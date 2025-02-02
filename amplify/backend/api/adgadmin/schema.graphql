@@ -1,0 +1,98 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+type User @model {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role!
+}
+
+type Location @model {
+  id: ID!
+  name: String
+  address: String
+  description: String
+  latitude: Float!
+  longitude: Float!
+}
+
+type Project @model {
+  id: ID!
+  oldId: String!
+  name: String!
+  description: String
+  location: Location @hasOne
+  locationString: String
+  createdBy: User! @hasOne
+  lastUpdatedBy: User @hasOne
+  featured: Boolean
+  link: String!
+  quote: String
+  quoteAttribution: String
+  collaborators: [Collaborator]
+    @manyToMany(relationName: "ProjectCollaborators")
+  size: String
+  gridOrder: Int
+  status: Status!
+  hero: ImageObject @hasOne
+  department: Department! @belongsTo
+  subcategories: [Subcategory] @manyToMany(relationName: "ProjectSubcategories")
+  building_type: [BuildingType]
+    @manyToMany(relationName: "ProjectBuildingTypes")
+  project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
+}
+
+type Collaborator @model {
+  id: ID!
+  name: String!
+  email: String
+  company: String
+  title: String
+  projects: [Project] @manyToMany(relationName: "ProjectCollaborators")
+}
+
+type Department @model {
+  id: ID!
+  name: String!
+  projects: [Project] @hasMany
+}
+
+type ImageObject @model {
+  id: ID!
+  url: String!
+  alt: String!
+  caption: String
+}
+
+type Subcategory @model {
+  id: ID!
+  name: String!
+  projects: [Project] @manyToMany(relationName: "ProjectSubcategories")
+}
+
+type BuildingType @model {
+  id: ID!
+  name: String!
+  projects: [Project] @manyToMany(relationName: "ProjectBuildingTypes")
+}
+
+type ProjectType @model {
+  id: ID!
+  name: String!
+  projects: [Project] @manyToMany(relationName: "ProjectProjectTypes")
+}
