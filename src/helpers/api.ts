@@ -11,6 +11,8 @@ import {
   listBuildingTypes,
 } from '../graphql/queries';
 import { createLocation } from '../graphql/mutations';
+import { GraphQLResult } from '@aws-amplify/api';
+import { Project, Subcategory, ProjectType, BuildingType } from '@/types';
 Amplify.configure(awsconfig, { ssr: true });
 
 const client = generateClient({
@@ -355,11 +357,11 @@ export const createNewLocation = async ({
 // };
 
 export const listAllProjects = async () => {
-  const projects = await client.graphql({
+  const projects = (await client.graphql({
     query: listProjects,
     variables: { limit: 300 },
     authMode: 'apiKey',
-  });
+  })) as GraphQLResult<{ listProjects: { items: Project[] } }>;
 
   return projects.data.listProjects.items;
 };
@@ -373,23 +375,23 @@ export const getProjectById = async (id: string) => {
 };
 
 export const getSubcategories = async () => {
-  const subcategories = await client.graphql({
+  const subcategories = (await client.graphql({
     query: listSubcategories,
-  });
+  })) as GraphQLResult<{ listSubcategories: { items: Subcategory[] } }>;
   return subcategories.data.listSubcategories.items;
 };
 
 export const getProjectTypes = async () => {
-  const projectTypes = await client.graphql({
+  const projectTypes = (await client.graphql({
     query: listProjectTypes,
-  });
+  })) as GraphQLResult<{ listProjectTypes: { items: ProjectType[] } }>;
   return projectTypes.data.listProjectTypes.items;
 };
 
 export const getBuildingTypes = async () => {
-  const buildingTypes = await client.graphql({
+  const buildingTypes = (await client.graphql({
     query: listBuildingTypes,
-  });
+  })) as GraphQLResult<{ listBuildingTypes: { items: BuildingType[] } }>;
   return buildingTypes.data.listBuildingTypes.items;
 };
 
