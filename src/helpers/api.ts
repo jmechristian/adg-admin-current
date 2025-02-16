@@ -1,6 +1,6 @@
 import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/api';
-import awsconfig from '@/aws-exports';
+import awsconfig from '../aws-exports';
 import axios from 'axios';
 import {
   listProjects,
@@ -11,7 +11,6 @@ import {
   listBuildingTypes,
 } from '../graphql/queries';
 import { createLocation } from '../graphql/mutations';
-
 Amplify.configure(awsconfig, { ssr: true });
 
 const client = generateClient({
