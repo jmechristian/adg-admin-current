@@ -41,24 +41,16 @@ export interface Project {
   link: string;
   quote?: string;
   quoteAttribution?: string;
-  collaborators?: { items: Collaborator[] };
+  collaborators?: string;
   size?: string;
   gridOrder?: number;
   status: Status;
   hero?: ImageObject;
+  gallery?: ImageObject[];
   department: Department;
   subcategories?: { items: Subcategory[] };
   building_type?: { items: BuildingType[] };
   project_type?: { items: ProjectType[] };
-}
-
-export interface Collaborator {
-  id: string;
-  name: string;
-  email?: string;
-  company?: string;
-  title?: string;
-  projects?: Project[];
 }
 
 export interface Department {

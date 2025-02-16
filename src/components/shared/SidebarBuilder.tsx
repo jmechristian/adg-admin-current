@@ -1,114 +1,9 @@
 import React from 'react';
-// import { SubcategorySelect } from './SubcategorySelect';
-// import { ProjectTypeSelect } from './ProjectTypeSelect';
-// import { BuildingTypeSelector } from './BuildingTypeSelector';
-
-interface Location {
-  id: string;
-  name: string | null;
-  address: string;
-  description: string | null;
-  latitude: number;
-  longitude: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Image {
-  id: string;
-  url: string;
-  alt: string;
-  caption: string;
-  createdAt: string;
-  updatedAt: string;
-  projectGalleryId: string | null;
-}
-
-interface Department {
-  id: string;
-  name: string;
-  projects: {
-    nextToken: string | null;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface ProjectData {
-  id: string;
-  oldId: string;
-  name: string;
-  description: string;
-  location: Location;
-  locationString: string;
-  createdBy: User;
-  lastUpdatedBy: User | null;
-  featured: boolean;
-  link: string;
-  quote: string | null;
-  quoteAttribution: string | null;
-  collaborators: {
-    items: any[];
-    nextToken: string | null;
-  };
-  size: string;
-  gridOrder: number;
-  status: string;
-  hero: Image;
-  gallery: {
-    items: any[];
-    nextToken: string | null;
-  };
-  department: Department;
-  subcategories: {
-    items: Array<{
-      id: string;
-      projectID: string;
-      subcategoryID: string;
-      createdAt: string;
-      updatedAt: string;
-    }>;
-    nextToken: string | null;
-  };
-  building_type: {
-    items: Array<{
-      id: string;
-      projectID: string;
-      buildingTypeID: string;
-      createdAt: string;
-      updatedAt: string;
-    }>;
-    nextToken: string | null;
-  };
-  project_type: {
-    items: Array<{
-      id: string;
-      projectID: string;
-      projectTypeID: string;
-      createdAt: string;
-      updatedAt: string;
-    }>;
-    nextToken: string | null;
-  };
-  createdAt: string;
-  updatedAt: string;
-  departmentProjectsId: string;
-  projectLocationId: string;
-  projectCreatedById: string;
-  projectLastUpdatedById: string | null;
-  projectHeroId: string;
-}
-
-const SidebarBuilder = ({ project }: { project: ProjectData }) => {
+import { Project } from '@/types';
+import { SubcategorySelect } from './SubcategorySelect';
+import { ProjectTypeSelect } from './ProjectTypeSelect';
+import { BuildingTypeSelector } from './BuildingTypeSelector';
+const SidebarBuilder = ({ project }: { project: Project }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const formattedDate = date
@@ -175,9 +70,15 @@ const SidebarBuilder = ({ project }: { project: ProjectData }) => {
           </span>
         </div>
       </div>
-      {/* <SubcategorySelect currentSubcategories={project.subcategories} />
-      <ProjectTypeSelect currentProjectTypes={project.project_type} />
-      <BuildingTypeSelector currentBuildingTypes={project.building_type} /> */}
+      <SubcategorySelect
+        currentSubcategories={project.subcategories?.items || []}
+      />
+      <ProjectTypeSelect
+        currentProjectTypes={project.project_type?.items || []}
+      />
+      <BuildingTypeSelector
+        currentBuildingTypes={project.building_type?.items || []}
+      />
     </div>
   );
 };

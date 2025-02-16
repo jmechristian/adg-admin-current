@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { listAllProjects } from '@/helpers/api';
+import { listAllProjects } from '../helpers/api';
 import HeaderItem from '@/components/shared/HeaderItem';
 import { Project } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 export default function Home() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
