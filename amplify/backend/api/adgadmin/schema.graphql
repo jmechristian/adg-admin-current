@@ -33,7 +33,7 @@ type Location @model {
 
 type Project @model {
   id: ID!
-  oldId: String!
+  oldId: String! @index(name: "projectByOldId")
   name: String!
   description: String
   location: Location @hasOne
@@ -44,26 +44,17 @@ type Project @model {
   link: String!
   quote: String
   quoteAttribution: String
-  collaborators: [Collaborator]
-    @manyToMany(relationName: "ProjectCollaborators")
+  collaborators: String
   size: String
   gridOrder: Int
   status: Status!
   hero: ImageObject @hasOne
+  gallery: [ImageObject] @hasMany
   department: Department! @belongsTo
   subcategories: [Subcategory] @manyToMany(relationName: "ProjectSubcategories")
   building_type: [BuildingType]
     @manyToMany(relationName: "ProjectBuildingTypes")
   project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
-}
-
-type Collaborator @model {
-  id: ID!
-  name: String!
-  email: String
-  company: String
-  title: String
-  projects: [Project] @manyToMany(relationName: "ProjectCollaborators")
 }
 
 type Department @model {

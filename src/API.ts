@@ -256,6 +256,7 @@ export type Project = {
   gridOrder?: number | null,
   status: Status,
   hero?: ImageObject | null,
+  gallery?: ModelImageObjectConnection | null,
   department: Department,
   subcategories?: ModelProjectSubcategoriesConnection | null,
   building_type?: ModelProjectBuildingTypesConnection | null,
@@ -306,6 +307,13 @@ export type ImageObject = {
   caption?: string | null,
   createdAt: string,
   updatedAt: string,
+  projectGalleryId?: string | null,
+};
+
+export type ModelImageObjectConnection = {
+  __typename: "ModelImageObjectConnection",
+  items:  Array<ImageObject | null >,
+  nextToken?: string | null,
 };
 
 export type Department = {
@@ -481,6 +489,7 @@ export type CreateImageObjectInput = {
   url: string,
   alt: string,
   caption?: string | null,
+  projectGalleryId?: string | null,
 };
 
 export type ModelImageObjectConditionInput = {
@@ -490,6 +499,7 @@ export type ModelImageObjectConditionInput = {
   and?: Array< ModelImageObjectConditionInput | null > | null,
   or?: Array< ModelImageObjectConditionInput | null > | null,
   not?: ModelImageObjectConditionInput | null,
+  projectGalleryId?: ModelIDInput | null,
 };
 
 export type UpdateImageObjectInput = {
@@ -497,6 +507,7 @@ export type UpdateImageObjectInput = {
   url?: string | null,
   alt?: string | null,
   caption?: string | null,
+  projectGalleryId?: string | null,
 };
 
 export type DeleteImageObjectInput = {
@@ -758,12 +769,7 @@ export type ModelImageObjectFilterInput = {
   and?: Array< ModelImageObjectFilterInput | null > | null,
   or?: Array< ModelImageObjectFilterInput | null > | null,
   not?: ModelImageObjectFilterInput | null,
-};
-
-export type ModelImageObjectConnection = {
-  __typename: "ModelImageObjectConnection",
-  items:  Array<ImageObject | null >,
-  nextToken?: string | null,
+  projectGalleryId?: ModelIDInput | null,
 };
 
 export type ModelSubcategoryFilterInput = {
@@ -1021,6 +1027,21 @@ export type CreateProjectMutation = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1148,6 +1169,21 @@ export type UpdateProjectMutation = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1275,6 +1311,21 @@ export type DeleteProjectMutation = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1560,6 +1611,7 @@ export type CreateImageObjectMutation = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1577,6 +1629,7 @@ export type UpdateImageObjectMutation = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1594,6 +1647,7 @@ export type DeleteImageObjectMutation = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1906,6 +1960,11 @@ export type CreateProjectCollaboratorsMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2019,6 +2078,11 @@ export type UpdateProjectCollaboratorsMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2132,6 +2196,11 @@ export type DeleteProjectCollaboratorsMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2245,6 +2314,11 @@ export type CreateProjectSubcategoriesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2355,6 +2429,11 @@ export type UpdateProjectSubcategoriesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2465,6 +2544,11 @@ export type DeleteProjectSubcategoriesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2575,6 +2659,11 @@ export type CreateProjectBuildingTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2685,6 +2774,11 @@ export type UpdateProjectBuildingTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2795,6 +2889,11 @@ export type DeleteProjectBuildingTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2905,6 +3004,11 @@ export type CreateProjectProjectTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3015,6 +3119,11 @@ export type UpdateProjectProjectTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3125,6 +3234,11 @@ export type DeleteProjectProjectTypesMutation = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3317,6 +3431,21 @@ export type GetProjectQuery = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -3439,6 +3568,11 @@ export type ListProjectsQuery = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3604,6 +3738,7 @@ export type GetImageObjectQuery = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -3624,6 +3759,7 @@ export type ListImageObjectsQuery = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -3844,6 +3980,11 @@ export type GetProjectCollaboratorsQuery = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4009,6 +4150,11 @@ export type GetProjectSubcategoriesQuery = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4168,6 +4314,11 @@ export type GetProjectBuildingTypesQuery = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4327,6 +4478,11 @@ export type GetProjectProjectTypesQuery = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4563,6 +4719,21 @@ export type OnCreateProjectSubscription = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -4685,6 +4856,21 @@ export type OnUpdateProjectSubscription = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -4807,6 +4993,21 @@ export type OnDeleteProjectSubscription = {
       caption?: string | null,
       createdAt: string,
       updatedAt: string,
+      projectGalleryId?: string | null,
+    } | null,
+    gallery?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -5057,6 +5258,7 @@ export type OnCreateImageObjectSubscription = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -5069,6 +5271,7 @@ export type OnUpdateImageObjectSubscription = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -5081,6 +5284,7 @@ export type OnDeleteImageObjectSubscription = {
     caption?: string | null,
     createdAt: string,
     updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -5343,6 +5547,11 @@ export type OnCreateProjectCollaboratorsSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5451,6 +5660,11 @@ export type OnUpdateProjectCollaboratorsSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5559,6 +5773,11 @@ export type OnDeleteProjectCollaboratorsSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5667,6 +5886,11 @@ export type OnCreateProjectSubcategoriesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5772,6 +5996,11 @@ export type OnUpdateProjectSubcategoriesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5877,6 +6106,11 @@ export type OnDeleteProjectSubcategoriesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5982,6 +6216,11 @@ export type OnCreateProjectBuildingTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6087,6 +6326,11 @@ export type OnUpdateProjectBuildingTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6192,6 +6436,11 @@ export type OnDeleteProjectBuildingTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6297,6 +6546,11 @@ export type OnCreateProjectProjectTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6402,6 +6656,11 @@ export type OnUpdateProjectProjectTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6507,6 +6766,11 @@ export type OnDeleteProjectProjectTypesSubscription = {
         caption?: string | null,
         createdAt: string,
         updatedAt: string,
+        projectGalleryId?: string | null,
+      } | null,
+      gallery?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
       } | null,
       department:  {
         __typename: "Department",

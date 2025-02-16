@@ -1,6 +1,8 @@
 import React from 'react';
 import { Project } from '@/types';
 import { SubcategorySelect } from './SubcategorySelect';
+import { ProjectTypeSelect } from './ProjectTypeSelect';
+import { BuildingTypeSelector } from './BuildingTypeSelector';
 const SidebarBuilder = ({ project }: { project: Project }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -22,7 +24,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
     return `${formattedDate} ${formattedTime}`;
   };
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-7'>
       <div className='flex flex-col gap-3'>
         <div className='w-full uppercase text-xs text-gray-400'>
           {project.department.name}
@@ -46,7 +48,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
           }}
         ></div>
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className='flex flex-col gap-0'>
         <div className='w-full text-sm text-gray-400'>
           Created:{' '}
           <span className='text-white italic'>
@@ -68,7 +70,9 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
           </span>
         </div>
       </div>
-      <SubcategorySelect />
+      <SubcategorySelect currentSubcategories={project.subcategories} />
+      <ProjectTypeSelect currentProjectTypes={project.project_type} />
+      <BuildingTypeSelector currentBuildingTypes={project.building_type} />
     </div>
   );
 };

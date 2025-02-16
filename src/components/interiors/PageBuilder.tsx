@@ -12,12 +12,9 @@ interface PageBuilderProps {
 export const PageBuilder = ({ project }: PageBuilderProps) => {
   console.log(project);
   return (
-    <div className='grid grid-cols-10 h-20 w-full'>
-      <div className='col-span-2 bg-black py-10 px-6'>
-        <SidebarBuilder project={project} />
-      </div>
+    <div className='grid grid-cols-10 w-full'>
       <div className='col-span-8 border'>
-        <div className='flex flex-col gap-10 max-w-7xl mx-auto py-10 w-full'>
+        <div className='flex flex-col gap-10 max-w-7xl mx-auto py-12 w-full'>
           <HeadingHero
             title={project.name}
             location={project.locationString || ''}
@@ -43,6 +40,9 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             }
           />
         </div>
+      </div>
+      <div className='col-span-2 bg-black py-10 px-6'>
+        <SidebarBuilder project={project} />
       </div>
     </div>
   );

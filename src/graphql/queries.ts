@@ -126,6 +126,19 @@ export const getProject = /* GraphQL */ `
         caption
         createdAt
         updatedAt
+        projectGalleryId
+      }
+      gallery {
+        items {
+          id
+          url
+          alt
+          caption
+          createdAt
+          updatedAt
+          projectGalleryId
+        }
+        nextToken
       }
       department {
         id
@@ -232,6 +245,10 @@ export const listProjects = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -369,6 +386,7 @@ export const getImageObject = /* GraphQL */ `
       caption
       createdAt
       updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -386,6 +404,7 @@ export const listImageObjects = /* GraphQL */ `
         caption
         createdAt
         updatedAt
+        projectGalleryId
       }
       nextToken
     }
@@ -566,6 +585,10 @@ export const getProjectCollaborators = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -714,6 +737,10 @@ export const getProjectSubcategories = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -856,6 +883,10 @@ export const getProjectBuildingTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -998,6 +1029,10 @@ export const getProjectProjectTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id

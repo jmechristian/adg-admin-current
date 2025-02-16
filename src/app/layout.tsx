@@ -47,7 +47,7 @@ export default function RootLayout({
         <div className='min-h-full'>
           <Disclosure
             as='nav'
-            className='bg-gray-900 py-4 px-10  border-b-4 border-b-brand '
+            className='bg-gray-900 py-2 px-10  border-b-4 border-b-brand '
           >
             <div>
               <div className='flex h-16 items-center justify-between w-full'>

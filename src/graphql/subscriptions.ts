@@ -138,6 +138,19 @@ export const onCreateProject = /* GraphQL */ `
         caption
         createdAt
         updatedAt
+        projectGalleryId
+      }
+      gallery {
+        items {
+          id
+          url
+          alt
+          caption
+          createdAt
+          updatedAt
+          projectGalleryId
+        }
+        nextToken
       }
       department {
         id
@@ -246,6 +259,19 @@ export const onUpdateProject = /* GraphQL */ `
         caption
         createdAt
         updatedAt
+        projectGalleryId
+      }
+      gallery {
+        items {
+          id
+          url
+          alt
+          caption
+          createdAt
+          updatedAt
+          projectGalleryId
+        }
+        nextToken
       }
       department {
         id
@@ -354,6 +380,19 @@ export const onDeleteProject = /* GraphQL */ `
         caption
         createdAt
         updatedAt
+        projectGalleryId
+      }
+      gallery {
+        items {
+          id
+          url
+          alt
+          caption
+          createdAt
+          updatedAt
+          projectGalleryId
+        }
+        nextToken
       }
       department {
         id
@@ -584,6 +623,7 @@ export const onCreateImageObject = /* GraphQL */ `
       caption
       createdAt
       updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -596,6 +636,7 @@ export const onUpdateImageObject = /* GraphQL */ `
       caption
       createdAt
       updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -608,6 +649,7 @@ export const onDeleteImageObject = /* GraphQL */ `
       caption
       createdAt
       updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -846,6 +888,10 @@ export const onCreateProjectCollaborators = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -942,6 +988,10 @@ export const onUpdateProjectCollaborators = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1038,6 +1088,10 @@ export const onDeleteProjectCollaborators = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1134,6 +1188,10 @@ export const onCreateProjectSubcategories = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1227,6 +1285,10 @@ export const onUpdateProjectSubcategories = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1320,6 +1382,10 @@ export const onDeleteProjectSubcategories = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1413,6 +1479,10 @@ export const onCreateProjectBuildingTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1506,6 +1576,10 @@ export const onUpdateProjectBuildingTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1599,6 +1673,10 @@ export const onDeleteProjectBuildingTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1692,6 +1770,10 @@ export const onCreateProjectProjectTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1785,6 +1867,10 @@ export const onUpdateProjectProjectTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
@@ -1878,6 +1964,10 @@ export const onDeleteProjectProjectTypes = /* GraphQL */ `
           caption
           createdAt
           updatedAt
+          projectGalleryId
+        }
+        gallery {
+          nextToken
         }
         department {
           id
