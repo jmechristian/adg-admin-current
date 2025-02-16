@@ -39,6 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  console.log(isAuthenticated);
   const user = useAuthStore((state) => state.user);
 
   return (

@@ -1,11 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import {
-  listAllProjects,
-  getAllDOProjects,
-  createNewProject,
-} from '@/helpers/api';
+import { listAllProjects } from '@/helpers/api';
 import HeaderItem from '@/components/shared/HeaderItem';
 import { Project } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';

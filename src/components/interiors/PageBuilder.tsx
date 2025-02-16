@@ -10,7 +10,6 @@ interface PageBuilderProps {
 }
 
 export const PageBuilder = ({ project }: PageBuilderProps) => {
-  console.log(project);
   return (
     <div className='grid grid-cols-10 w-full'>
       <div className='col-span-8 border'>
