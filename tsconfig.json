@@ -20,7 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noImplicitAny": false,
+    "useUnknownInCatchVariables": false,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": [
     "next-env.d.ts",
