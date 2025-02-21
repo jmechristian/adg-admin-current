@@ -11,9 +11,11 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "@jmechristian/adg-component-library": "^1.0.8",
+    "@jmechristian/adg-component-library": "^1.0.10",
     "aws-amplify": "^6.10.3",
     "axios": "^1.7.9",
+    "fs-extra": "^11.3.0",
+    "jszip": "^3.10.1",
     "next": "15.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

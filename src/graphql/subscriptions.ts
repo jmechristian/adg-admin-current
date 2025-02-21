@@ -80,6 +80,282 @@ export const onDeleteLocation = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGallery = /* GraphQL */ `
+  subscription OnCreateGallery {
+    onCreateGallery {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
+export const onUpdateGallery = /* GraphQL */ `
+  subscription OnUpdateGallery {
+    onUpdateGallery {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
+export const onDeleteGallery = /* GraphQL */ `
+  subscription OnDeleteGallery {
+    onDeleteGallery {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
 export const onCreateProject = /* GraphQL */ `
   subscription OnCreateProject {
     onCreateProject {
@@ -118,39 +394,40 @@ export const onCreateProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -197,7 +474,7 @@ export const onCreateProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
+      projectGalleryId
     }
   }
 `;
@@ -239,39 +516,40 @@ export const onUpdateProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -318,7 +596,7 @@ export const onUpdateProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
+      projectGalleryId
     }
   }
 `;
@@ -360,39 +638,40 @@ export const onDeleteProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -439,76 +718,7 @@ export const onDeleteProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
-    }
-  }
-`;
-export const onCreateCollaborator = /* GraphQL */ `
-  subscription OnCreateCollaborator {
-    onCreateCollaborator {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCollaborator = /* GraphQL */ `
-  subscription OnUpdateCollaborator {
-    onUpdateCollaborator {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCollaborator = /* GraphQL */ `
-  subscription OnDeleteCollaborator {
-    onDeleteCollaborator {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -528,6 +738,7 @@ export const onCreateDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -537,7 +748,7 @@ export const onCreateDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -562,6 +773,7 @@ export const onUpdateDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -571,7 +783,7 @@ export const onUpdateDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -596,6 +808,7 @@ export const onDeleteDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -605,7 +818,7 @@ export const onDeleteDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -621,9 +834,41 @@ export const onCreateImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -634,9 +879,41 @@ export const onUpdateImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -647,9 +924,41 @@ export const onDeleteImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -833,306 +1142,6 @@ export const onDeleteProjectType = /* GraphQL */ `
     }
   }
 `;
-export const onCreateProjectCollaborators = /* GraphQL */ `
-  subscription OnCreateProjectCollaborators {
-    onCreateProjectCollaborators {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateProjectCollaborators = /* GraphQL */ `
-  subscription OnUpdateProjectCollaborators {
-    onUpdateProjectCollaborators {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteProjectCollaborators = /* GraphQL */ `
-  subscription OnDeleteProjectCollaborators {
-    onDeleteProjectCollaborators {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateProjectSubcategories = /* GraphQL */ `
   subscription OnCreateProjectSubcategories {
     onCreateProjectSubcategories {
@@ -1175,23 +1184,15 @@ export const onCreateProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1214,7 +1215,7 @@ export const onCreateProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1272,23 +1273,15 @@ export const onUpdateProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1311,7 +1304,7 @@ export const onUpdateProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1369,23 +1362,15 @@ export const onDeleteProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1408,7 +1393,7 @@ export const onDeleteProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1466,23 +1451,15 @@ export const onCreateProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1505,7 +1482,7 @@ export const onCreateProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1563,23 +1540,15 @@ export const onUpdateProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1602,7 +1571,7 @@ export const onUpdateProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1660,23 +1629,15 @@ export const onDeleteProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1699,7 +1660,7 @@ export const onDeleteProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1757,23 +1718,15 @@ export const onCreateProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1796,7 +1749,7 @@ export const onCreateProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id
@@ -1854,23 +1807,15 @@ export const onUpdateProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1893,7 +1838,7 @@ export const onUpdateProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id
@@ -1951,23 +1896,15 @@ export const onDeleteProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1990,7 +1927,7 @@ export const onDeleteProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id

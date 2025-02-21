@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/aws-exports.ts", // Add this line
-    "src/aws-exports.ts"
+    "src/aws-exports.ts",
+    "src/scripts/exportProjects.js"
   ],
   "exclude": ["node_modules"]
 }

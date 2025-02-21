@@ -68,6 +68,140 @@ export const listLocations = /* GraphQL */ `
     }
   }
 `;
+export const getGallery = /* GraphQL */ `
+  query GetGallery($id: ID!) {
+    getGallery(id: $id) {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
+export const listGalleries = /* GraphQL */ `
+  query ListGalleries(
+    $filter: ModelGalleryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGalleries(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      nextToken
+    }
+  }
+`;
 export const getProject = /* GraphQL */ `
   query GetProject($id: ID!) {
     getProject(id: $id) {
@@ -106,39 +240,40 @@ export const getProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -185,7 +320,7 @@ export const getProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
+      projectGalleryId
     }
   }
 `;
@@ -232,23 +367,15 @@ export const listProjects = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -271,53 +398,7 @@ export const listProjects = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
-      }
-      nextToken
-    }
-  }
-`;
-export const getCollaborator = /* GraphQL */ `
-  query GetCollaborator($id: ID!) {
-    getCollaborator(id: $id) {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listCollaborators = /* GraphQL */ `
-  query ListCollaborators(
-    $filter: ModelCollaboratorFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCollaborators(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        projectGalleryId
       }
       nextToken
     }
@@ -339,6 +420,7 @@ export const getDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -348,7 +430,7 @@ export const getDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -384,9 +466,41 @@ export const getImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -402,9 +516,16 @@ export const listImageObjects = /* GraphQL */ `
         url
         alt
         caption
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        order
         createdAt
         updatedAt
-        projectGalleryId
+        galleryImagesId
       }
       nextToken
     }
@@ -530,158 +651,6 @@ export const listProjectTypes = /* GraphQL */ `
     }
   }
 `;
-export const getProjectCollaborators = /* GraphQL */ `
-  query GetProjectCollaborators($id: ID!) {
-    getProjectCollaborators(id: $id) {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listProjectCollaborators = /* GraphQL */ `
-  query ListProjectCollaborators(
-    $filter: ModelProjectCollaboratorsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listProjectCollaborators(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        projectID
-        collaboratorID
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          quote
-          quoteAttribution
-          size
-          gridOrder
-          status
-          createdAt
-          updatedAt
-          departmentProjectsId
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectHeroId
-        }
-        collaborator {
-          id
-          name
-          email
-          company
-          title
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getProjectSubcategories = /* GraphQL */ `
   query GetProjectSubcategories($id: ID!) {
     getProjectSubcategories(id: $id) {
@@ -724,23 +693,15 @@ export const getProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -763,7 +724,7 @@ export const getProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -804,6 +765,7 @@ export const listProjectSubcategories = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -813,7 +775,7 @@ export const listProjectSubcategories = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         subcategory {
           id
@@ -870,23 +832,15 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -909,7 +863,7 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -950,6 +904,7 @@ export const listProjectBuildingTypes = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -959,7 +914,7 @@ export const listProjectBuildingTypes = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         buildingType {
           id
@@ -1016,23 +971,15 @@ export const getProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1055,7 +1002,7 @@ export const getProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id
@@ -1096,6 +1043,7 @@ export const listProjectProjectTypes = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -1105,7 +1053,7 @@ export const listProjectProjectTypes = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         projectType {
           id

@@ -26,6 +26,20 @@ export interface Location {
   longitude: number;
 }
 
+export interface GalleryResponse {
+  data: {
+    getGallery: Gallery;
+  };
+}
+
+export interface Gallery {
+  id: string;
+  images: {
+    items: ImageObject[];
+  };
+  project: Project;
+}
+
 export interface Project {
   createdAt: string;
   updatedAt: string;
@@ -36,21 +50,48 @@ export interface Project {
   location?: Location;
   locationString?: string;
   createdBy: User;
-  lastUpdatedBy?: User;
-  featured?: boolean;
+  lastUpdatedBy?: User | null;
+  featured: boolean;
   link: string;
-  quote?: string;
-  quoteAttribution?: string;
-  collaborators?: string;
+  quote?: string | null;
+  quoteAttribution?: string | null;
+  collaborators?: string | null;
   size?: string;
   gridOrder?: number;
   status: Status;
   hero?: ImageObject;
-  gallery?: ImageObject[];
+  gallery: Gallery;
   department: Department;
-  subcategories?: { items: Subcategory[] };
-  building_type?: { items: BuildingType[] };
-  project_type?: { items: ProjectType[] };
+  subcategories: {
+    items: {
+      subcategory: {
+        id: string;
+        name: string;
+      };
+    }[];
+  };
+  building_type: {
+    items: {
+      buildingType: {
+        id: string;
+        name: string;
+      };
+    }[];
+  };
+  project_type: {
+    items: {
+      projectType: {
+        id: string;
+        name: string;
+      };
+    }[];
+  };
+  onDescriptionChange?: (description: string) => void;
+  onNameChange?: (name: string) => void;
+  onSizeChange?: (size: string) => void;
+  onLocationChange?: (location: string) => void;
+  onQuoteChange?: (quote: string) => void;
+  onQuoteAttributionChange?: (quoteAttribution: string) => void;
 }
 
 export interface Department {

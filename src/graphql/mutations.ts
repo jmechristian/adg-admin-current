@@ -98,6 +98,291 @@ export const deleteLocation = /* GraphQL */ `
     }
   }
 `;
+export const createGallery = /* GraphQL */ `
+  mutation CreateGallery(
+    $input: CreateGalleryInput!
+    $condition: ModelGalleryConditionInput
+  ) {
+    createGallery(input: $input, condition: $condition) {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
+export const updateGallery = /* GraphQL */ `
+  mutation UpdateGallery(
+    $input: UpdateGalleryInput!
+    $condition: ModelGalleryConditionInput
+  ) {
+    updateGallery(input: $input, condition: $condition) {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
+export const deleteGallery = /* GraphQL */ `
+  mutation DeleteGallery(
+    $input: DeleteGalleryInput!
+    $condition: ModelGalleryConditionInput
+  ) {
+    deleteGallery(input: $input, condition: $condition) {
+      id
+      images {
+        items {
+          id
+          url
+          alt
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryImagesId
+        }
+        nextToken
+      }
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        departmentProjectsId
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      galleryProjectId
+    }
+  }
+`;
 export const createProject = /* GraphQL */ `
   mutation CreateProject(
     $input: CreateProjectInput!
@@ -139,39 +424,40 @@ export const createProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -218,7 +504,7 @@ export const createProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
+      projectGalleryId
     }
   }
 `;
@@ -263,39 +549,40 @@ export const updateProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -342,7 +629,7 @@ export const updateProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
+      projectGalleryId
     }
   }
 `;
@@ -387,39 +674,40 @@ export const deleteProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
-      collaborators {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      collaborators
       size
       gridOrder
       status
-      hero {
-        id
-        url
-        alt
-        caption
-        createdAt
-        updatedAt
-        projectGalleryId
-      }
       gallery {
-        items {
+        id
+        images {
+          nextToken
+        }
+        project {
           id
-          url
-          alt
-          caption
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
           createdAt
           updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
           projectGalleryId
         }
-        nextToken
+        createdAt
+        updatedAt
+        galleryProjectId
       }
       department {
         id
@@ -466,85 +754,7 @@ export const deleteProject = /* GraphQL */ `
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
-      projectHeroId
-    }
-  }
-`;
-export const createCollaborator = /* GraphQL */ `
-  mutation CreateCollaborator(
-    $input: CreateCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
-  ) {
-    createCollaborator(input: $input, condition: $condition) {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateCollaborator = /* GraphQL */ `
-  mutation UpdateCollaborator(
-    $input: UpdateCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
-  ) {
-    updateCollaborator(input: $input, condition: $condition) {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteCollaborator = /* GraphQL */ `
-  mutation DeleteCollaborator(
-    $input: DeleteCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
-  ) {
-    deleteCollaborator(input: $input, condition: $condition) {
-      id
-      name
-      email
-      company
-      title
-      projects {
-        items {
-          id
-          projectID
-          collaboratorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
+      projectGalleryId
     }
   }
 `;
@@ -567,6 +777,7 @@ export const createDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -576,7 +787,7 @@ export const createDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -604,6 +815,7 @@ export const updateDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -613,7 +825,7 @@ export const updateDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -641,6 +853,7 @@ export const deleteDepartment = /* GraphQL */ `
           link
           quote
           quoteAttribution
+          collaborators
           size
           gridOrder
           status
@@ -650,7 +863,7 @@ export const deleteDepartment = /* GraphQL */ `
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
-          projectHeroId
+          projectGalleryId
         }
         nextToken
       }
@@ -669,9 +882,41 @@ export const createImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -685,9 +930,41 @@ export const updateImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -701,9 +978,41 @@ export const deleteImageObject = /* GraphQL */ `
       url
       alt
       caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          createdAt
+          updatedAt
+          departmentProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
       createdAt
       updatedAt
-      projectGalleryId
+      galleryImagesId
     }
   }
 `;
@@ -914,315 +1223,6 @@ export const deleteProjectType = /* GraphQL */ `
     }
   }
 `;
-export const createProjectCollaborators = /* GraphQL */ `
-  mutation CreateProjectCollaborators(
-    $input: CreateProjectCollaboratorsInput!
-    $condition: ModelProjectCollaboratorsConditionInput
-  ) {
-    createProjectCollaborators(input: $input, condition: $condition) {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateProjectCollaborators = /* GraphQL */ `
-  mutation UpdateProjectCollaborators(
-    $input: UpdateProjectCollaboratorsInput!
-    $condition: ModelProjectCollaboratorsConditionInput
-  ) {
-    updateProjectCollaborators(input: $input, condition: $condition) {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteProjectCollaborators = /* GraphQL */ `
-  mutation DeleteProjectCollaborators(
-    $input: DeleteProjectCollaboratorsInput!
-    $condition: ModelProjectCollaboratorsConditionInput
-  ) {
-    deleteProjectCollaborators(input: $input, condition: $condition) {
-      id
-      projectID
-      collaboratorID
-      project {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        collaborators {
-          nextToken
-        }
-        size
-        gridOrder
-        status
-        hero {
-          id
-          url
-          alt
-          caption
-          createdAt
-          updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
-        }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        departmentProjectsId
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectHeroId
-      }
-      collaborator {
-        id
-        name
-        email
-        company
-        title
-        projects {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createProjectSubcategories = /* GraphQL */ `
   mutation CreateProjectSubcategories(
     $input: CreateProjectSubcategoriesInput!
@@ -1268,23 +1268,15 @@ export const createProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1307,7 +1299,7 @@ export const createProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1368,23 +1360,15 @@ export const updateProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1407,7 +1391,7 @@ export const updateProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1468,23 +1452,15 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1507,7 +1483,7 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       subcategory {
         id
@@ -1568,23 +1544,15 @@ export const createProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1607,7 +1575,7 @@ export const createProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1668,23 +1636,15 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1707,7 +1667,7 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1768,23 +1728,15 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1807,7 +1759,7 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       buildingType {
         id
@@ -1868,23 +1820,15 @@ export const createProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -1907,7 +1851,7 @@ export const createProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id
@@ -1968,23 +1912,15 @@ export const updateProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -2007,7 +1943,7 @@ export const updateProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id
@@ -2068,23 +2004,15 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
-        collaborators {
-          nextToken
-        }
+        collaborators
         size
         gridOrder
         status
-        hero {
+        gallery {
           id
-          url
-          alt
-          caption
           createdAt
           updatedAt
-          projectGalleryId
-        }
-        gallery {
-          nextToken
+          galleryProjectId
         }
         department {
           id
@@ -2107,7 +2035,7 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
-        projectHeroId
+        projectGalleryId
       }
       projectType {
         id

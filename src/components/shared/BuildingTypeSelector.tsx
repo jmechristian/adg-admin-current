@@ -11,9 +11,8 @@ export const BuildingTypeSelector = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [allBuildingTypes, setAllBuildingTypes] = useState<BuildingType[]>([]);
-  const [selectedBuildingTypes, setSelectedBuildingTypes] = useState<
-    BuildingType[]
-  >(currentBuildingTypes || []);
+  const [selectedBuildingTypes, setSelectedBuildingTypes] =
+    useState<BuildingType[]>(currentBuildingTypes);
 
   useEffect(() => {
     const fetchBuildingTypes = async () => {
@@ -47,8 +46,8 @@ export const BuildingTypeSelector = ({
 
   return (
     <div className='flex flex-col gap-2 w-full relative'>
-      <div className='w-full font-brand-bold text-white border-b border-b-brand pb-1.5 flex items-center justify-between'>
-        <div>Project Type</div>
+      <div className='w-full text-sm text-gray-400 border-b border-b-gray-700 pb-1.5 flex items-center justify-between'>
+        <div>Building Type:</div>
         <div className='cursor-pointer' onClick={() => setShowModal(true)}>
           <MdEdit color='white' size={18} />
         </div>
@@ -58,7 +57,7 @@ export const BuildingTypeSelector = ({
           selectedBuildingTypes.map((buildingType) => (
             <div
               key={buildingType.id}
-              className='text-gray-400 text-sm px-2 my-1'
+              className='text-white font-semibold text-sm px-2 my-1'
             >
               {buildingType.name}
             </div>

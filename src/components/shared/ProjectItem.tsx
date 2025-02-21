@@ -1,10 +1,24 @@
-import React from 'react';
-import { Project } from '@/types';
+'use client';
 
+import React, { useEffect, useState } from 'react';
+import { Gallery, Project, GalleryResponse } from '@/types';
+import { getProjectGallery } from '@/helpers/api';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+
 const ProjectItem = ({ project }: { project: Project }) => {
+  const [gallery, setGallery] = useState<Gallery | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      const projectGallery = (await getProjectGallery(
+        project.gallery.id
+      )) as GalleryResponse;
+      setGallery(projectGallery.data.getGallery);
+    };
+    fetchGallery();
+  }, [project.gallery.id]);
 
   const handleClick = () => {
     const catSlug = project.department.name.toLowerCase().replace(/\s+/g, '-');
@@ -19,25 +33,24 @@ const ProjectItem = ({ project }: { project: Project }) => {
       onClick={handleClick}
     >
       <div className='col-span-1 text-xs'>{project.oldId}</div>
-      <div className='col-span-1 text-xs'>
-        {new Date(project.createdAt).toLocaleDateString()}
-      </div>
+
       <div className='col-span-5 flex gap-5 items-center'>
-        <div
-          className='aspect-video w-[180px]  bg-gray-300 overflow-hidden bg-cover bg-center'
-          style={
-            project.hero?.url
-              ? {
-                  backgroundImage: `url(${project.hero.url})`,
-                }
-              : {}
-          }
-        ></div>
+        <div>
+          <div
+            className='aspect-video w-[180px]  bg-gray-300 overflow-hidden bg-cover bg-center'
+            style={{
+              backgroundImage: gallery?.images?.items?.length
+                ? `url(${gallery.images.items[0].url})`
+                : 'none',
+            }}
+          ></div>
+        </div>
         <div className='flex flex-col gap-1'>
           <div className='font-brand-bold'>{project.name}</div>
           <div className='text-sm text-gray-500'>{project.department.name}</div>
         </div>
       </div>
+      <div className='col-span-1 text-xs'>{gallery?.images.items.length}</div>
       <div className='col-span-2 text-xs'>{project.size}</div>
 
       <div className='col-span-1 text-xs'>

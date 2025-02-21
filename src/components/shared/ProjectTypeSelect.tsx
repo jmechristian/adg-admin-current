@@ -11,9 +11,8 @@ export const ProjectTypeSelect = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [allProjectTypes, setAllProjectTypes] = useState<ProjectType[]>([]);
-  const [selectedProjectTypes, setSelectedProjectTypes] = useState<
-    ProjectType[]
-  >(Array.isArray(currentProjectTypes) ? currentProjectTypes : []);
+  const [selectedProjectTypes, setSelectedProjectTypes] =
+    useState<ProjectType[]>(currentProjectTypes);
 
   useEffect(() => {
     const fetchProjectTypes = async () => {
@@ -47,8 +46,8 @@ export const ProjectTypeSelect = ({
 
   return (
     <div className='flex flex-col gap-2 w-full relative'>
-      <div className='w-full font-brand-bold text-white border-b border-b-brand pb-1.5 flex items-center justify-between'>
-        <div>Project Type</div>
+      <div className='w-full text-sm text-gray-400 border-b border-b-gray-700 pb-1.5 flex items-center justify-between'>
+        <div>Project Type:</div>
         <div className='cursor-pointer' onClick={() => setShowModal(true)}>
           <MdEdit color='white' size={18} />
         </div>
@@ -58,7 +57,7 @@ export const ProjectTypeSelect = ({
           selectedProjectTypes.map((projectType) => (
             <div
               key={projectType.id}
-              className='text-gray-400 text-sm px-2 my-1'
+              className='text-white font-semibold text-sm px-2 my-1'
             >
               {projectType.name}
             </div>

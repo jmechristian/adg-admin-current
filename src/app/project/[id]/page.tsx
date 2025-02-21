@@ -7,17 +7,12 @@ interface ProjectResponse {
   getProject: Project;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolvedParams = await params;
-  const id = resolvedParams.id;
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
   const project = (await getProjectById(id)) as GraphQLResult<ProjectResponse>;
   return (
     <main className='w-full'>
-      <PageBuilder project={project.data.getProject} />
+      <PageBuilder project={project.data?.getProject} />
     </main>
   );
 }

@@ -31,14 +31,20 @@ type Location @model {
   longitude: Float!
 }
 
+type Gallery @model {
+  id: ID!
+  images: [ImageObject] @hasMany
+  project: Project @belongsTo
+}
+
 type Project @model {
   id: ID!
-  oldId: String! @index(name: "projectByOldId")
+  oldId: String
   name: String!
   description: String
   location: Location @hasOne
   locationString: String
-  createdBy: User! @hasOne
+  createdBy: User @hasOne
   lastUpdatedBy: User @hasOne
   featured: Boolean
   link: String!
@@ -48,8 +54,7 @@ type Project @model {
   size: String
   gridOrder: Int
   status: Status!
-  hero: ImageObject @hasOne
-  gallery: [ImageObject] @hasMany
+  gallery: Gallery @hasOne
   department: Department! @belongsTo
   subcategories: [Subcategory] @manyToMany(relationName: "ProjectSubcategories")
   building_type: [BuildingType]
@@ -68,6 +73,8 @@ type ImageObject @model {
   url: String!
   alt: String!
   caption: String
+  gallery: Gallery @belongsTo
+  order: Int
 }
 
 type Subcategory @model {

@@ -148,77 +148,16 @@ export type DeleteLocationInput = {
   id: string,
 };
 
-export type CreateProjectInput = {
+export type CreateGalleryInput = {
   id?: string | null,
-  oldId: string,
-  name: string,
-  description?: string | null,
-  locationString?: string | null,
-  featured?: boolean | null,
-  link: string,
-  quote?: string | null,
-  quoteAttribution?: string | null,
-  size?: string | null,
-  gridOrder?: number | null,
-  status: Status,
-  departmentProjectsId?: string | null,
-  projectLocationId?: string | null,
-  projectCreatedById: string,
-  projectLastUpdatedById?: string | null,
-  projectHeroId?: string | null,
+  galleryProjectId?: string | null,
 };
 
-export enum Status {
-  DRAFT = "DRAFT",
-  PUBLISHED = "PUBLISHED",
-  ARCHIVED = "ARCHIVED",
-}
-
-
-export type ModelProjectConditionInput = {
-  oldId?: ModelStringInput | null,
-  name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  locationString?: ModelStringInput | null,
-  featured?: ModelBooleanInput | null,
-  link?: ModelStringInput | null,
-  quote?: ModelStringInput | null,
-  quoteAttribution?: ModelStringInput | null,
-  size?: ModelStringInput | null,
-  gridOrder?: ModelIntInput | null,
-  status?: ModelStatusInput | null,
-  and?: Array< ModelProjectConditionInput | null > | null,
-  or?: Array< ModelProjectConditionInput | null > | null,
-  not?: ModelProjectConditionInput | null,
-  departmentProjectsId?: ModelIDInput | null,
-  projectLocationId?: ModelIDInput | null,
-  projectCreatedById?: ModelIDInput | null,
-  projectLastUpdatedById?: ModelIDInput | null,
-  projectHeroId?: ModelIDInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelStatusInput = {
-  eq?: Status | null,
-  ne?: Status | null,
+export type ModelGalleryConditionInput = {
+  and?: Array< ModelGalleryConditionInput | null > | null,
+  or?: Array< ModelGalleryConditionInput | null > | null,
+  not?: ModelGalleryConditionInput | null,
+  galleryProjectId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -237,66 +176,20 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type Project = {
-  __typename: "Project",
+export type Gallery = {
+  __typename: "Gallery",
   id: string,
-  oldId: string,
-  name: string,
-  description?: string | null,
-  location?: Location | null,
-  locationString?: string | null,
-  createdBy: User,
-  lastUpdatedBy?: User | null,
-  featured?: boolean | null,
-  link: string,
-  quote?: string | null,
-  quoteAttribution?: string | null,
-  collaborators?: ModelProjectCollaboratorsConnection | null,
-  size?: string | null,
-  gridOrder?: number | null,
-  status: Status,
-  hero?: ImageObject | null,
-  gallery?: ModelImageObjectConnection | null,
-  department: Department,
-  subcategories?: ModelProjectSubcategoriesConnection | null,
-  building_type?: ModelProjectBuildingTypesConnection | null,
-  project_type?: ModelProjectProjectTypesConnection | null,
+  images?: ModelImageObjectConnection | null,
+  project?: Project | null,
   createdAt: string,
   updatedAt: string,
-  departmentProjectsId?: string | null,
-  projectLocationId?: string | null,
-  projectCreatedById: string,
-  projectLastUpdatedById?: string | null,
-  projectHeroId?: string | null,
+  galleryProjectId?: string | null,
 };
 
-export type ModelProjectCollaboratorsConnection = {
-  __typename: "ModelProjectCollaboratorsConnection",
-  items:  Array<ProjectCollaborators | null >,
+export type ModelImageObjectConnection = {
+  __typename: "ModelImageObjectConnection",
+  items:  Array<ImageObject | null >,
   nextToken?: string | null,
-};
-
-export type ProjectCollaborators = {
-  __typename: "ProjectCollaborators",
-  id: string,
-  projectID: string,
-  collaboratorID: string,
-  project: Project,
-  collaborator: Collaborator,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type Collaborator = {
-  __typename: "Collaborator",
-  id: string,
-  name: string,
-  email?: string | null,
-  company?: string | null,
-  title?: string | null,
-  projects?: ModelProjectCollaboratorsConnection | null,
-  createdAt: string,
-  updatedAt: string,
 };
 
 export type ImageObject = {
@@ -305,16 +198,51 @@ export type ImageObject = {
   url: string,
   alt: string,
   caption?: string | null,
+  gallery?: Gallery | null,
+  order?: number | null,
   createdAt: string,
   updatedAt: string,
+  galleryImagesId?: string | null,
+};
+
+export type Project = {
+  __typename: "Project",
+  id: string,
+  oldId?: string | null,
+  name: string,
+  description?: string | null,
+  location?: Location | null,
+  locationString?: string | null,
+  createdBy?: User | null,
+  lastUpdatedBy?: User | null,
+  featured?: boolean | null,
+  link: string,
+  quote?: string | null,
+  quoteAttribution?: string | null,
+  collaborators?: string | null,
+  size?: string | null,
+  gridOrder?: number | null,
+  status: Status,
+  gallery?: Gallery | null,
+  department: Department,
+  subcategories?: ModelProjectSubcategoriesConnection | null,
+  building_type?: ModelProjectBuildingTypesConnection | null,
+  project_type?: ModelProjectProjectTypesConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  departmentProjectsId?: string | null,
+  projectLocationId?: string | null,
+  projectCreatedById?: string | null,
+  projectLastUpdatedById?: string | null,
   projectGalleryId?: string | null,
 };
 
-export type ModelImageObjectConnection = {
-  __typename: "ModelImageObjectConnection",
-  items:  Array<ImageObject | null >,
-  nextToken?: string | null,
-};
+export enum Status {
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  ARCHIVED = "ARCHIVED",
+}
+
 
 export type Department = {
   __typename: "Department",
@@ -409,6 +337,83 @@ export type ProjectType = {
   updatedAt: string,
 };
 
+export type UpdateGalleryInput = {
+  id: string,
+  galleryProjectId?: string | null,
+};
+
+export type DeleteGalleryInput = {
+  id: string,
+};
+
+export type CreateProjectInput = {
+  id?: string | null,
+  oldId?: string | null,
+  name: string,
+  description?: string | null,
+  locationString?: string | null,
+  featured?: boolean | null,
+  link: string,
+  quote?: string | null,
+  quoteAttribution?: string | null,
+  collaborators?: string | null,
+  size?: string | null,
+  gridOrder?: number | null,
+  status: Status,
+  departmentProjectsId?: string | null,
+  projectLocationId?: string | null,
+  projectCreatedById?: string | null,
+  projectLastUpdatedById?: string | null,
+  projectGalleryId?: string | null,
+};
+
+export type ModelProjectConditionInput = {
+  oldId?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  locationString?: ModelStringInput | null,
+  featured?: ModelBooleanInput | null,
+  link?: ModelStringInput | null,
+  quote?: ModelStringInput | null,
+  quoteAttribution?: ModelStringInput | null,
+  collaborators?: ModelStringInput | null,
+  size?: ModelStringInput | null,
+  gridOrder?: ModelIntInput | null,
+  status?: ModelStatusInput | null,
+  and?: Array< ModelProjectConditionInput | null > | null,
+  or?: Array< ModelProjectConditionInput | null > | null,
+  not?: ModelProjectConditionInput | null,
+  departmentProjectsId?: ModelIDInput | null,
+  projectLocationId?: ModelIDInput | null,
+  projectCreatedById?: ModelIDInput | null,
+  projectLastUpdatedById?: ModelIDInput | null,
+  projectGalleryId?: ModelIDInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelStatusInput = {
+  eq?: Status | null,
+  ne?: Status | null,
+};
+
 export type UpdateProjectInput = {
   id: string,
   oldId?: string | null,
@@ -419,47 +424,18 @@ export type UpdateProjectInput = {
   link?: string | null,
   quote?: string | null,
   quoteAttribution?: string | null,
+  collaborators?: string | null,
   size?: string | null,
   gridOrder?: number | null,
   status?: Status | null,
   departmentProjectsId?: string | null,
   projectLocationId?: string | null,
-  projectCreatedById: string,
+  projectCreatedById?: string | null,
   projectLastUpdatedById?: string | null,
-  projectHeroId?: string | null,
+  projectGalleryId?: string | null,
 };
 
 export type DeleteProjectInput = {
-  id: string,
-};
-
-export type CreateCollaboratorInput = {
-  id?: string | null,
-  name: string,
-  email?: string | null,
-  company?: string | null,
-  title?: string | null,
-};
-
-export type ModelCollaboratorConditionInput = {
-  name?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  company?: ModelStringInput | null,
-  title?: ModelStringInput | null,
-  and?: Array< ModelCollaboratorConditionInput | null > | null,
-  or?: Array< ModelCollaboratorConditionInput | null > | null,
-  not?: ModelCollaboratorConditionInput | null,
-};
-
-export type UpdateCollaboratorInput = {
-  id: string,
-  name?: string | null,
-  email?: string | null,
-  company?: string | null,
-  title?: string | null,
-};
-
-export type DeleteCollaboratorInput = {
   id: string,
 };
 
@@ -489,17 +465,19 @@ export type CreateImageObjectInput = {
   url: string,
   alt: string,
   caption?: string | null,
-  projectGalleryId?: string | null,
+  order?: number | null,
+  galleryImagesId?: string | null,
 };
 
 export type ModelImageObjectConditionInput = {
   url?: ModelStringInput | null,
   alt?: ModelStringInput | null,
   caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
   and?: Array< ModelImageObjectConditionInput | null > | null,
   or?: Array< ModelImageObjectConditionInput | null > | null,
   not?: ModelImageObjectConditionInput | null,
-  projectGalleryId?: ModelIDInput | null,
+  galleryImagesId?: ModelIDInput | null,
 };
 
 export type UpdateImageObjectInput = {
@@ -507,7 +485,8 @@ export type UpdateImageObjectInput = {
   url?: string | null,
   alt?: string | null,
   caption?: string | null,
-  projectGalleryId?: string | null,
+  order?: number | null,
+  galleryImagesId?: string | null,
 };
 
 export type DeleteImageObjectInput = {
@@ -574,30 +553,6 @@ export type UpdateProjectTypeInput = {
 };
 
 export type DeleteProjectTypeInput = {
-  id: string,
-};
-
-export type CreateProjectCollaboratorsInput = {
-  id?: string | null,
-  projectID: string,
-  collaboratorID: string,
-};
-
-export type ModelProjectCollaboratorsConditionInput = {
-  projectID?: ModelIDInput | null,
-  collaboratorID?: ModelIDInput | null,
-  and?: Array< ModelProjectCollaboratorsConditionInput | null > | null,
-  or?: Array< ModelProjectCollaboratorsConditionInput | null > | null,
-  not?: ModelProjectCollaboratorsConditionInput | null,
-};
-
-export type UpdateProjectCollaboratorsInput = {
-  id: string,
-  projectID?: string | null,
-  collaboratorID?: string | null,
-};
-
-export type DeleteProjectCollaboratorsInput = {
   id: string,
 };
 
@@ -707,6 +662,20 @@ export type ModelLocationConnection = {
   nextToken?: string | null,
 };
 
+export type ModelGalleryFilterInput = {
+  id?: ModelIDInput | null,
+  and?: Array< ModelGalleryFilterInput | null > | null,
+  or?: Array< ModelGalleryFilterInput | null > | null,
+  not?: ModelGalleryFilterInput | null,
+  galleryProjectId?: ModelIDInput | null,
+};
+
+export type ModelGalleryConnection = {
+  __typename: "ModelGalleryConnection",
+  items:  Array<Gallery | null >,
+  nextToken?: string | null,
+};
+
 export type ModelProjectFilterInput = {
   id?: ModelIDInput | null,
   oldId?: ModelStringInput | null,
@@ -717,6 +686,7 @@ export type ModelProjectFilterInput = {
   link?: ModelStringInput | null,
   quote?: ModelStringInput | null,
   quoteAttribution?: ModelStringInput | null,
+  collaborators?: ModelStringInput | null,
   size?: ModelStringInput | null,
   gridOrder?: ModelIntInput | null,
   status?: ModelStatusInput | null,
@@ -727,24 +697,7 @@ export type ModelProjectFilterInput = {
   projectLocationId?: ModelIDInput | null,
   projectCreatedById?: ModelIDInput | null,
   projectLastUpdatedById?: ModelIDInput | null,
-  projectHeroId?: ModelIDInput | null,
-};
-
-export type ModelCollaboratorFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  company?: ModelStringInput | null,
-  title?: ModelStringInput | null,
-  and?: Array< ModelCollaboratorFilterInput | null > | null,
-  or?: Array< ModelCollaboratorFilterInput | null > | null,
-  not?: ModelCollaboratorFilterInput | null,
-};
-
-export type ModelCollaboratorConnection = {
-  __typename: "ModelCollaboratorConnection",
-  items:  Array<Collaborator | null >,
-  nextToken?: string | null,
+  projectGalleryId?: ModelIDInput | null,
 };
 
 export type ModelDepartmentFilterInput = {
@@ -766,10 +719,11 @@ export type ModelImageObjectFilterInput = {
   url?: ModelStringInput | null,
   alt?: ModelStringInput | null,
   caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
   and?: Array< ModelImageObjectFilterInput | null > | null,
   or?: Array< ModelImageObjectFilterInput | null > | null,
   not?: ModelImageObjectFilterInput | null,
-  projectGalleryId?: ModelIDInput | null,
+  galleryImagesId?: ModelIDInput | null,
 };
 
 export type ModelSubcategoryFilterInput = {
@@ -812,15 +766,6 @@ export type ModelProjectTypeConnection = {
   __typename: "ModelProjectTypeConnection",
   items:  Array<ProjectType | null >,
   nextToken?: string | null,
-};
-
-export type ModelProjectCollaboratorsFilterInput = {
-  id?: ModelIDInput | null,
-  projectID?: ModelIDInput | null,
-  collaboratorID?: ModelIDInput | null,
-  and?: Array< ModelProjectCollaboratorsFilterInput | null > | null,
-  or?: Array< ModelProjectCollaboratorsFilterInput | null > | null,
-  not?: ModelProjectCollaboratorsFilterInput | null,
 };
 
 export type ModelProjectSubcategoriesFilterInput = {
@@ -958,6 +903,330 @@ export type DeleteLocationMutation = {
   } | null,
 };
 
+export type CreateGalleryMutationVariables = {
+  input: CreateGalleryInput,
+  condition?: ModelGalleryConditionInput | null,
+};
+
+export type CreateGalleryMutation = {
+  createGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
+export type UpdateGalleryMutationVariables = {
+  input: UpdateGalleryInput,
+  condition?: ModelGalleryConditionInput | null,
+};
+
+export type UpdateGalleryMutation = {
+  updateGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
+export type DeleteGalleryMutationVariables = {
+  input: DeleteGalleryInput,
+  condition?: ModelGalleryConditionInput | null,
+};
+
+export type DeleteGalleryMutation = {
+  deleteGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
 export type CreateProjectMutationVariables = {
   input: CreateProjectInput,
   condition?: ModelProjectConditionInput | null,
@@ -967,7 +1236,7 @@ export type CreateProjectMutation = {
   createProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -982,7 +1251,7 @@ export type CreateProjectMutation = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -990,7 +1259,7 @@ export type CreateProjectMutation = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -1004,44 +1273,43 @@ export type CreateProjectMutation = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1094,9 +1362,9 @@ export type CreateProjectMutation = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1109,7 +1377,7 @@ export type UpdateProjectMutation = {
   updateProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -1124,7 +1392,7 @@ export type UpdateProjectMutation = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -1132,7 +1400,7 @@ export type UpdateProjectMutation = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -1146,44 +1414,43 @@ export type UpdateProjectMutation = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1236,9 +1503,9 @@ export type UpdateProjectMutation = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1251,7 +1518,7 @@ export type DeleteProjectMutation = {
   deleteProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -1266,7 +1533,7 @@ export type DeleteProjectMutation = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -1274,7 +1541,7 @@ export type DeleteProjectMutation = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -1288,44 +1555,43 @@ export type DeleteProjectMutation = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -1378,99 +1644,9 @@ export type DeleteProjectMutation = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
-  } | null,
-};
-
-export type CreateCollaboratorMutationVariables = {
-  input: CreateCollaboratorInput,
-  condition?: ModelCollaboratorConditionInput | null,
-};
-
-export type CreateCollaboratorMutation = {
-  createCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateCollaboratorMutationVariables = {
-  input: UpdateCollaboratorInput,
-  condition?: ModelCollaboratorConditionInput | null,
-};
-
-export type UpdateCollaboratorMutation = {
-  updateCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteCollaboratorMutationVariables = {
-  input: DeleteCollaboratorInput,
-  condition?: ModelCollaboratorConditionInput | null,
-};
-
-export type DeleteCollaboratorMutation = {
-  deleteCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -1489,7 +1665,7 @@ export type CreateDepartmentMutation = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -1497,6 +1673,7 @@ export type CreateDepartmentMutation = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -1504,9 +1681,9 @@ export type CreateDepartmentMutation = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1530,7 +1707,7 @@ export type UpdateDepartmentMutation = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -1538,6 +1715,7 @@ export type UpdateDepartmentMutation = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -1545,9 +1723,9 @@ export type UpdateDepartmentMutation = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1571,7 +1749,7 @@ export type DeleteDepartmentMutation = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -1579,6 +1757,7 @@ export type DeleteDepartmentMutation = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -1586,9 +1765,9 @@ export type DeleteDepartmentMutation = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1609,9 +1788,44 @@ export type CreateImageObjectMutation = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -1627,9 +1841,44 @@ export type UpdateImageObjectMutation = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -1645,9 +1894,44 @@ export type DeleteImageObjectMutation = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -1894,360 +2178,6 @@ export type DeleteProjectTypeMutation = {
   } | null,
 };
 
-export type CreateProjectCollaboratorsMutationVariables = {
-  input: CreateProjectCollaboratorsInput,
-  condition?: ModelProjectCollaboratorsConditionInput | null,
-};
-
-export type CreateProjectCollaboratorsMutation = {
-  createProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateProjectCollaboratorsMutationVariables = {
-  input: UpdateProjectCollaboratorsInput,
-  condition?: ModelProjectCollaboratorsConditionInput | null,
-};
-
-export type UpdateProjectCollaboratorsMutation = {
-  updateProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteProjectCollaboratorsMutationVariables = {
-  input: DeleteProjectCollaboratorsInput,
-  condition?: ModelProjectCollaboratorsConditionInput | null,
-};
-
-export type DeleteProjectCollaboratorsMutation = {
-  deleteProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type CreateProjectSubcategoriesMutationVariables = {
   input: CreateProjectSubcategoriesInput,
   condition?: ModelProjectSubcategoriesConditionInput | null,
@@ -2262,7 +2192,7 @@ export type CreateProjectSubcategoriesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2277,7 +2207,7 @@ export type CreateProjectSubcategoriesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2285,7 +2215,7 @@ export type CreateProjectSubcategoriesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2299,26 +2229,16 @@ export type CreateProjectSubcategoriesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2343,9 +2263,9 @@ export type CreateProjectSubcategoriesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -2377,7 +2297,7 @@ export type UpdateProjectSubcategoriesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2392,7 +2312,7 @@ export type UpdateProjectSubcategoriesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2400,7 +2320,7 @@ export type UpdateProjectSubcategoriesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2414,26 +2334,16 @@ export type UpdateProjectSubcategoriesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2458,9 +2368,9 @@ export type UpdateProjectSubcategoriesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -2492,7 +2402,7 @@ export type DeleteProjectSubcategoriesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2507,7 +2417,7 @@ export type DeleteProjectSubcategoriesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2515,7 +2425,7 @@ export type DeleteProjectSubcategoriesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2529,26 +2439,16 @@ export type DeleteProjectSubcategoriesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2573,9 +2473,9 @@ export type DeleteProjectSubcategoriesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -2607,7 +2507,7 @@ export type CreateProjectBuildingTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2622,7 +2522,7 @@ export type CreateProjectBuildingTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2630,7 +2530,7 @@ export type CreateProjectBuildingTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2644,26 +2544,16 @@ export type CreateProjectBuildingTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2688,9 +2578,9 @@ export type CreateProjectBuildingTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -2722,7 +2612,7 @@ export type UpdateProjectBuildingTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2737,7 +2627,7 @@ export type UpdateProjectBuildingTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2745,7 +2635,7 @@ export type UpdateProjectBuildingTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2759,26 +2649,16 @@ export type UpdateProjectBuildingTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2803,9 +2683,9 @@ export type UpdateProjectBuildingTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -2837,7 +2717,7 @@ export type DeleteProjectBuildingTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2852,7 +2732,7 @@ export type DeleteProjectBuildingTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2860,7 +2740,7 @@ export type DeleteProjectBuildingTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2874,26 +2754,16 @@ export type DeleteProjectBuildingTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -2918,9 +2788,9 @@ export type DeleteProjectBuildingTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -2952,7 +2822,7 @@ export type CreateProjectProjectTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -2967,7 +2837,7 @@ export type CreateProjectProjectTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -2975,7 +2845,7 @@ export type CreateProjectProjectTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -2989,26 +2859,16 @@ export type CreateProjectProjectTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3033,9 +2893,9 @@ export type CreateProjectProjectTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -3067,7 +2927,7 @@ export type UpdateProjectProjectTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -3082,7 +2942,7 @@ export type UpdateProjectProjectTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -3090,7 +2950,7 @@ export type UpdateProjectProjectTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -3104,26 +2964,16 @@ export type UpdateProjectProjectTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3148,9 +2998,9 @@ export type UpdateProjectProjectTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -3182,7 +3032,7 @@ export type DeleteProjectProjectTypesMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -3197,7 +3047,7 @@ export type DeleteProjectProjectTypesMutation = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -3205,7 +3055,7 @@ export type DeleteProjectProjectTypesMutation = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -3219,26 +3069,16 @@ export type DeleteProjectProjectTypesMutation = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3263,9 +3103,9 @@ export type DeleteProjectProjectTypesMutation = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -3363,6 +3203,160 @@ export type ListLocationsQuery = {
   } | null,
 };
 
+export type GetGalleryQueryVariables = {
+  id: string,
+};
+
+export type GetGalleryQuery = {
+  getGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
+export type ListGalleriesQueryVariables = {
+  filter?: ModelGalleryFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGalleriesQuery = {
+  listGalleries?:  {
+    __typename: "ModelGalleryConnection",
+    items:  Array< {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetProjectQueryVariables = {
   id: string,
 };
@@ -3371,7 +3365,7 @@ export type GetProjectQuery = {
   getProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -3386,7 +3380,7 @@ export type GetProjectQuery = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -3394,7 +3388,7 @@ export type GetProjectQuery = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -3408,44 +3402,43 @@ export type GetProjectQuery = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -3498,9 +3491,9 @@ export type GetProjectQuery = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -3516,7 +3509,7 @@ export type ListProjectsQuery = {
     items:  Array< {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -3531,7 +3524,7 @@ export type ListProjectsQuery = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -3539,7 +3532,7 @@ export type ListProjectsQuery = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -3553,26 +3546,16 @@ export type ListProjectsQuery = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -3597,65 +3580,9 @@ export type ListProjectsQuery = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetCollaboratorQueryVariables = {
-  id: string,
-};
-
-export type GetCollaboratorQuery = {
-  getCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListCollaboratorsQueryVariables = {
-  filter?: ModelCollaboratorFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListCollaboratorsQuery = {
-  listCollaborators?:  {
-    __typename: "ModelCollaboratorConnection",
-    items:  Array< {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
+      projectGalleryId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -3675,7 +3602,7 @@ export type GetDepartmentQuery = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -3683,6 +3610,7 @@ export type GetDepartmentQuery = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -3690,9 +3618,9 @@ export type GetDepartmentQuery = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3736,9 +3664,44 @@ export type GetImageObjectQuery = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -3757,9 +3720,17 @@ export type ListImageObjectsQuery = {
       url: string,
       alt: string,
       caption?: string | null,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      order?: number | null,
       createdAt: string,
       updatedAt: string,
-      projectGalleryId?: string | null,
+      galleryImagesId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -3915,176 +3886,6 @@ export type ListProjectTypesQuery = {
   } | null,
 };
 
-export type GetProjectCollaboratorsQueryVariables = {
-  id: string,
-};
-
-export type GetProjectCollaboratorsQuery = {
-  getProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListProjectCollaboratorsQueryVariables = {
-  filter?: ModelProjectCollaboratorsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListProjectCollaboratorsQuery = {
-  listProjectCollaborators?:  {
-    __typename: "ModelProjectCollaboratorsConnection",
-    items:  Array< {
-      __typename: "ProjectCollaborators",
-      id: string,
-      projectID: string,
-      collaboratorID: string,
-      project:  {
-        __typename: "Project",
-        id: string,
-        oldId: string,
-        name: string,
-        description?: string | null,
-        locationString?: string | null,
-        featured?: boolean | null,
-        link: string,
-        quote?: string | null,
-        quoteAttribution?: string | null,
-        size?: string | null,
-        gridOrder?: number | null,
-        status: Status,
-        createdAt: string,
-        updatedAt: string,
-        departmentProjectsId?: string | null,
-        projectLocationId?: string | null,
-        projectCreatedById: string,
-        projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
-      },
-      collaborator:  {
-        __typename: "Collaborator",
-        id: string,
-        name: string,
-        email?: string | null,
-        company?: string | null,
-        title?: string | null,
-        createdAt: string,
-        updatedAt: string,
-      },
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetProjectSubcategoriesQueryVariables = {
   id: string,
 };
@@ -4098,7 +3899,7 @@ export type GetProjectSubcategoriesQuery = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -4113,7 +3914,7 @@ export type GetProjectSubcategoriesQuery = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -4121,7 +3922,7 @@ export type GetProjectSubcategoriesQuery = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -4135,26 +3936,16 @@ export type GetProjectSubcategoriesQuery = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4179,9 +3970,9 @@ export type GetProjectSubcategoriesQuery = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -4216,7 +4007,7 @@ export type ListProjectSubcategoriesQuery = {
       project:  {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -4224,6 +4015,7 @@ export type ListProjectSubcategoriesQuery = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -4231,9 +4023,9 @@ export type ListProjectSubcategoriesQuery = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       },
       subcategory:  {
         __typename: "Subcategory",
@@ -4262,7 +4054,7 @@ export type GetProjectBuildingTypesQuery = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -4277,7 +4069,7 @@ export type GetProjectBuildingTypesQuery = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -4285,7 +4077,7 @@ export type GetProjectBuildingTypesQuery = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -4299,26 +4091,16 @@ export type GetProjectBuildingTypesQuery = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4343,9 +4125,9 @@ export type GetProjectBuildingTypesQuery = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -4380,7 +4162,7 @@ export type ListProjectBuildingTypesQuery = {
       project:  {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -4388,6 +4170,7 @@ export type ListProjectBuildingTypesQuery = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -4395,9 +4178,9 @@ export type ListProjectBuildingTypesQuery = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       },
       buildingType:  {
         __typename: "BuildingType",
@@ -4426,7 +4209,7 @@ export type GetProjectProjectTypesQuery = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -4441,7 +4224,7 @@ export type GetProjectProjectTypesQuery = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -4449,7 +4232,7 @@ export type GetProjectProjectTypesQuery = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -4463,26 +4246,16 @@ export type GetProjectProjectTypesQuery = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -4507,9 +4280,9 @@ export type GetProjectProjectTypesQuery = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -4544,7 +4317,7 @@ export type ListProjectProjectTypesQuery = {
       project:  {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -4552,6 +4325,7 @@ export type ListProjectProjectTypesQuery = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -4559,9 +4333,9 @@ export type ListProjectProjectTypesQuery = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       },
       projectType:  {
         __typename: "ProjectType",
@@ -4655,11 +4429,320 @@ export type OnDeleteLocationSubscription = {
   } | null,
 };
 
+export type OnCreateGallerySubscription = {
+  onCreateGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
+export type OnUpdateGallerySubscription = {
+  onUpdateGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
+export type OnDeleteGallerySubscription = {
+  onDeleteGallery?:  {
+    __typename: "Gallery",
+    id: string,
+    images?:  {
+      __typename: "ModelImageObjectConnection",
+      items:  Array< {
+        __typename: "ImageObject",
+        id: string,
+        url: string,
+        alt: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentProjectsId?: string | null,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryProjectId?: string | null,
+  } | null,
+};
+
 export type OnCreateProjectSubscription = {
   onCreateProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -4674,7 +4757,7 @@ export type OnCreateProjectSubscription = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -4682,7 +4765,7 @@ export type OnCreateProjectSubscription = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -4696,44 +4779,43 @@ export type OnCreateProjectSubscription = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -4786,9 +4868,9 @@ export type OnCreateProjectSubscription = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -4796,7 +4878,7 @@ export type OnUpdateProjectSubscription = {
   onUpdateProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -4811,7 +4893,7 @@ export type OnUpdateProjectSubscription = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -4819,7 +4901,7 @@ export type OnUpdateProjectSubscription = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -4833,44 +4915,43 @@ export type OnUpdateProjectSubscription = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -4923,9 +5004,9 @@ export type OnUpdateProjectSubscription = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -4933,7 +5014,7 @@ export type OnDeleteProjectSubscription = {
   onDeleteProject?:  {
     __typename: "Project",
     id: string,
-    oldId: string,
+    oldId?: string | null,
     name: string,
     description?: string | null,
     location?:  {
@@ -4948,7 +5029,7 @@ export type OnDeleteProjectSubscription = {
       updatedAt: string,
     } | null,
     locationString?: string | null,
-    createdBy:  {
+    createdBy?:  {
       __typename: "User",
       id: string,
       name: string,
@@ -4956,7 +5037,7 @@ export type OnDeleteProjectSubscription = {
       role: Role,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     lastUpdatedBy?:  {
       __typename: "User",
       id: string,
@@ -4970,44 +5051,43 @@ export type OnDeleteProjectSubscription = {
     link: string,
     quote?: string | null,
     quoteAttribution?: string | null,
-    collaborators?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    collaborators?: string | null,
     size?: string | null,
     gridOrder?: number | null,
     status: Status,
-    hero?:  {
-      __typename: "ImageObject",
-      id: string,
-      url: string,
-      alt: string,
-      caption?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      projectGalleryId?: string | null,
-    } | null,
     gallery?:  {
-      __typename: "ModelImageObjectConnection",
-      items:  Array< {
-        __typename: "ImageObject",
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
         createdAt: string,
         updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
     } | null,
     department:  {
       __typename: "Department",
@@ -5060,84 +5140,9 @@ export type OnDeleteProjectSubscription = {
     updatedAt: string,
     departmentProjectsId?: string | null,
     projectLocationId?: string | null,
-    projectCreatedById: string,
+    projectCreatedById?: string | null,
     projectLastUpdatedById?: string | null,
-    projectHeroId?: string | null,
-  } | null,
-};
-
-export type OnCreateCollaboratorSubscription = {
-  onCreateCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateCollaboratorSubscription = {
-  onUpdateCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteCollaboratorSubscription = {
-  onDeleteCollaborator?:  {
-    __typename: "Collaborator",
-    id: string,
-    name: string,
-    email?: string | null,
-    company?: string | null,
-    title?: string | null,
-    projects?:  {
-      __typename: "ModelProjectCollaboratorsConnection",
-      items:  Array< {
-        __typename: "ProjectCollaborators",
-        id: string,
-        projectID: string,
-        collaboratorID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
+    projectGalleryId?: string | null,
   } | null,
 };
 
@@ -5151,7 +5156,7 @@ export type OnCreateDepartmentSubscription = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -5159,6 +5164,7 @@ export type OnCreateDepartmentSubscription = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -5166,9 +5172,9 @@ export type OnCreateDepartmentSubscription = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -5187,7 +5193,7 @@ export type OnUpdateDepartmentSubscription = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -5195,6 +5201,7 @@ export type OnUpdateDepartmentSubscription = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -5202,9 +5209,9 @@ export type OnUpdateDepartmentSubscription = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -5223,7 +5230,7 @@ export type OnDeleteDepartmentSubscription = {
       items:  Array< {
         __typename: "Project",
         id: string,
-        oldId: string,
+        oldId?: string | null,
         name: string,
         description?: string | null,
         locationString?: string | null,
@@ -5231,6 +5238,7 @@ export type OnDeleteDepartmentSubscription = {
         link: string,
         quote?: string | null,
         quoteAttribution?: string | null,
+        collaborators?: string | null,
         size?: string | null,
         gridOrder?: number | null,
         status: Status,
@@ -5238,9 +5246,9 @@ export type OnDeleteDepartmentSubscription = {
         updatedAt: string,
         departmentProjectsId?: string | null,
         projectLocationId?: string | null,
-        projectCreatedById: string,
+        projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
-        projectHeroId?: string | null,
+        projectGalleryId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -5256,9 +5264,44 @@ export type OnCreateImageObjectSubscription = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -5269,9 +5312,44 @@ export type OnUpdateImageObjectSubscription = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -5282,9 +5360,44 @@ export type OnDeleteImageObjectSubscription = {
     url: string,
     alt: string,
     caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link: string,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        createdAt: string,
+        updatedAt: string,
+        departmentProjectsId?: string | null,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
     createdAt: string,
     updatedAt: string,
-    projectGalleryId?: string | null,
+    galleryImagesId?: string | null,
   } | null,
 };
 
@@ -5486,345 +5599,6 @@ export type OnDeleteProjectTypeSubscription = {
   } | null,
 };
 
-export type OnCreateProjectCollaboratorsSubscription = {
-  onCreateProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateProjectCollaboratorsSubscription = {
-  onUpdateProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteProjectCollaboratorsSubscription = {
-  onDeleteProjectCollaborators?:  {
-    __typename: "ProjectCollaborators",
-    id: string,
-    projectID: string,
-    collaboratorID: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      oldId: string,
-      name: string,
-      description?: string | null,
-      location?:  {
-        __typename: "Location",
-        id: string,
-        name?: string | null,
-        address?: string | null,
-        description?: string | null,
-        latitude: number,
-        longitude: number,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      locationString?: string | null,
-      createdBy:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      },
-      lastUpdatedBy?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        email: string,
-        role: Role,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      featured?: boolean | null,
-      link: string,
-      quote?: string | null,
-      quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      size?: string | null,
-      gridOrder?: number | null,
-      status: Status,
-      hero?:  {
-        __typename: "ImageObject",
-        id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
-      } | null,
-      department:  {
-        __typename: "Department",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-      },
-      subcategories?:  {
-        __typename: "ModelProjectSubcategoriesConnection",
-        nextToken?: string | null,
-      } | null,
-      building_type?:  {
-        __typename: "ModelProjectBuildingTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      project_type?:  {
-        __typename: "ModelProjectProjectTypesConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      departmentProjectsId?: string | null,
-      projectLocationId?: string | null,
-      projectCreatedById: string,
-      projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
-    },
-    collaborator:  {
-      __typename: "Collaborator",
-      id: string,
-      name: string,
-      email?: string | null,
-      company?: string | null,
-      title?: string | null,
-      projects?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type OnCreateProjectSubcategoriesSubscription = {
   onCreateProjectSubcategories?:  {
     __typename: "ProjectSubcategories",
@@ -5834,7 +5608,7 @@ export type OnCreateProjectSubcategoriesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -5849,7 +5623,7 @@ export type OnCreateProjectSubcategoriesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -5857,7 +5631,7 @@ export type OnCreateProjectSubcategoriesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -5871,26 +5645,16 @@ export type OnCreateProjectSubcategoriesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -5915,9 +5679,9 @@ export type OnCreateProjectSubcategoriesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -5944,7 +5708,7 @@ export type OnUpdateProjectSubcategoriesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -5959,7 +5723,7 @@ export type OnUpdateProjectSubcategoriesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -5967,7 +5731,7 @@ export type OnUpdateProjectSubcategoriesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -5981,26 +5745,16 @@ export type OnUpdateProjectSubcategoriesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6025,9 +5779,9 @@ export type OnUpdateProjectSubcategoriesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -6054,7 +5808,7 @@ export type OnDeleteProjectSubcategoriesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6069,7 +5823,7 @@ export type OnDeleteProjectSubcategoriesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6077,7 +5831,7 @@ export type OnDeleteProjectSubcategoriesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6091,26 +5845,16 @@ export type OnDeleteProjectSubcategoriesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6135,9 +5879,9 @@ export type OnDeleteProjectSubcategoriesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     subcategory:  {
       __typename: "Subcategory",
@@ -6164,7 +5908,7 @@ export type OnCreateProjectBuildingTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6179,7 +5923,7 @@ export type OnCreateProjectBuildingTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6187,7 +5931,7 @@ export type OnCreateProjectBuildingTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6201,26 +5945,16 @@ export type OnCreateProjectBuildingTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6245,9 +5979,9 @@ export type OnCreateProjectBuildingTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -6274,7 +6008,7 @@ export type OnUpdateProjectBuildingTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6289,7 +6023,7 @@ export type OnUpdateProjectBuildingTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6297,7 +6031,7 @@ export type OnUpdateProjectBuildingTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6311,26 +6045,16 @@ export type OnUpdateProjectBuildingTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6355,9 +6079,9 @@ export type OnUpdateProjectBuildingTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -6384,7 +6108,7 @@ export type OnDeleteProjectBuildingTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6399,7 +6123,7 @@ export type OnDeleteProjectBuildingTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6407,7 +6131,7 @@ export type OnDeleteProjectBuildingTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6421,26 +6145,16 @@ export type OnDeleteProjectBuildingTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6465,9 +6179,9 @@ export type OnDeleteProjectBuildingTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     buildingType:  {
       __typename: "BuildingType",
@@ -6494,7 +6208,7 @@ export type OnCreateProjectProjectTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6509,7 +6223,7 @@ export type OnCreateProjectProjectTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6517,7 +6231,7 @@ export type OnCreateProjectProjectTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6531,26 +6245,16 @@ export type OnCreateProjectProjectTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6575,9 +6279,9 @@ export type OnCreateProjectProjectTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -6604,7 +6308,7 @@ export type OnUpdateProjectProjectTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6619,7 +6323,7 @@ export type OnUpdateProjectProjectTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6627,7 +6331,7 @@ export type OnUpdateProjectProjectTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6641,26 +6345,16 @@ export type OnUpdateProjectProjectTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6685,9 +6379,9 @@ export type OnUpdateProjectProjectTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",
@@ -6714,7 +6408,7 @@ export type OnDeleteProjectProjectTypesSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      oldId: string,
+      oldId?: string | null,
       name: string,
       description?: string | null,
       location?:  {
@@ -6729,7 +6423,7 @@ export type OnDeleteProjectProjectTypesSubscription = {
         updatedAt: string,
       } | null,
       locationString?: string | null,
-      createdBy:  {
+      createdBy?:  {
         __typename: "User",
         id: string,
         name: string,
@@ -6737,7 +6431,7 @@ export type OnDeleteProjectProjectTypesSubscription = {
         role: Role,
         createdAt: string,
         updatedAt: string,
-      },
+      } | null,
       lastUpdatedBy?:  {
         __typename: "User",
         id: string,
@@ -6751,26 +6445,16 @@ export type OnDeleteProjectProjectTypesSubscription = {
       link: string,
       quote?: string | null,
       quoteAttribution?: string | null,
-      collaborators?:  {
-        __typename: "ModelProjectCollaboratorsConnection",
-        nextToken?: string | null,
-      } | null,
+      collaborators?: string | null,
       size?: string | null,
       gridOrder?: number | null,
       status: Status,
-      hero?:  {
-        __typename: "ImageObject",
+      gallery?:  {
+        __typename: "Gallery",
         id: string,
-        url: string,
-        alt: string,
-        caption?: string | null,
         createdAt: string,
         updatedAt: string,
-        projectGalleryId?: string | null,
-      } | null,
-      gallery?:  {
-        __typename: "ModelImageObjectConnection",
-        nextToken?: string | null,
+        galleryProjectId?: string | null,
       } | null,
       department:  {
         __typename: "Department",
@@ -6795,9 +6479,9 @@ export type OnDeleteProjectProjectTypesSubscription = {
       updatedAt: string,
       departmentProjectsId?: string | null,
       projectLocationId?: string | null,
-      projectCreatedById: string,
+      projectCreatedById?: string | null,
       projectLastUpdatedById?: string | null,
-      projectHeroId?: string | null,
+      projectGalleryId?: string | null,
     },
     projectType:  {
       __typename: "ProjectType",

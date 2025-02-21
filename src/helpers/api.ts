@@ -5,14 +5,22 @@ import axios from 'axios';
 import {
   listProjects,
   listUsers,
-  getProject,
   listSubcategories,
   listProjectTypes,
   listBuildingTypes,
+  getGallery,
 } from '../graphql/queries';
-import { createLocation } from '../graphql/mutations';
+import {
+  createLocation,
+  // updateProject,
+  // createGallery,
+  // createImageObject,
+} from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import { Project, Subcategory, ProjectType, BuildingType } from '@/types';
+// import * as doProjects from '../data/do-projects.json';
+// import * as images from '../data/images.json';
+
 Amplify.configure(awsconfig, { ssr: true });
 
 const client = generateClient({
@@ -368,7 +376,85 @@ export const listAllProjects = async () => {
 
 export const getProjectById = async (id: string) => {
   const project = await client.graphql({
-    query: getProject,
+    query: `
+      query GetProject($id: ID!) {
+        getProject(id: $id) {
+          building_type {
+            items {
+              buildingType {
+                id
+                name
+              }
+            }
+          }
+          collaborators
+          createdAt
+          createdBy {
+            email
+            id
+            name
+          }
+          department {
+            name
+            id
+          }
+          description
+          featured
+          gallery {
+            id
+            images {
+              items {
+                id
+                order
+                url
+                alt
+                caption
+              }
+            }
+          }
+          gridOrder
+          id
+          lastUpdatedBy {
+            email
+            id
+            name
+          }
+          link
+          location {
+            address
+            description
+            id
+            latitude
+            longitude
+            name
+          }
+          locationString
+          name
+          oldId
+          project_type {
+            items {
+              projectType {
+                id
+                name
+              }
+            }
+          }
+          quote
+          quoteAttribution
+          size
+          status
+          subcategories {
+            items {
+              subcategory {
+                name
+                id
+              }
+            }
+          }
+          updatedAt
+        }
+      }
+    `,
     variables: { id },
   });
   return project;
@@ -402,5 +488,216 @@ export const getAllDOProjects = async () => {
 
   const allProjects = res.data.data;
 
+  // Create a blob and download it
+  const blob = new Blob([JSON.stringify(allProjects, null, 2)], {
+    type: 'application/json',
+  });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'do-projects.json';
+  a.click();
+  window.URL.revokeObjectURL(url);
+
   return allProjects;
+};
+
+// export const pullAllImagesIntoGalleries = async () => {
+//   // Safely access the projects data, handling both direct and default exports
+//   const projects = Array.isArray(doProjects) ? doProjects : doProjects.default;
+//   if (!projects) {
+//     throw new Error('No projects data found');
+//   }
+
+//   const transformedProjects = projects.map((project) => {
+//     const gallery = [];
+
+//     // Add hero image if it exists
+//     if (project.attributes.hero?.data?.attributes) {
+//       gallery.push({
+//         name: project.attributes.hero.data.attributes.name || '',
+//         alt: project.attributes.hero.data.attributes.alternativeText || '',
+//         caption: project.attributes.hero.data.attributes.caption || '',
+//         url: project.attributes.hero.data.attributes.url || '',
+//         order: 0,
+//       });
+//     }
+
+//     // Add gallery images if they exist
+//     if (project.attributes.gallery?.data) {
+//       project.attributes.gallery.data.forEach((item, index) => {
+//         if (item.attributes) {
+//           gallery.push({
+//             name: item.attributes.name || '',
+//             alt: item.attributes.alternativeText || '',
+//             caption: item.attributes.caption || '',
+//             url: item.attributes.url || '',
+//             order: index + 1,
+//           });
+//         }
+//       });
+//     }
+
+//     // Process above_quote images
+//     if (project.attributes.above_quote) {
+//       [
+//         'full_width',
+//         'vertical_left',
+//         'horizontal_right',
+//         'horizontal_left',
+//         'vertical_right',
+//       ].forEach((type, index) => {
+//         const component = project.attributes.above_quote.find((item) =>
+//           item.__component?.includes(type)
+//         );
+//         if (component?.image?.data?.attributes) {
+//           gallery.push({
+//             name: component.image.data.attributes.name || '',
+//             alt: component.image.data.attributes.alternativeText || '',
+//             caption: component.image.data.attributes.caption || '',
+//             url: component.image.data.attributes.url || '',
+//             order: index + 1,
+//           });
+//         }
+//       });
+//     }
+
+//     // Process below_text images
+//     if (project.attributes.below_text) {
+//       [
+//         'full_width',
+//         'vertical_left',
+//         'horizontal_right',
+//         'horizontal_left',
+//         'vertical_right',
+//       ].forEach((type, index) => {
+//         const component = project.attributes.below_text.find((item) =>
+//           item.__component?.includes(type)
+//         );
+//         if (component?.image?.data?.attributes) {
+//           gallery.push({
+//             name: component.image.data.attributes.name || '',
+//             alt: component.image.data.attributes.alternativeText || '',
+//             caption: component.image.data.attributes.caption || '',
+//             url: component.image.data.attributes.url || '',
+//             order: index + 1,
+//           });
+//         }
+//       });
+//     }
+
+//     return {
+//       oldId: project.id,
+//       gallery,
+//     };
+//   });
+
+//   // Create a blob and download it
+//   const blob = new Blob([JSON.stringify(transformedProjects, null, 2)], {
+//     type: 'application/json',
+//   });
+//   const url = window.URL.createObjectURL(blob);
+//   const a = document.createElement('a');
+//   a.href = url;
+//   a.download = 'transformed-projects.json';
+//   a.click();
+//   window.URL.revokeObjectURL(url);
+
+//   return transformedProjects;
+// };
+
+// export const updateProjectGalleries = async () => {
+//   const projects = await listAllProjects();
+
+//   for (const project of projects) {
+//     try {
+//       const galleryResponse = await client.graphql({
+//         query: createGallery,
+//         variables: {
+//           input: {
+//             galleryProjectId: project.id,
+//           },
+//         },
+//       });
+
+//       console.log('Gallery creation response:', galleryResponse); // Debug log
+
+//       if (!galleryResponse?.data?.createGallery?.id) {
+//         console.error(`No gallery ID returned for project ${project.name}`);
+//         continue;
+//       }
+
+//       await client.graphql({
+//         query: updateProject,
+//         variables: {
+//           input: {
+//             id: project.id,
+//             projectGalleryId: galleryResponse.data.createGallery.id,
+//           },
+//         },
+//       });
+
+//       console.log(`Successfully updated project: ${project.name}`);
+//     } catch (error) {
+//       console.error(`Error processing project ${project.name}:`, error);
+//     }
+//   }
+// };
+
+// export const putAllImagesIntoGalleries = async () => {
+//   const projects = await listAllProjects();
+
+//   for (const project of projects) {
+//     try {
+//       const matchingImageData = images.find(
+//         (img) => img.oldId === Number(project.oldId)
+//       );
+
+//       if (!matchingImageData || !project.projectGalleryId) {
+//         console.log(
+//           `Skipping project ${project.name} (oldId: ${project.oldId}): No matching image data or gallery ID`
+//         );
+//         continue;
+//       }
+
+//       console.log(
+//         `Processing ${matchingImageData.gallery.length} images for project: ${project.name}`
+//       );
+
+//       // Create image objects for each image in the gallery
+//       for (const image of matchingImageData.gallery) {
+//         try {
+//           await client.graphql({
+//             query: createImageObject,
+//             variables: {
+//               input: {
+//                 url: image.url,
+//                 alt: image.alt || '',
+//                 caption: image.caption || '',
+//                 galleryImagesId: project.projectGalleryId,
+//                 order: image.order,
+//               },
+//             },
+//           });
+
+//           console.log(`Created image: ${image.url}`);
+//         } catch (imageError) {
+//           console.error(
+//             `Error creating image for project ${project.name}:`,
+//             imageError
+//           );
+//         }
+//       }
+//     } catch (error) {
+//       console.error(`Error processing project ${project.name}:`, error);
+//     }
+//   }
+// };
+
+export const getProjectGallery = async (galleryId: string) => {
+  const gallery = await client.graphql({
+    query: getGallery,
+    variables: { id: galleryId },
+  });
+  return gallery;
 };

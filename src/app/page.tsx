@@ -17,7 +17,6 @@ export default function Home() {
       const res = await listAllProjects();
 
       setProjects(res);
-      console.log(res);
     };
     getProjects();
   }, []);
@@ -91,18 +90,6 @@ export default function Home() {
     setActiveFilter(activeFilter === department ? '' : department);
     setCurrentPage(1);
   };
-
-  // const createBulkProjects = async () => {
-  //   try {
-  //     for (const project of projects) {
-  //       await createNewProject(project);
-  //       console.log(`Created project: ${project.name}`);
-  //     }
-  //     console.log('All projects created successfully');
-  //   } catch (error) {
-  //     console.error('Error creating projects:', error);
-  //   }
-  // };
 
   return (
     <div className='flex flex-col'>
@@ -183,8 +170,9 @@ export default function Home() {
 
         <div className='grid grid-cols-12 gap-10 border-b-2 pb-2'>
           <div className='font-brand-bold text-xs col-span-1'>ID</div>
-          <div className='font-brand-bold text-xs col-span-1'>Created</div>
+
           <div className='font-brand-bold text-xs col-span-5'>Details</div>
+          <div className='font-brand-bold text-xs col-span-1'>Gallery</div>
           <div className='font-brand-bold text-xs col-span-2'>Size</div>
           <div className='font-brand-bold text-xs col-span-1'>Updated</div>
           <div className='font-brand-bold text-xs col-span-1'>Featured</div>
@@ -192,9 +180,11 @@ export default function Home() {
         </div>
         <div className='flex flex-col gap-2 divide-y divide-gray-300'>
           {currentProjects.length > 0 &&
-            currentProjects.map((project: Project) => (
-              <ProjectItem key={project.id} project={project} />
-            ))}
+            currentProjects
+              .sort((a, b) => a.oldId.localeCompare(b.oldId))
+              .map((project: Project) => (
+                <ProjectItem key={project.id} project={project} />
+              ))}
         </div>
         <div className='flex justify-center mt-4'>
           {Array.from({ length: totalPages }, (_, index) => (
