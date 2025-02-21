@@ -9,6 +9,7 @@ import {
   listProjectTypes,
   listBuildingTypes,
   getGallery,
+  listLocations,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -700,4 +701,45 @@ export const getProjectGallery = async (galleryId: string) => {
     variables: { id: galleryId },
   });
   return gallery;
+};
+
+export const listProjectsWithLocations = async () => {
+  const customQuery = `
+    query MyQuery {
+  listProjects(limit: 300) {
+    items {
+      department {
+        name
+      }
+      gallery {
+        images(limit: 1) {
+          items {
+            url
+          }
+        }
+      }
+      locationString
+      name
+      size
+      status
+      description
+      location {
+        address
+            id
+            latitude
+            longitude
+            name
+          }
+        }
+      }
+    }
+  `;
+
+  const locations = (await client.graphql({
+    query: customQuery,
+    variables: {
+      limit: 300,
+    },
+  })) as { data: { listProjects: { items: any[] } } };
+  return locations.data.listProjects.items;
 };

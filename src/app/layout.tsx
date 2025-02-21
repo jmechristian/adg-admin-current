@@ -15,13 +15,17 @@ import useAuthStore from '@/store/useAuthStore';
 import './globals.css';
 
 const navigation = [
-  { name: 'Projects', href: '#', current: true },
-  { name: 'Architecture', href: '#', current: false },
-  { name: 'Commercial Interiors', href: '#', current: false },
-  { name: 'Branding', href: '#', current: false },
-  { name: 'Map', href: '#', current: false },
-  { name: 'Templates', href: '#', current: false },
-  { name: 'Media', href: '#', current: false },
+  { name: 'Projects', href: '/', current: true },
+  { name: 'Architecture', href: '/architecture', current: false },
+  {
+    name: 'Commercial Interiors',
+    href: '/commercial-interiors',
+    current: false,
+  },
+  { name: 'Branding', href: '/branding', current: false },
+  { name: 'Map', href: '/map', current: false },
+  { name: 'Templates', href: '/templates', current: false },
+  { name: 'Media', href: '/media', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
