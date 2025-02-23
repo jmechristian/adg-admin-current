@@ -66,13 +66,17 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
           <HeadingHero
             title={editedProject.name}
             location={editedProject.locationString || ''}
-            hero={
-              editedProject.gallery.images.items[0] || {
-                id: '9050e5e5-a95b-4020-87c5-03703c2b4400',
-                url: 'https://placehold.co/1152x775',
-                alt: 'Hero Image',
-              }
-            }
+            hero={{
+              id:
+                editedProject.gallery.images.items[0]?.id ??
+                '9050e5e5-a95b-4020-87c5-03703c2b4400',
+              url:
+                editedProject.gallery.images.items[0]?.url ??
+                'https://placehold.co/1152x775',
+              alt: editedProject.gallery.images.items[0]?.alt ?? 'Hero Image',
+              caption:
+                editedProject.gallery.images.items[0]?.caption ?? 'Hero Image',
+            }}
           />
           <TwoColIntro
             id={editedProject.id}
