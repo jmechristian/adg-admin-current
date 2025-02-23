@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 
 const ProjectItem = ({ project }: { project: Project }) => {
   const [gallery, setGallery] = useState<Gallery | null>(null);
+  const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,15 +22,20 @@ const ProjectItem = ({ project }: { project: Project }) => {
   }, [project.gallery.id]);
 
   const handleClick = () => {
+    setIsClicked(true);
     const catSlug = project.department.name.toLowerCase().replace(/\s+/g, '-');
 
+    // Reset the click state after a brief delay
+    setTimeout(() => setIsClicked(false), 200);
     router.push(`/${catSlug}/${project.id}`);
   };
 
   return (
     <div
       key={project.id}
-      className='grid grid-cols-12 gap-10 py-4 items-center w-full relative cursor-pointer hover:bg-gray-100'
+      className={`grid grid-cols-12 gap-10 py-4 items-center w-full relative cursor-pointer hover:bg-gray-100 transition-colors duration-200 ${
+        isClicked ? 'bg-gray-200' : ''
+      }`}
       onClick={handleClick}
     >
       <div className='col-span-1 text-xs'>{project.oldId}</div>
