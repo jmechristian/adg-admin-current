@@ -35,7 +35,7 @@ export interface GalleryResponse {
 export interface Gallery {
   id: string;
   images: {
-    items: ImageObject[];
+    items: Image[];
   };
   project: Project;
 }
@@ -97,7 +97,6 @@ export interface Project {
 export interface Department {
   id: string;
   name: string;
-  projects?: Project[];
 }
 
 export interface ImageObject {
@@ -123,4 +122,19 @@ export interface ProjectType {
   id: string;
   name: string;
   projects?: Project[];
+}
+
+export interface Image {
+  id: string;
+  url: string;
+  alt?: string;
+  caption?: string;
+  order: number;
+}
+
+export interface DepartmentFilters {
+  architecture: boolean;
+  'commercial interiors': boolean;
+  branding: boolean;
+  akres: boolean;
 }

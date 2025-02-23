@@ -11,11 +11,12 @@ import {
 } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import useAuthStore from '@/store/useAuthStore';
+import { usePathname } from 'next/navigation';
 
 import './globals.css';
 
 const navigation = [
-  { name: 'Projects', href: '/', current: true },
+  { name: 'Projects', href: '/', current: false },
   { name: 'Architecture', href: '/architecture', current: false },
   {
     name: 'Commercial Interiors',
@@ -25,7 +26,7 @@ const navigation = [
   { name: 'Branding', href: '/branding', current: false },
   { name: 'Map', href: '/map', current: false },
   { name: 'Templates', href: '/templates', current: false },
-  { name: 'Media', href: '/media', current: false },
+  { name: 'Gallery', href: '/media', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -45,6 +46,12 @@ export default function RootLayout({
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   console.log(isAuthenticated);
   const user = useAuthStore((state) => state.user);
+  const pathname = usePathname();
+
+  const currentNavigation = navigation.map((item) => ({
+    ...item,
+    current: pathname === item.href,
+  }));
 
   return (
     <html lang='en'>
@@ -67,7 +74,7 @@ export default function RootLayout({
                 </div>
                 <div className='hidden md:!block'>
                   <div className='ml-10 flex gap-1'>
-                    {navigation.map((item) => (
+                    {currentNavigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -146,7 +153,7 @@ export default function RootLayout({
 
             <DisclosurePanel className='md:!hidden'>
               <div className='space-y-1 px-2 pb-3 pt-2 sm:px-3'>
-                {navigation.map((item) => (
+                {currentNavigation.map((item) => (
                   <DisclosureButton
                     key={item.name}
                     as='a'

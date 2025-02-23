@@ -12,6 +12,10 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         brand: '#d50057',
+        architecture: 'rgb(199 210 254)',
+        commercialInteriors: '#bef264',
+        branding: '#bef26499',
+        akres: '#bef26499',
       },
       fontFamily: {
         'brand-book': 'Gotham Book',

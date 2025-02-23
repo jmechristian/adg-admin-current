@@ -10,6 +10,7 @@ import {
   listBuildingTypes,
   getGallery,
   listLocations,
+  listGalleries,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -18,7 +19,13 @@ import {
   // createImageObject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
-import { Project, Subcategory, ProjectType, BuildingType } from '@/types';
+import {
+  Project,
+  Subcategory,
+  ProjectType,
+  BuildingType,
+  Gallery,
+} from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
 
@@ -742,4 +749,41 @@ export const listProjectsWithLocations = async () => {
     },
   })) as { data: { listProjects: { items: any[] } } };
   return locations.data.listProjects.items;
+};
+
+export const getGalleries = async () => {
+  const customQuery = `
+    query ListGalleries {
+      listGalleries(limit: 500) {
+        items {
+          id
+          project {
+            id
+            name
+            department {
+              id
+              name
+            }
+          }
+          images {
+            items {
+              id
+              url
+              alt
+              caption
+              order
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const galleries = (await client.graphql({
+    query: customQuery,
+    variables: {
+      limit: 500,
+    },
+  })) as GraphQLResult<{ listGalleries: { items: Gallery[] } }>;
+  return galleries.data.listGalleries.items;
 };
