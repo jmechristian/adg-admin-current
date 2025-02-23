@@ -4,9 +4,14 @@ import { MdHome } from 'react-icons/md';
 interface AkresIconProps {
   active?: boolean;
   onClick?: () => void;
+  small?: boolean;
 }
 
-const AkresIcon = ({ active = false, onClick }: AkresIconProps) => {
+const AkresIcon = ({
+  active = false,
+  onClick,
+  small = false,
+}: AkresIconProps) => {
   return (
     <div className='relative group' onClick={onClick}>
       <div
@@ -16,10 +21,12 @@ const AkresIcon = ({ active = false, onClick }: AkresIconProps) => {
         AkRes
       </div>
       <div
-        className={`w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center cursor-pointer
+        className={`${
+          small ? 'w-7 h-7' : 'w-10 h-10'
+        } bg-amber-500 rounded-full flex items-center justify-center cursor-pointer
         ${!active ? 'opacity-50' : ''} transition-opacity`}
       >
-        <MdHome className='text-white/70 text-3xl' />
+        <MdHome className={`${small ? 'text-xl' : 'text-3xl'} text-white/70`} />
       </div>
     </div>
   );

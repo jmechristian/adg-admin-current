@@ -4,6 +4,10 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Map, { MapRef, Marker } from 'react-map-gl/mapbox';
 import { listProjectsWithLocations } from '@/helpers/api';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import ArchitectureIcon from '@/components/shared/ArchitectureIcon';
+import BrandingIcon from '@/components/shared/BrandingIcon';
+import AkresIcon from '@/components/shared/AkresIcon';
+import InteriorsIcon from '@/components/shared/InteriorsIcon';
 
 interface ProjectWithLocation {
   department: {
@@ -122,6 +126,12 @@ const MapPage = () => {
     useState<ProjectWithLocation | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilters, setActiveFilters] = useState<string[]>([
+    'akres',
+    'commercial interiors',
+    'architecture',
+    'branding',
+  ]);
 
   const initialView = {
     longitude: -77.0307193335218,
@@ -143,22 +153,49 @@ const MapPage = () => {
     getLocations();
   }, []);
 
-  const getMarkerStyle = (department: string) => {
+  const getMarkerIcon = (department: string) => {
     switch (department.toLowerCase()) {
       case 'akres':
-        return 'bg-blue-500';
+        return <AkresIcon active small />;
       case 'commercial interiors':
-        return 'bg-pink-800';
+        return <InteriorsIcon active small />;
       case 'architecture':
-        return 'bg-brand';
+        return <ArchitectureIcon active small />;
+      case 'branding':
+        return <BrandingIcon active small />;
       default:
-        return 'bg-gray-500';
+        return <ArchitectureIcon active small />;
     }
   };
 
+  const toggleFilter = (department: string) => {
+    setActiveFilters((prev) =>
+      prev.includes(department.toLowerCase())
+        ? prev.filter((f) => f !== department.toLowerCase())
+        : [...prev, department.toLowerCase()]
+    );
+  };
+
+  const filteredLocations = useMemo(() => {
+    let filtered = locations;
+
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (location) =>
+          location.name.toLowerCase().includes(query) ||
+          location.location.address.toLowerCase().includes(query)
+      );
+    }
+
+    return filtered.filter((location) =>
+      activeFilters.includes(location.department.name.toLowerCase())
+    );
+  }, [locations, searchQuery, activeFilters]);
+
   const markers = useMemo(() => {
-    return locations.map((location) => {
-      const colorClass = getMarkerStyle(location.department.name);
+    return filteredLocations.map((location) => {
+      const icon = getMarkerIcon(location.department.name);
 
       return (
         <Marker
@@ -166,67 +203,34 @@ const MapPage = () => {
           longitude={location.location.longitude}
           latitude={location.location.latitude}
         >
-          <div className='relative cursor-pointer'>
-            {/* Custom pin shape using CSS */}
-            <div
-              className={`
-              w-6 h-6 
-              ${colorClass}
-              rounded-full 
-              flex items-center justify-center
-              shadow-lg
-              before:content-[''] 
-              before:absolute 
-              before:w-4 
-              before:h-4 
-              before:rotate-45 
-              before:${colorClass}
-              before:-bottom-1 
-              before:left-1
-            `}
-              onClick={(e) => {
-                // If we let the click event propagates to the map, it will immediately close the popup
-                // with `closeOnClick: true`
-                e.stopPropagation();
-                setSelectedLocation(location);
-                mapRef.current?.flyTo({
-                  center: [
-                    location.location.longitude,
-                    location.location.latitude,
-                  ],
-                  zoom: 16,
-                  duration: 1500,
-                  offset: [0, 100],
-                  pitch: 70,
-                  bearing: 0,
-                  essential: true,
-                  curve: 0.7,
-                  easing: function (t) {
-                    return 1 - Math.pow(1 - t, 5);
-                  },
-                });
-              }}
-            >
-              {/* Optional: Add an icon or text inside the marker */}
-              <span className='text-white text-xs'>
-                {location.department.name.charAt(0)}
-              </span>
-            </div>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedLocation(location);
+              mapRef.current?.flyTo({
+                center: [
+                  location.location.longitude,
+                  location.location.latitude,
+                ],
+                zoom: 16,
+                duration: 1500,
+                offset: [0, 100],
+                pitch: 70,
+                bearing: 0,
+                essential: true,
+                curve: 0.7,
+                easing: function (t) {
+                  return 1 - Math.pow(1 - t, 5);
+                },
+              });
+            }}
+          >
+            {icon}
           </div>
         </Marker>
       );
     });
-  }, [locations]);
-
-  const filteredLocations = useMemo(() => {
-    if (!searchQuery) return locations;
-    const query = searchQuery.toLowerCase();
-    return locations.filter(
-      (location) =>
-        location.name.toLowerCase().includes(query) ||
-        location.location.address.toLowerCase().includes(query)
-    );
-  }, [locations, searchQuery]);
+  }, [filteredLocations]);
 
   const LocationModal = ({
     location,
@@ -320,22 +324,54 @@ const MapPage = () => {
               />
             </svg>
           </button>
+          <div className='w-fit flex items-center gap-3 absolute top-4 right-4 z-10'>
+            <div className=' flex gap-1.5'>
+              <div
+                onClick={() => toggleFilter('Akres')}
+                className='cursor-pointer'
+              >
+                <AkresIcon active={activeFilters.includes('akres')} />
+              </div>
+              <div
+                onClick={() => toggleFilter('Commercial Interiors')}
+                className='cursor-pointer'
+              >
+                <InteriorsIcon
+                  active={activeFilters.includes('commercial interiors')}
+                />
+              </div>
+              <div
+                onClick={() => toggleFilter('Architecture')}
+                className='cursor-pointer'
+              >
+                <ArchitectureIcon
+                  active={activeFilters.includes('architecture')}
+                />
+              </div>
+              <div
+                onClick={() => toggleFilter('Branding')}
+                className='cursor-pointer'
+              >
+                <BrandingIcon active={activeFilters.includes('branding')} />
+              </div>
+            </div>
+            <button
+              className=' bg-white px-4 py-2 rounded-md shadow-md hover:bg-gray-100'
+              onClick={() => {
+                mapRef.current?.flyTo({
+                  center: [initialView.longitude, initialView.latitude],
+                  zoom: initialView.zoom,
+                  pitch: initialView.pitch,
+                  duration: 1500,
+                  essential: true,
+                });
+                setViewState(initialView);
+              }}
+            >
+              Reset View
+            </button>
+          </div>
           {markers}
-          <button
-            className='absolute top-4 right-4 bg-white px-4 py-2 rounded-md shadow-md hover:bg-gray-100'
-            onClick={() => {
-              mapRef.current?.flyTo({
-                center: [initialView.longitude, initialView.latitude],
-                zoom: initialView.zoom,
-                pitch: initialView.pitch,
-                duration: 1500,
-                essential: true,
-              });
-              setViewState(initialView);
-            }}
-          >
-            Reset View
-          </button>
         </Map>
         <LocationSidebar
           isSidebarOpen={isSidebarOpen}

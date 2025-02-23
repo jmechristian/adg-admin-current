@@ -4,9 +4,14 @@ import { MdChair } from 'react-icons/md';
 interface InteriorsIconProps {
   active?: boolean;
   onClick?: () => void;
+  small?: boolean;
 }
 
-const InteriorsIcon = ({ active = false, onClick }: InteriorsIconProps) => {
+const InteriorsIcon = ({
+  active = false,
+  onClick,
+  small = false,
+}: InteriorsIconProps) => {
   return (
     <div className='relative group' onClick={onClick}>
       <div
@@ -16,10 +21,14 @@ const InteriorsIcon = ({ active = false, onClick }: InteriorsIconProps) => {
         Interiors
       </div>
       <div
-        className={`w-10 h-10 bg-lime-600 rounded-full flex items-center justify-center cursor-pointer
+        className={`${
+          small ? 'w-7 h-7' : 'w-10 h-10'
+        } bg-lime-600 rounded-full flex items-center justify-center cursor-pointer
         ${!active ? 'opacity-50' : ''} transition-opacity`}
       >
-        <MdChair className='text-white/70 text-3xl' />
+        <MdChair
+          className={`${small ? 'text-xl' : 'text-3xl'} text-white/70`}
+        />
       </div>
     </div>
   );

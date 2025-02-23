@@ -4,9 +4,11 @@ import { MdArchitecture } from 'react-icons/md';
 interface ArchitectureIconProps {
   active?: boolean;
   onClick?: () => void;
+  small?: boolean;
 }
 
 const ArchitectureIcon = ({
+  small = false,
   active = false,
   onClick,
 }: ArchitectureIconProps) => {
@@ -19,10 +21,14 @@ const ArchitectureIcon = ({
         Architecture
       </div>
       <div
-        className={`w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center cursor-pointer
+        className={`${
+          small ? 'w-7 h-7' : 'w-10 h-10'
+        } bg-cyan-500 rounded-full flex items-center justify-center cursor-pointer
         ${!active ? 'opacity-50' : ''} transition-opacity`}
       >
-        <MdArchitecture className='text-white/70 text-3xl' />
+        <MdArchitecture
+          className={`${small ? 'text-xl' : 'text-3xl'} text-white/70`}
+        />
       </div>
     </div>
   );
