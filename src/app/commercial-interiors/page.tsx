@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { listAllProjects } from '../../helpers/api';
 import { Project } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
+import InteriorsIcon from '@/components/shared/InteriorsIcon';
 export default function CommercialInteriors() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,9 +81,15 @@ export default function CommercialInteriors() {
           </>
         ) : (
           <>
-            <div className='font-brand-bold text-2xl w-full border-b-2 pb-2'>
-              Commercial Interiors:{' '}
-              <span className='text-brand'>{projects.length} Projects</span>
+            <div className='font-brand-bold text-2xl w-full border-b-2 pb-2 flex justify-between items-center'>
+              <div className='flex items-center gap-2'>
+                <InteriorsIcon active={true} />
+                Commercial Interiors:{' '}
+                <span className='text-brand'>{projects.length} Projects</span>
+              </div>
+              <button className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'>
+                Create New +
+              </button>
             </div>
 
             <div className='flex justify-between items-center mb-4'>

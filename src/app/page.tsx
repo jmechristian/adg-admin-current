@@ -173,7 +173,13 @@ export default function Home() {
           </>
         ) : (
           <>
-            <div className='flex justify-between items-center mb-4'>
+            <div className='w-full border-b-2 pb-2 flex justify-between items-center'>
+              <div className='font-brand-bold text-2xl'>All Projects</div>
+              <button className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'>
+                Create New +
+              </button>
+            </div>
+            <div className='flex justify-between items-center mt-5 mb-4'>
               <input
                 type='text'
                 placeholder='Search by name'
