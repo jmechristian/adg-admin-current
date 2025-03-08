@@ -1,5 +1,6 @@
 import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/api';
+import { uploadData } from 'aws-amplify/storage';
 import awsconfig from '../aws-exports';
 import axios from 'axios';
 import {
@@ -14,9 +15,10 @@ import {
 } from '../graphql/queries';
 import {
   createLocation,
+  updateImageObject,
   // updateProject,
-  // createGallery,
-  // createImageObject,
+  createGallery,
+  createImageObject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -29,7 +31,15 @@ import {
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
 
-Amplify.configure(awsconfig, { ssr: true });
+Amplify.configure({
+  ...awsconfig,
+  Storage: {
+    S3: {
+      bucket: awsconfig.aws_user_files_s3_bucket,
+      region: awsconfig.aws_user_files_s3_bucket_region,
+    },
+  },
+});
 
 const client = generateClient({
   authMode: 'apiKey',
@@ -786,4 +796,97 @@ export const getGalleries = async () => {
     },
   })) as GraphQLResult<{ listGalleries: { items: Gallery[] } }>;
   return galleries.data.listGalleries.items;
+};
+
+export const createNewGallery = async (projectId: string) => {
+  const gallery = await client.graphql({
+    query: createGallery,
+    variables: {
+      input: {
+        galleryProjectId: projectId,
+      },
+    },
+  });
+  return gallery;
+};
+
+export const uploadAndConvertImage = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await fetch('/api/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to upload image');
+    }
+
+    // Get the processed filename from Content-Disposition header
+    const contentDisposition = response.headers.get('Content-Disposition');
+    const processedFilename = contentDisposition
+      ? contentDisposition.split('filename="')[1].split('"')[0]
+      : file.name
+          .replace(/\.[^/.]+$/, '')
+          .replace(/\s+/g, '-')
+          .toLowerCase() + '.webp';
+
+    // Get the WebP buffer from the response
+    const webpBuffer = await response.blob();
+
+    const result = await uploadData({
+      key: `${processedFilename}`, // Use the processed filename instead of original
+      data: webpBuffer,
+      options: {
+        contentType: 'image/webp',
+      },
+    }).result;
+
+    console.log('Upload result:', result.key);
+    return result.key.toString();
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+};
+
+export const addImageToGallery = async (
+  imageUrl: string,
+  galleryId: string,
+  order: number,
+  caption: string,
+  alt: string
+) => {
+  const addToGallery = await client.graphql({
+    query: createImageObject,
+    variables: {
+      input: {
+        url: imageUrl,
+        galleryImagesId: galleryId,
+        order: order,
+        caption: caption,
+        alt: caption,
+      },
+    },
+  });
+  return addToGallery;
+};
+
+export const updateImage = async (
+  imageId: string,
+  url: string,
+  order: number,
+  caption: string,
+  alt: string
+) => {
+  const updateImage = await client.graphql({
+    query: updateImageObject,
+    variables: {
+      input: { id: imageId, url, order, caption, alt },
+    },
+  });
+  return updateImage;
 };

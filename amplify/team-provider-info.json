@@ -15,7 +15,43 @@
       "auth": {
         "adgadminb6009424": {},
         "true": {},
-        "adgadmin67c23b32": {}
+        "adgadmin67c23b32": {},
+        "adgadmince5d8bba": {
+          "userPoolId": "us-east-1_3NT6yM1BZ",
+          "userPoolName": "amplifyAuthUserPool4BA7F805-g6K4b3eZY9t2",
+          "webClientId": "282i7kri59mecifdjb308fvhtu",
+          "nativeClientId": "282i7kri59mecifdjb308fvhtu",
+          "identityPoolId": "us-east-1:3ab42053-ba0d-4caf-824f-9d63aeb1387b",
+          "identityPoolName": "amplifyAuthIdentityPool3FDE84CC_CHTCIoXkGeH1",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::864899843182:role/amplify-adgadmin-jamiechr-amplifyAuthauthenticatedU-wpKXUKzHHeCF",
+          "authRoleName": "amplify-adgadmin-jamiechr-amplifyAuthauthenticatedU-wpKXUKzHHeCF",
+          "unauthRoleArn": "arn:aws:iam::864899843182:role/amplify-adgadmin-jamiechr-amplifyAuthunauthenticate-6VKrpI2zI3uU",
+          "unauthRoleName": "amplify-adgadmin-jamiechr-amplifyAuthunauthenticate-6VKrpI2zI3uU"
+        },
+        "adgadmin64127632": {
+          "userPoolId": "us-east-1_3NT6yM1BZ",
+          "userPoolName": "amplifyAuthUserPool4BA7F805-g6K4b3eZY9t2",
+          "webClientId": "282i7kri59mecifdjb308fvhtu",
+          "nativeClientId": "282i7kri59mecifdjb308fvhtu",
+          "identityPoolId": "us-east-1:3ab42053-ba0d-4caf-824f-9d63aeb1387b",
+          "identityPoolName": "amplifyAuthIdentityPool3FDE84CC_CHTCIoXkGeH1",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::864899843182:role/amplify-adgadmin-jamiechr-amplifyAuthauthenticatedU-wpKXUKzHHeCF",
+          "authRoleName": "amplify-adgadmin-jamiechr-amplifyAuthauthenticatedU-wpKXUKzHHeCF",
+          "unauthRoleArn": "arn:aws:iam::864899843182:role/amplify-adgadmin-jamiechr-amplifyAuthunauthenticate-6VKrpI2zI3uU",
+          "unauthRoleName": "amplify-adgadmin-jamiechr-amplifyAuthunauthenticate-6VKrpI2zI3uU"
+        }
+      },
+      "storage": {
+        "adgadmindc7194c5": {
+          "bucketName": "adgadmin170407-dev",
+          "region": "us-east-1"
+        },
+        "adgadmin6634d938": {
+          "bucketName": "adgadmin170407-dev",
+          "region": "us-east-1"
+        }
       }
     }
   }

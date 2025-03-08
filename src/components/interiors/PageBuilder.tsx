@@ -1,11 +1,13 @@
 'use client';
 import React from 'react';
 import SidebarBuilder from '@/components/shared/SidebarBuilder';
+import { images } from '@/data/image';
 
 import {
   TwoColIntro,
   HeadingHero,
   ProjectQuote,
+  CascadingGallery,
 } from '@jmechristian/adg-component-library';
 import '@jmechristian/adg-component-library/styles.css';
 import { Project } from '@/types';
@@ -105,6 +107,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
               attribution={editedProject.quoteAttribution || ''}
             />
           )}
+          <CascadingGallery images={images} />
         </div>
       </div>
       <div className='col-span-2 bg-black py-6 px-6'>
