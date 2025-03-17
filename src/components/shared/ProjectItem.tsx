@@ -7,6 +7,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 
 const ProjectItem = ({ project }: { project: Project }) => {
+  console.log(project);
   const [gallery, setGallery] = useState<Gallery | null>(null);
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
@@ -18,8 +19,11 @@ const ProjectItem = ({ project }: { project: Project }) => {
       )) as GalleryResponse;
       setGallery(projectGallery.data.getGallery);
     };
-    fetchGallery();
-  }, [project.gallery.id]);
+
+    if (project) {
+      fetchGallery();
+    }
+  }, [project]);
 
   const handleClick = () => {
     setIsClicked(true);
@@ -38,9 +42,7 @@ const ProjectItem = ({ project }: { project: Project }) => {
       }`}
       onClick={handleClick}
     >
-      <div className='col-span-1 text-xs'>{project.oldId}</div>
-
-      <div className='col-span-5 flex gap-5 items-center'>
+      <div className='col-span-4 flex gap-5 items-center'>
         <div>
           <div
             className='aspect-video w-[180px]  bg-gray-300 overflow-hidden bg-cover bg-center'
@@ -56,6 +58,7 @@ const ProjectItem = ({ project }: { project: Project }) => {
           <div className='text-sm text-gray-500'>{project.department.name}</div>
         </div>
       </div>
+      <div className='col-span-2 text-xs'>{project.locationString}</div>
       <div className='col-span-1 text-xs'>{gallery?.images.items.length}</div>
       <div className='col-span-2 text-xs'>{project.size}</div>
 

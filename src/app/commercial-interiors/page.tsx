@@ -131,7 +131,7 @@ export default function CommercialInteriors() {
             <div className='flex flex-col gap-2 divide-y divide-gray-300'>
               {currentProjects.length > 0 &&
                 currentProjects
-                  .sort((a, b) => a.oldId.localeCompare(b.oldId))
+                  .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: Project) => (
                     <ProjectItem key={project.id} project={project} />
                   ))}

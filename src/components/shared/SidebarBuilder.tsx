@@ -1,3 +1,4 @@
+import { MdEdit } from 'react-icons/md';
 import React, { useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { MapPinIcon } from '@heroicons/react/24/solid';
@@ -5,7 +6,15 @@ import { Project } from '@/types';
 import { SubcategorySelect } from './SubcategorySelect';
 import { ProjectTypeSelect } from './ProjectTypeSelect';
 import { BuildingTypeSelector } from './BuildingTypeSelector';
-import { updateImage, uploadAndConvertImage } from '@/helpers/api';
+import {
+  updateImage,
+  uploadAndConvertImage,
+  addNewImageObject,
+  saveProject,
+  deleteImage,
+} from '@/helpers/api';
+import LocationModal from './LocationModal';
+import { updateProject } from '@/graphql/mutations';
 // Add type for image
 interface ImageObject {
   id: string;
@@ -15,13 +24,29 @@ interface ImageObject {
   order?: number;
 }
 
-const SidebarBuilder = ({ project }: { project: Project }) => {
+const getFullImageUrl = (url: string) => {
+  if (!url) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `https://adgadmin170407-dev.s3.us-east-1.amazonaws.com/public/${url}`;
+};
+
+const SidebarBuilder = ({
+  project,
+  onProjectUpdate,
+  refreshProject,
+}: {
+  project: Project;
+  onProjectUpdate: () => void;
+  refreshProject: () => void;
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-
+  const [newImageAlt, setNewImageAlt] = useState('');
+  const [newImageCaption, setNewImageCaption] = useState('');
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const handleImageUpdate = async (updates: Partial<ImageObject>) => {
     if (!selectedImage) return;
     setSelectedImage({ ...selectedImage, ...updates });
@@ -39,6 +64,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
         selectedImage.alt || selectedImage.caption || ''
       );
     } finally {
+      refreshProject();
       setIsUpdating(false);
     }
   };
@@ -62,6 +88,30 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
 
     return `${formattedDate} ${formattedTime}`;
   };
+
+  const handleSaveProject = async () => {
+    await saveProject(
+      project.id,
+      project.name,
+      project.description || '',
+      project.location?.id || '',
+      project.locationString || '',
+      project.collaborators || '',
+      project.size || '',
+      project.quote || '',
+      project.quoteAttribution || ''
+    );
+  };
+
+  const handlePublishProject = async () => {
+    console.log('publish project');
+  };
+
+  const handleDeleteImage = async (id: string) => {
+    await deleteImage(id);
+    refreshProject();
+  };
+
   return (
     <div className='flex flex-col gap-7'>
       <div className='flex flex-col gap-3'>
@@ -104,6 +154,24 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
             <div className='text-white'>
               {project.location?.latitude}, {project.location?.longitude}
             </div>
+            <button
+              className='text-white ml-1'
+              onClick={() => setIsLocationModalOpen(true)}
+            >
+              <MdEdit size={18} />
+            </button>
+            {isLocationModalOpen && (
+              <LocationModal
+                isOpen={isLocationModalOpen}
+                onClose={() => setIsLocationModalOpen(false)}
+                onSave={(location) => {
+                  // Handle saving the location to your backend
+                  console.log(location);
+                  setIsLocationModalOpen(false);
+                }}
+                initialLocation={project.location}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -124,16 +192,19 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
           currentSubcategories={
             project.subcategories?.items.map((s) => s.subcategory) || []
           }
+          projectId={project.id}
         />
         <ProjectTypeSelect
           currentProjectTypes={
             project.project_type?.items.map((p) => p.projectType) || []
           }
+          projectId={project.id}
         />
         <BuildingTypeSelector
           currentBuildingTypes={
             project.building_type?.items.map((b) => b.buildingType) || []
           }
+          projectId={project.id}
         />
       </div>
       <div className='flex flex-col gap-3'>
@@ -172,26 +243,29 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
       </div>
       <div className='flex flex-col gap-2'>
         <div className='w-full text-sm text-gray-400'>Gallery:</div>
-        <div className='w-full border border-gray-700 rounded p-2 grid grid-cols-3 gap-2'>
-          {project.gallery.images.items.map((image) => (
-            <div
-              key={image.id}
-              className='w-full aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 cursor-pointer'
-              style={{ backgroundImage: `url(${image.url})` }}
-              onClick={() => {
-                setSelectedImage(image);
-                setIsModalOpen(true);
-              }}
-            ></div>
-          ))}
+        <div className='w-full border border-gray-700 rounded p-2 grid grid-cols-5 gap-2'>
+          {[...project.gallery.images.items]
+            .sort((a, b) => (a.order || 0) - (b.order || 0))
+            .map((image, index) => (
+              <div
+                key={image.id}
+                className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer ${
+                  selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
+                }`}
+                style={{
+                  backgroundImage: `url(${image.url})`,
+                }}
+                onClick={() => setSelectedImage(image)}
+              />
+            ))}
           <button
-            className='w-full aspect-square bg-cover bg-center bg-no-repeat bg-slate-500'
+            className='w-full aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
             onClick={() => {
               setSelectedImage(null);
               setIsModalOpen(true);
             }}
           >
-            <PlusIcon className='w-24 h-24 text-white' />
+            <PlusIcon className='w-10 h-10 text-white/50' />
           </button>
         </div>
       </div>
@@ -200,29 +274,44 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
       {isModalOpen && (
         <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
           <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
-            {/* Left side - Gallery (8 columns) */}
+            {/* Left side - Gallery */}
             <div className='w-8/12 pr-6 overflow-y-auto grid grid-cols-3 gap-4'>
-              {project.gallery.images.items.map((image) => (
-                <div
-                  key={image.id}
-                  className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer ${
-                    selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
-                  }`}
-                  style={{ backgroundImage: `url(${image.url})` }}
-                  onClick={() => setSelectedImage(image)}
-                ></div>
-              ))}
+              {[...project.gallery.images.items]
+                .sort((a, b) => (a.order || 0) - (b.order || 0))
+                .map((image, index) => (
+                  <div
+                    key={image.id}
+                    className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
+                      selectedImage?.id === image.id
+                        ? 'ring-2 ring-blue-500'
+                        : ''
+                    }`}
+                    style={{
+                      backgroundImage: `url(${image.url})`,
+                    }}
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    {index === 0 && (
+                      <div className='absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
+                        HERO
+                      </div>
+                    )}
+                  </div>
+                ))}
             </div>
 
-            {/* Right side - Image details (4 columns) */}
+            {/* Right side - Image details */}
             <div className='w-4/12 pl-6 border-l border-gray-700'>
               {selectedImage ? (
-                <div className='flex flex-col gap-4'>
-                  <img
-                    src={selectedImage.url}
-                    alt={selectedImage.alt}
-                    className='w-full rounded'
-                  />
+                <div className='flex flex-col gap-4 w-full'>
+                  <div
+                    className='w-full aspect-[4/3] overflow-hidden bg-cover bg-center bg-no-repeat bg-slate-500'
+                    style={{
+                      backgroundImage: `url(${getFullImageUrl(
+                        selectedImage.url
+                      )})`,
+                    }}
+                  ></div>
                   <div className='space-y-4'>
                     <div>
                       <label className='block text-sm text-gray-400'>
@@ -230,7 +319,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
                       </label>
                       <input
                         type='text'
-                        value={selectedImage.alt}
+                        value={selectedImage.alt || ''}
                         onChange={(e) =>
                           handleImageUpdate({ alt: e.target.value })
                         }
@@ -242,7 +331,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
                         Caption
                       </label>
                       <textarea
-                        value={selectedImage.caption}
+                        value={selectedImage.caption || ''}
                         onChange={(e) =>
                           handleImageUpdate({ caption: e.target.value })
                         }
@@ -256,7 +345,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
                       </label>
                       <input
                         type='number'
-                        value={selectedImage.order}
+                        value={selectedImage.order || 0}
                         onChange={(e) =>
                           handleImageUpdate({
                             order: parseInt(e.target.value, 10),
@@ -266,58 +355,135 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
                       />
                     </div>
                   </div>
-                  <div className='flex items-center justify-center gap-4'>
-                    <button
-                      className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
-                      onClick={handleUpdateSelected}
-                      disabled={isUpdating}
-                    >
-                      {isUpdating ? 'Updating...' : 'Update Selected'}
-                    </button>
-                    <button
-                      className='w-full bg-red-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
-                      onClick={() => {
-                        /* handle delete */
-                      }}
-                      disabled={isDeleting}
-                    >
-                      {isDeleting ? 'Deleting...' : 'Delete Selected'}
-                    </button>
-                  </div>
-                  <div className='flex items-center justify-center gap-4 pt-5 border-t border-t-gray-500 mt-5'>
-                    <label className='w-full'>
-                      <input
-                        type='file'
-                        accept='image/*'
-                        className='hidden'
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-
-                          setIsUploading(true);
-                          try {
-                            await uploadAndConvertImage(file);
-                            // Clear the input after upload
-                            e.target.value = '';
-                          } finally {
-                            setIsUploading(false);
-                          }
-                        }}
-                      />
-                      <div
-                        className='w-full bg-white text-black text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50 text-center cursor-pointer'
-                        style={{ opacity: isUploading ? 0.5 : 1 }}
+                  {selectedImage?.id && (
+                    <div className='flex items-center justify-center gap-4'>
+                      <button
+                        className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
+                        onClick={handleUpdateSelected}
+                        disabled={isUpdating}
                       >
-                        {isUploading ? 'Uploading...' : 'Upload New'}
-                      </div>
-                    </label>
+                        {isUpdating ? 'Updating...' : 'Update Selected'}
+                      </button>
+                      <button
+                        className='w-full bg-red-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
+                        onClick={() => {
+                          handleDeleteImage(selectedImage?.id || '');
+                        }}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? 'Deleting...' : 'Delete Selected'}
+                      </button>
+                    </div>
+                  )}
+                  <div className='flex items-center justify-center gap-4 pt-5 border-t border-t-gray-500 mt-5'>
+                    <button
+                      className='w-full bg-white text-black text-sm mt-1 p-2 border border-gray-700 rounded text-center cursor-pointer'
+                      onClick={async () => {
+                        if (selectedImage?.id) {
+                          // If there's an existing image selected, clear the selection
+                          setSelectedImage(null);
+                        } else {
+                          // Handle new image upload logic here
+                          // You might want to trigger the file input or handle the upload differently
+                          try {
+                            const newImageObject = await addNewImageObject(
+                              getFullImageUrl(selectedImage.url),
+                              project.gallery.id,
+                              project.gallery.images.items.length + 1,
+                              selectedImage.caption || '',
+                              selectedImage.alt || ''
+                            );
+                            console.log(newImageObject);
+                            // Call onProjectUpdate after successful upload
+                            onProjectUpdate();
+                            setIsModalOpen(false);
+                          } catch (error) {
+                            console.error('Error uploading new image:', error);
+                          }
+                        }
+                      }}
+                    >
+                      {selectedImage?.id ? 'Upload New' : 'Upload Image'}
+                    </button>
                   </div>
                 </div>
               ) : (
-                <div className='flex items-center justify-center h-full'>
-                  <div className='text-gray-400'>
-                    Select an image or add new ones
+                <div className='flex flex-col gap-4'>
+                  <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex items-center justify-center cursor-pointer hover:border-gray-500'>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      className='hidden'
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+
+                        setIsUploading(true);
+                        try {
+                          const uploadedUrl = await uploadAndConvertImage(file);
+                          setSelectedImage({
+                            id: '',
+                            url: uploadedUrl,
+                            order: project.gallery.images.items.length + 1,
+                            alt: newImageAlt,
+                            caption: newImageCaption,
+                          });
+                          setNewImageAlt('');
+                          setNewImageCaption('');
+                          e.target.value = '';
+                        } finally {
+                          setIsUploading(false);
+                        }
+                      }}
+                    />
+                    <div className='text-center'>
+                      <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
+                      <div className='text-gray-400'>
+                        Click to upload new image
+                      </div>
+                    </div>
+                  </label>
+                  <div className='space-y-4'>
+                    <div>
+                      <label className='block text-sm text-gray-400'>
+                        Alt Text
+                      </label>
+                      <input
+                        type='text'
+                        value={newImageAlt}
+                        onChange={(e) => setNewImageAlt(e.target.value)}
+                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                      />
+                    </div>
+                    <div>
+                      <label className='block text-sm text-gray-400'>
+                        Caption
+                      </label>
+                      <textarea
+                        value={newImageCaption}
+                        onChange={(e) => setNewImageCaption(e.target.value)}
+                        rows={3}
+                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                      />
+                    </div>
+                    <div>
+                      <label className='block text-sm text-gray-400'>
+                        Order
+                      </label>
+                      <input
+                        type='number'
+                        value={project.gallery.images.items.length + 1}
+                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                        readOnly
+                      />
+                    </div>
                   </div>
+                  <button
+                    className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
+                    disabled={isUploading}
+                  >
+                    {isUploading ? 'Uploading...' : 'Upload New Image'}
+                  </button>
                 </div>
               )}
             </div>
@@ -359,13 +525,13 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
         {project.status === 'DRAFT' ? (
           <>
             <button
-              // onClick={project.onSave}
+              onClick={handleSaveProject}
               className='px-4 py-3 text-sm text-white bg-gray-700 rounded hover:bg-gray-600'
             >
               Save
             </button>
             <button
-              // onClick={project.onPublish}
+              onClick={handlePublishProject}
               className='px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
             >
               Publish
@@ -373,7 +539,7 @@ const SidebarBuilder = ({ project }: { project: Project }) => {
           </>
         ) : (
           <button
-            // onClick={project.onSave}
+            onClick={handleSaveProject}
             className='col-span-2 px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
           >
             Save Changes

@@ -1,13 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getProjectTypes } from '@/helpers/api';
+import { getProjectTypes, createNewProjectProjectType } from '@/helpers/api';
 import { ProjectType } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const ProjectTypeSelect = ({
   currentProjectTypes,
+  projectId,
+  onProjectTypeChange,
 }: {
   currentProjectTypes: ProjectType[];
+  projectId: string;
+  onProjectTypeChange?: (selectedProjectTypes: ProjectType[]) => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [allProjectTypes, setAllProjectTypes] = useState<ProjectType[]>([]);
@@ -44,6 +48,28 @@ export const ProjectTypeSelect = ({
     }
   };
 
+  const handleSaveProjectTypes = async () => {
+    try {
+      // Map through each project type ID and create promises for each
+      const promises = selectedProjectTypes.map((projectType) =>
+        createNewProjectProjectType(projectId, projectType.id)
+      );
+
+      // Wait for all promises to resolve
+      const results = await Promise.all(promises);
+
+      console.log('All project types saved:', results);
+      setShowModal(false);
+
+      // If you need to refresh the UI after saving
+      if (onProjectTypeChange) {
+        onProjectTypeChange(selectedProjectTypes);
+      }
+    } catch (error) {
+      console.error('Error saving project types:', error);
+    }
+  };
+
   return (
     <div className='flex flex-col gap-2 w-full relative'>
       <div className='w-full text-sm text-gray-400 border-b border-b-gray-700 pb-1.5 flex items-center justify-between'>
@@ -71,10 +97,7 @@ export const ProjectTypeSelect = ({
           <div className='bg-white p-4 rounded-md w-full flex flex-col gap-2'>
             <div className='flex items-center justify-between'>
               <div className='font-brand-bold'>Select Project Types</div>
-              <div
-                className='cursor-pointer'
-                onClick={() => setShowModal(false)}
-              >
+              <div className='cursor-pointer' onClick={handleSaveProjectTypes}>
                 <MdSave color='black' size={18} />
               </div>
             </div>

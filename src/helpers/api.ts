@@ -16,9 +16,14 @@ import {
 import {
   createLocation,
   updateImageObject,
-  // updateProject,
+  createProject,
   createGallery,
   createImageObject,
+  updateProject,
+  createProjectSubcategories,
+  createProjectProjectTypes,
+  createProjectBuildingTypes,
+  deleteImageObject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -27,6 +32,10 @@ import {
   ProjectType,
   BuildingType,
   Gallery,
+  ProjectObject,
+  LocationResponse,
+  Location,
+  Status,
 } from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
@@ -204,21 +213,29 @@ export const createNewLocation = async ({
   address,
   lat,
   lng,
+  name,
+  description,
 }: {
   address: string;
   lat: number;
   lng: number;
+  name: string;
+  description: string;
 }) => {
-  const locationResponse = await client.graphql({
+  const locationResponse = (await client.graphql({
     query: createLocation,
     variables: {
-      address,
-      lat,
-      lng,
+      input: {
+        address,
+        latitude: lat,
+        longitude: lng,
+        name,
+        description,
+      },
     },
-  });
+  })) as GraphQLResult<{ createLocation: Location }>;
 
-  return locationResponse;
+  return locationResponse.data.createLocation;
 };
 
 // export const createNewProject = async (project) => {
@@ -853,7 +870,7 @@ export const uploadAndConvertImage = async (file: File) => {
   }
 };
 
-export const addImageToGallery = async (
+export const addNewImageObject = async (
   imageUrl: string,
   galleryId: string,
   order: number,
@@ -889,4 +906,95 @@ export const updateImage = async (
     },
   });
   return updateImage;
+};
+
+export const createNewProject = async (project: ProjectObject) => {
+  const createNewProject = await client.graphql({
+    query: createProject,
+    variables: { input: project },
+  });
+  return createNewProject;
+};
+
+export const updateCurrentProject = async (project: ProjectObject) => {
+  const updateProj = await client.graphql({
+    query: updateProject,
+    variables: { input: project },
+  });
+  return updateProj;
+};
+
+export const saveProject = async (
+  id: string,
+  name: string,
+  description: string,
+  projectLocationId: string,
+  locationString: string,
+  collaborators: string,
+  size: string,
+  quote: string,
+  quoteAttribution: string
+) => {
+  const res = await client.graphql({
+    query: updateProject,
+    variables: {
+      input: {
+        id,
+        name,
+        description,
+        projectLocationId,
+        locationString,
+        collaborators,
+        size,
+        quote,
+        quoteAttribution,
+      },
+    },
+  });
+  return res;
+};
+
+export const createNewProjectSubcategories = async (
+  projectId: string,
+  subcat: string
+) => {
+  const res = await client.graphql({
+    query: createProjectSubcategories,
+    variables: { input: { projectID: projectId, subcategoryID: subcat } },
+  });
+  return res;
+};
+
+export const createNewProjectProjectType = async (
+  projectId: string,
+  projectTypeId: string
+) => {
+  const res = await client.graphql({
+    query: createProjectProjectTypes,
+    variables: {
+      input: { projectID: projectId, projectTypeID: projectTypeId },
+    },
+  });
+  return res;
+};
+
+export const createNewProjectBuildingType = async (
+  projectId: string,
+  buildingTypeId: string
+) => {
+  const res = await client.graphql({
+    query: createProjectBuildingTypes,
+    variables: {
+      input: { projectID: projectId, buildingTypeID: buildingTypeId },
+    },
+  });
+  return res;
+};
+
+export const deleteImage = async (imageId: string) => {
+  const res = await client.graphql({
+    query: deleteImageObject,
+    variables: { input: { id: imageId } },
+  });
+  return res;
 };

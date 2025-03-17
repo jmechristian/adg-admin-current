@@ -32,6 +32,12 @@ export interface GalleryResponse {
   };
 }
 
+export interface LocationResponse {
+  data: {
+    createLocation: Location;
+  };
+}
+
 export interface Gallery {
   id: string;
   images: {
@@ -49,6 +55,7 @@ export interface Project {
   description?: string;
   location?: Location;
   locationString?: string;
+  projectLocationId?: string;
   createdBy: User;
   lastUpdatedBy?: User | null;
   featured: boolean;
@@ -137,4 +144,20 @@ export interface DepartmentFilters {
   'commercial interiors': boolean;
   branding: boolean;
   akres: boolean;
+}
+
+export interface ProjectObject {
+  id?: string;
+  name: string;
+  description: string;
+  projectLocationId: string;
+  locationString: string;
+  departmentProjectsId: string;
+  link: string;
+  status: Status;
+  projectCreatedById: string;
+  size: string;
+  quote: string;
+  quoteAttribution: string;
+  collaborators: string;
 }

@@ -12,7 +12,8 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import useAuthStore from '@/store/useAuthStore';
 import { usePathname } from 'next/navigation';
-
+import useLayoutStore from '@/store/useLayoutStore';
+import ProjectCreateModal from '@/components/shared/ProjectCreateModal';
 import './globals.css';
 
 const navigation = [
@@ -44,9 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  console.log(isAuthenticated);
   const user = useAuthStore((state) => state.user);
   const pathname = usePathname();
+  const isModalOpen = useLayoutStore((state) => state.isModalOpen);
+  const toggleModal = useLayoutStore((state) => state.toggleModal);
 
   const currentNavigation = navigation.map((item) => ({
     ...item,
@@ -212,7 +214,8 @@ export default function RootLayout({
             </DisclosurePanel>
           </Disclosure>
 
-          <main>
+          <main className='relative'>
+            {isModalOpen && <ProjectCreateModal />}
             <div>{children}</div>
           </main>
         </div>

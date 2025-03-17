@@ -5,6 +5,8 @@ import { listAllProjects } from '../helpers/api';
 import HeaderItem from '@/components/shared/HeaderItem';
 import { Project } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
+import useLayoutStore from '@/store/useLayoutStore';
+
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [activeFilter, setActiveFilter] = useState('');
-
+  const toggleModal = useLayoutStore((state) => state.toggleModal);
   useEffect(() => {
     const getProjects = async () => {
       try {
@@ -175,7 +177,10 @@ export default function Home() {
           <>
             <div className='w-full border-b-2 pb-2 flex justify-between items-center'>
               <div className='font-brand-bold text-2xl'>All Projects</div>
-              <button className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'>
+              <button
+                onClick={toggleModal}
+                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'
+              >
                 Create New +
               </button>
             </div>
@@ -206,9 +211,8 @@ export default function Home() {
             </div>
 
             <div className='grid grid-cols-12 gap-10 border-b-2 pb-2'>
-              <div className='font-brand-bold text-xs col-span-1'>ID</div>
-
-              <div className='font-brand-bold text-xs col-span-5'>Details</div>
+              <div className='font-brand-bold text-xs col-span-4'>Details</div>
+              <div className='font-brand-bold text-xs col-span-2'>Location</div>
               <div className='font-brand-bold text-xs col-span-1'>Gallery</div>
               <div className='font-brand-bold text-xs col-span-2'>Size</div>
               <div className='font-brand-bold text-xs col-span-1'>Updated</div>
@@ -218,7 +222,7 @@ export default function Home() {
             <div className='flex flex-col gap-2 divide-y divide-gray-300'>
               {currentProjects.length > 0 &&
                 currentProjects
-                  .sort((a, b) => a.oldId.localeCompare(b.oldId))
+                  .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: Project) => (
                     <ProjectItem key={project.id} project={project} />
                   ))}

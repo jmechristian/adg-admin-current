@@ -16,7 +16,6 @@ export default async function Page({
   const resolvedParams = await params;
   const id = resolvedParams.id;
   const project = (await getProjectById(id)) as GraphQLResult<ProjectResponse>;
-  console.log(project);
   return (
     <main className='w-full'>
       <PageBuilder project={project.data.getProject} />

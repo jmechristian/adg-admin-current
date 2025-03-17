@@ -1,13 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getSubcategories } from '@/helpers/api';
+import { getSubcategories, createNewProjectSubcategories } from '@/helpers/api';
 import { Subcategory } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const SubcategorySelect = ({
   currentSubcategories,
+  projectId,
+  onSubcategoryChange,
 }: {
   currentSubcategories: Subcategory[];
+  projectId: string;
+  onSubcategoryChange?: (subcategories: Subcategory[]) => void;
 }) => {
   console.log(currentSubcategories);
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +48,28 @@ export const SubcategorySelect = ({
     }
   };
 
+  const handleSaveSubcategories = async () => {
+    try {
+      // Map through each subcategory and create promises for each
+      const promises = selectedSubcategories.map((subcategory) =>
+        createNewProjectSubcategories(projectId, subcategory.id)
+      );
+
+      // Wait for all promises to resolve
+      const results = await Promise.all(promises);
+
+      console.log('All subcategories saved:', results);
+      setShowModal(false);
+
+      // If you need to refresh the UI after saving
+      if (onSubcategoryChange) {
+        onSubcategoryChange(selectedSubcategories);
+      }
+    } catch (error) {
+      console.error('Error saving subcategories:', error);
+    }
+  };
+
   return (
     <div className='flex flex-col gap-2 w-full relative'>
       <div className='w-full text-sm text-gray-400 border-b border-b-gray-700 pb-1.5 flex items-center justify-between'>
@@ -71,10 +97,7 @@ export const SubcategorySelect = ({
           <div className='bg-white p-4 rounded-md w-full flex flex-col gap-2'>
             <div className='flex items-center justify-between'>
               <div className='font-brand-bold'>Select Subcategories</div>
-              <div
-                className='cursor-pointer'
-                onClick={() => setShowModal(false)}
-              >
+              <div className='cursor-pointer' onClick={handleSaveSubcategories}>
                 <MdSave color='black' size={18} />
               </div>
             </div>

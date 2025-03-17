@@ -2,6 +2,8 @@
 import React from 'react';
 import SidebarBuilder from '@/components/shared/SidebarBuilder';
 import { images } from '@/data/image';
+import { getProjectById } from '@/helpers/api';
+import { GraphQLResult } from 'aws-amplify/api';
 
 import {
   TwoColIntro,
@@ -12,12 +14,35 @@ import {
 import '@jmechristian/adg-component-library/styles.css';
 import { Project } from '@/types';
 
+interface ProjectResponse {
+  getProject: Project;
+}
+
 interface PageBuilderProps {
   project: Project;
 }
 
 export const PageBuilder = ({ project }: PageBuilderProps) => {
   const [editedProject, setEditedProject] = React.useState(project);
+
+  const handleProjectUpdate = async () => {
+    try {
+      const response = (await getProjectById(
+        project.id
+      )) as GraphQLResult<ProjectResponse>;
+      setEditedProject(response.data.getProject);
+    } catch (error) {
+      console.error('Error refreshing project:', error);
+      setEditedProject(project);
+    }
+  };
+
+  const refreshProject = async () => {
+    const response = (await getProjectById(
+      project.id
+    )) as GraphQLResult<ProjectResponse>;
+    setEditedProject(response.data.getProject);
+  };
 
   const handleDescriptionChange = (newDescription: string) => {
     setEditedProject((prev) => ({
@@ -70,21 +95,28 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             location={editedProject.locationString || ''}
             hero={{
               id:
-                editedProject.gallery.images.items[0]?.id ??
-                '9050e5e5-a95b-4020-87c5-03703c2b4400',
+                editedProject.gallery.images.items.sort(
+                  (a, b) => (a.order || 0) - (b.order || 0)
+                )[0]?.id ?? '9050e5e5-a95b-4020-87c5-03703c2b4400',
               url:
-                editedProject.gallery.images.items[0]?.url ??
-                'https://placehold.co/1152x775',
-              alt: editedProject.gallery.images.items[0]?.alt ?? 'Hero Image',
+                editedProject.gallery.images.items.sort(
+                  (a, b) => (a.order || 0) - (b.order || 0)
+                )[0]?.url ?? 'https://placehold.co/1152x775',
+              alt:
+                editedProject.gallery.images.items.sort(
+                  (a, b) => (a.order || 0) - (b.order || 0)
+                )[0]?.alt ?? 'Hero Image',
               caption:
-                editedProject.gallery.images.items[0]?.caption ?? 'Hero Image',
+                editedProject.gallery.images.items.sort(
+                  (a, b) => (a.order || 0) - (b.order || 0)
+                )[0]?.caption ?? 'Hero Image',
             }}
           />
           <TwoColIntro
             id={editedProject.id}
             description={editedProject.description || ''}
             collaborators={[]}
-            size={editedProject.size || ''}
+            size={editedProject.size || 'Enter Size'}
             subcategory={
               editedProject.subcategories?.items.map(
                 (s) => s.subcategory.name
@@ -93,12 +125,12 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             project_type={
               editedProject.project_type?.items.map(
                 (p) => p.projectType.name
-              ) || []
+              ) || 'Choose Project Type'
             }
             building_type={
               editedProject.building_type?.items.map(
                 (b) => b.buildingType.name
-              ) || []
+              ) || 'Choose Building Type'
             }
           />
           {editedProject.quote && (
@@ -107,7 +139,15 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
               attribution={editedProject.quoteAttribution || ''}
             />
           )}
-          <CascadingGallery images={images} />
+          <CascadingGallery
+            images={
+              editedProject.gallery.images.items.length > 1
+                ? editedProject.gallery.images.items
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .slice(1)
+                : images
+            }
+          />
         </div>
       </div>
       <div className='col-span-2 bg-black py-6 px-6'>
@@ -121,6 +161,8 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             onQuoteChange: handleQuoteChange,
             onQuoteAttributionChange: handleQuoteAttributionChange,
           }}
+          onProjectUpdate={handleProjectUpdate}
+          refreshProject={refreshProject}
         />
       </div>
     </div>
