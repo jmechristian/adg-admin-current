@@ -25,12 +25,14 @@ export default function LocationModal({
     description: '',
     latitude: 0,
     longitude: 0,
+    id: '',
   } as {
     name?: string;
     address?: string;
     description?: string;
     latitude: number;
     longitude: number;
+    id?: string;
   });
 
   // Initialize with passed location or default values
@@ -124,7 +126,10 @@ export default function LocationModal({
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                onSave(formData);
+                onSave({
+                  ...formData,
+                  id: formData.id || '',
+                });
               }}
               className='space-y-4'
             >
