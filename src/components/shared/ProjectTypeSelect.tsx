@@ -8,10 +8,12 @@ export const ProjectTypeSelect = ({
   currentProjectTypes,
   projectId,
   onProjectTypeChange,
+  refreshProject,
 }: {
   currentProjectTypes: ProjectType[];
   projectId: string;
   onProjectTypeChange?: (selectedProjectTypes: ProjectType[]) => void;
+  refreshProject: () => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [allProjectTypes, setAllProjectTypes] = useState<ProjectType[]>([]);

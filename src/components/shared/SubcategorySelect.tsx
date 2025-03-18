@@ -8,10 +8,12 @@ export const SubcategorySelect = ({
   currentSubcategories,
   projectId,
   onSubcategoryChange,
+  refreshProject,
 }: {
   currentSubcategories: Subcategory[];
   projectId: string;
   onSubcategoryChange?: (subcategories: Subcategory[]) => void;
+  refreshProject: () => void;
 }) => {
   console.log(currentSubcategories);
   const [showModal, setShowModal] = useState(false);

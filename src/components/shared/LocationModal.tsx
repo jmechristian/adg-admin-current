@@ -107,6 +107,19 @@ export default function LocationModal({
                 latitude: initialLocation?.latitude || formData.latitude || 39,
                 zoom: 12,
               }}
+              viewState={{
+                longitude: formData.longitude || -98,
+                latitude: formData.latitude || 39,
+                zoom: 12,
+                bearing: 0,
+                pitch: 0,
+                padding: { top: 0, bottom: 0, left: 0, right: 0 },
+                width: 800,
+                height: 600,
+              }}
+              onMove={(evt) => {
+                // Optional: update formData when map is moved manually
+              }}
               style={{ width: '100%', height: '100%' }}
               mapStyle='mapbox://styles/adg-branding/cl47jmywy003p15rmjzucu62i'
               onClick={handleMapClick}

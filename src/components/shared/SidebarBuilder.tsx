@@ -12,6 +12,8 @@ import {
   addNewImageObject,
   saveProject,
   deleteImage,
+  updateCurrentLocation,
+  createNewLocation,
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
 import { updateProject } from '@/graphql/mutations';
@@ -101,6 +103,7 @@ const SidebarBuilder = ({
       project.quote || '',
       project.quoteAttribution || ''
     );
+    refreshProject();
   };
 
   const handlePublishProject = async () => {
@@ -164,9 +167,21 @@ const SidebarBuilder = ({
               <LocationModal
                 isOpen={isLocationModalOpen}
                 onClose={() => setIsLocationModalOpen(false)}
-                onSave={(location) => {
+                onSave={async (location) => {
+                  if (location.id) {
+                    await updateCurrentLocation(location);
+                    refreshProject();
+                  } else {
+                    await createNewLocation({
+                      address: location.address || '',
+                      lat: location.latitude,
+                      lng: location.longitude,
+                      name: location.name || '',
+                      description: location.description || '',
+                    });
+                    refreshProject();
+                  }
                   // Handle saving the location to your backend
-                  console.log(location);
                   setIsLocationModalOpen(false);
                 }}
                 initialLocation={project.location}
@@ -175,7 +190,7 @@ const SidebarBuilder = ({
           </div>
         </div>
       </div>
-      <div className='flex flex-col gap-1'>
+      {/* <div className='flex flex-col gap-1'>
         <div
           className='w-full aspect-video bg-cover bg-center bg-no-repeat bg-slate-500'
           style={{
@@ -185,7 +200,7 @@ const SidebarBuilder = ({
             })`,
           }}
         ></div>
-      </div>
+      </div> */}
 
       <div className='flex flex-col gap-3'>
         <SubcategorySelect
@@ -193,18 +208,21 @@ const SidebarBuilder = ({
             project.subcategories?.items.map((s) => s.subcategory) || []
           }
           projectId={project.id}
+          refreshProject={refreshProject}
         />
         <ProjectTypeSelect
           currentProjectTypes={
             project.project_type?.items.map((p) => p.projectType) || []
           }
           projectId={project.id}
+          refreshProject={refreshProject}
         />
         <BuildingTypeSelector
           currentBuildingTypes={
             project.building_type?.items.map((b) => b.buildingType) || []
           }
           projectId={project.id}
+          refreshProject={refreshProject}
         />
       </div>
       <div className='flex flex-col gap-3'>

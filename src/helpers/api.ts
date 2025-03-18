@@ -24,6 +24,7 @@ import {
   createProjectProjectTypes,
   createProjectBuildingTypes,
   deleteImageObject,
+  updateLocation,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -236,6 +237,14 @@ export const createNewLocation = async ({
   })) as GraphQLResult<{ createLocation: Location }>;
 
   return locationResponse.data.createLocation;
+};
+
+export const updateCurrentLocation = async (location: Location) => {
+  const locationResponse = (await client.graphql({
+    query: updateLocation,
+    variables: { input: location },
+  })) as GraphQLResult<{ updateLocation: Location }>;
+  return locationResponse.data.updateLocation;
 };
 
 // export const createNewProject = async (project) => {

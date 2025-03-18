@@ -8,10 +8,12 @@ export const BuildingTypeSelector = ({
   currentBuildingTypes,
   projectId,
   onBuildingTypeChange,
+  refreshProject,
 }: {
   currentBuildingTypes: BuildingType[];
   projectId: string;
   onBuildingTypeChange?: (buildingTypes: BuildingType[]) => void;
+  refreshProject: () => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [allBuildingTypes, setAllBuildingTypes] = useState<BuildingType[]>([]);
