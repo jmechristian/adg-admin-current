@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { listAllProjects } from '../../helpers/api';
+import useLayoutStore from '@/store/useLayoutStore';
 import { Project } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 import InteriorsIcon from '@/components/shared/InteriorsIcon';
@@ -12,7 +13,7 @@ export default function CommercialInteriors() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [activeFilter, setActiveFilter] = useState('');
-
+  const toggleModal = useLayoutStore((state) => state.toggleModal);
   useEffect(() => {
     const getProjects = async () => {
       try {
@@ -87,7 +88,10 @@ export default function CommercialInteriors() {
                 Commercial Interiors:{' '}
                 <span className='text-brand'>{projects.length} Projects</span>
               </div>
-              <button className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'>
+              <button
+                onClick={() => toggleModal()}
+                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'
+              >
                 Create New +
               </button>
             </div>
