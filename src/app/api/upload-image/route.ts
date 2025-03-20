@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     // Convert to WebP
     const buffer = Buffer.from(await file.arrayBuffer());
-    const webpBuffer = await sharp(buffer).webp({ quality: 90 }).toBuffer();
+    const webpBuffer = await sharp(buffer).webp({ quality: 96 }).toBuffer();
 
     // Sanitize the filename to remove special characters
     const sanitizedFileName = encodeURIComponent(fileName);
