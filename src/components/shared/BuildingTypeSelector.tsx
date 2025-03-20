@@ -53,14 +53,13 @@ export const BuildingTypeSelector = ({
   const handleSaveBuildingTypes = async () => {
     try {
       // Map through each building type ID and create promises for each
-      const promises = selectedBuildingTypes.map((buildingType) =>
-        createNewProjectBuildingType(projectId, buildingType.id)
-      );
+      // const promises = selectedBuildingTypes.map((buildingType) =>
+      //   createNewProjectBuildingType(projectId, buildingType.id)
+      // );
 
-      // Wait for all promises to resolve
-      const results = await Promise.all(promises);
+      // // Wait for all promises to resolve
+      // const results = await Promise.all(promises);
 
-      console.log('All building types saved:', results);
       setShowModal(false);
 
       // If you need to refresh the UI after saving

@@ -53,14 +53,14 @@ export const SubcategorySelect = ({
   const handleSaveSubcategories = async () => {
     try {
       // Map through each subcategory and create promises for each
-      const promises = selectedSubcategories.map((subcategory) =>
-        createNewProjectSubcategories(projectId, subcategory.id)
-      );
+      // const promises = selectedSubcategories.map((subcategory) =>
+      //   createNewProjectSubcategories(projectId, subcategory.id)
+      // );
 
-      // Wait for all promises to resolve
-      const results = await Promise.all(promises);
+      // // Wait for all promises to resolve
+      // const results = await Promise.all(promises);
 
-      console.log('All subcategories saved:', results);
+      // console.log('All subcategories saved:', results);
       setShowModal(false);
 
       // If you need to refresh the UI after saving

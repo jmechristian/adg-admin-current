@@ -53,14 +53,13 @@ export const ProjectTypeSelect = ({
   const handleSaveProjectTypes = async () => {
     try {
       // Map through each project type ID and create promises for each
-      const promises = selectedProjectTypes.map((projectType) =>
-        createNewProjectProjectType(projectId, projectType.id)
-      );
+      // const promises = selectedProjectTypes.map((projectType) =>
+      //   createNewProjectProjectType(projectId, projectType.id)
+      // );
 
-      // Wait for all promises to resolve
-      const results = await Promise.all(promises);
+      // // Wait for all promises to resolve
+      // const results = await Promise.all(promises);
 
-      console.log('All project types saved:', results);
       setShowModal(false);
 
       // If you need to refresh the UI after saving

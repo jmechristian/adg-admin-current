@@ -1,5 +1,5 @@
 import { MdEdit } from 'react-icons/md';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { MapPinIcon } from '@heroicons/react/24/solid';
 import { Project } from '@/types';
@@ -17,6 +17,7 @@ import {
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
 import { updateProject } from '@/graphql/mutations';
+
 // Add type for image
 interface ImageObject {
   id: string;
@@ -49,6 +50,20 @@ const SidebarBuilder = ({
   const [newImageAlt, setNewImageAlt] = useState('');
   const [newImageCaption, setNewImageCaption] = useState('');
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [draggedImage, setDraggedImage] = useState<string | null>(null);
+  const [sortedImages, setSortedImages] = useState<ImageObject[]>([]);
+
+  // Initialize the sorted images whenever project changes
+  React.useEffect(() => {
+    if (project?.gallery?.images?.items) {
+      setSortedImages(
+        [...project.gallery.images.items].sort(
+          (a, b) => (a.order || 0) - (b.order || 0)
+        )
+      );
+    }
+  }, [project.gallery.images.items]);
+
   const handleImageUpdate = async (updates: Partial<ImageObject>) => {
     if (!selectedImage) return;
     setSelectedImage({ ...selectedImage, ...updates });
@@ -113,6 +128,81 @@ const SidebarBuilder = ({
   const handleDeleteImage = async (id: string) => {
     await deleteImage(id);
     refreshProject();
+  };
+
+  // Handle image reordering
+  const handleDragStart = (e: React.DragEvent, imageId: string) => {
+    setDraggedImage(imageId);
+    e.dataTransfer.setData('imageId', imageId);
+    e.currentTarget.classList.add('opacity-50');
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDragEnter = (e: React.DragEvent, imageId: string) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('bg-gray-700');
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.currentTarget.classList.remove('bg-gray-700');
+  };
+
+  const handleDrop = async (e: React.DragEvent, targetImageId: string) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('bg-gray-700');
+
+    if (!draggedImage || draggedImage === targetImageId) return;
+
+    const draggedImageIndex = sortedImages.findIndex(
+      (img) => img.id === draggedImage
+    );
+    const targetImageIndex = sortedImages.findIndex(
+      (img) => img.id === targetImageId
+    );
+
+    if (draggedImageIndex === -1 || targetImageIndex === -1) return;
+
+    // Create a new array with the reordered images
+    const newImages = [...sortedImages];
+    const [movedImage] = newImages.splice(draggedImageIndex, 1);
+    newImages.splice(targetImageIndex, 0, movedImage);
+
+    // Update order values for all items
+    const updatedItems = newImages.map((item, index) => {
+      return { ...item, order: index };
+    });
+
+    // Update the local state immediately for better UX
+    setSortedImages(updatedItems);
+    setIsUpdating(true);
+
+    try {
+      // Update each image's order in the database
+      for (const item of updatedItems) {
+        await updateImage(
+          item.id,
+          item.url,
+          item.order || 0,
+          item.caption || '',
+          item.alt || item.caption || ''
+        );
+      }
+      refreshProject();
+    } catch (error) {
+      console.error('Error updating image order:', error);
+    } finally {
+      setIsUpdating(false);
+    }
+
+    setDraggedImage(null);
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    e.currentTarget.classList.remove('opacity-50');
+    setDraggedImage(null);
   };
 
   return (
@@ -260,31 +350,65 @@ const SidebarBuilder = ({
         </div>
       </div>
       <div className='flex flex-col gap-2'>
-        <div className='w-full text-sm text-gray-400'>Gallery:</div>
-        <div className='w-full border border-gray-700 rounded p-2 grid grid-cols-5 gap-2'>
-          {[...project.gallery.images.items]
-            .sort((a, b) => (a.order || 0) - (b.order || 0))
-            .map((image, index) => (
+        <div className='w-full text-sm text-gray-400 flex justify-between items-center'>
+          <span>Gallery:</span>
+          {isUpdating && (
+            <span className='text-xs text-brand'>Updating order...</span>
+          )}
+        </div>
+        <div className='w-full border border-gray-700 rounded p-2'>
+          <div className='grid grid-cols-3 gap-2'>
+            {sortedImages.map((image, index) => (
               <div
                 key={image.id}
-                className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer ${
+                draggable
+                onDragStart={(e) => handleDragStart(e, image.id)}
+                onDragOver={handleDragOver}
+                onDragEnter={(e) => handleDragEnter(e, image.id)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, image.id)}
+                onDragEnd={handleDragEnd}
+                className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
                   selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
-                }`}
+                } hover:ring-1 hover:ring-gray-400`}
                 style={{
                   backgroundImage: `url(${image.url})`,
                 }}
                 onClick={() => setSelectedImage(image)}
-              />
+              >
+                <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
+                  <svg
+                    className='w-4 h-4 text-white'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M8 9l4-4 4 4m0 6l-4 4-4-4'
+                    />
+                  </svg>
+                </div>
+
+                {index === 0 && (
+                  <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
+                    HERO
+                  </div>
+                )}
+              </div>
             ))}
-          <button
-            className='w-full aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
-            onClick={() => {
-              setSelectedImage(null);
-              setIsModalOpen(true);
-            }}
-          >
-            <PlusIcon className='w-10 h-10 text-white/50' />
-          </button>
+            <button
+              className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
+              onClick={() => {
+                setSelectedImage(null);
+                setIsModalOpen(true);
+              }}
+            >
+              <PlusIcon className='w-10 h-10 text-white/50' />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -293,10 +417,9 @@ const SidebarBuilder = ({
         <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
           <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
             {/* Left side - Gallery */}
-            <div className='w-8/12 pr-6 overflow-y-auto grid grid-cols-3 gap-4'>
-              {[...project.gallery.images.items]
-                .sort((a, b) => (a.order || 0) - (b.order || 0))
-                .map((image, index) => (
+            <div className='w-8/12 pr-6 overflow-y-auto'>
+              <div className='grid grid-cols-3 gap-4'>
+                {sortedImages.map((image, index) => (
                   <div
                     key={image.id}
                     className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
@@ -316,6 +439,7 @@ const SidebarBuilder = ({
                     )}
                   </div>
                 ))}
+              </div>
             </div>
 
             {/* Right side - Image details */}
