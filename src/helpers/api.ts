@@ -25,6 +25,7 @@ import {
   createProjectBuildingTypes,
   deleteImageObject,
   updateLocation,
+  deleteProjectSubcategories as deleteProjectSubcategoriesMutation,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -970,6 +971,14 @@ export const createNewProjectSubcategories = async (
   const res = await client.graphql({
     query: createProjectSubcategories,
     variables: { input: { projectID: projectId, subcategoryID: subcat } },
+  });
+  return res;
+};
+
+export const deleteProjectSubcategories = async (id: string) => {
+  const res = await client.graphql({
+    query: deleteProjectSubcategoriesMutation,
+    variables: { input: { id } },
   });
   return res;
 };

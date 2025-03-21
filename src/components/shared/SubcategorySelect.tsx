@@ -1,6 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getSubcategories, createNewProjectSubcategories } from '@/helpers/api';
+import {
+  getSubcategories,
+  createNewProjectSubcategories,
+  deleteProjectSubcategories,
+} from '@/helpers/api';
 import { Subcategory } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
