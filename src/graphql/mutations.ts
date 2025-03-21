@@ -465,6 +465,9 @@ export const createProject = /* GraphQL */ `
         projects {
           nextToken
         }
+        subcategories {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -588,6 +591,9 @@ export const updateProject = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        subcategories {
           nextToken
         }
         createdAt
@@ -715,6 +721,9 @@ export const deleteProject = /* GraphQL */ `
         projects {
           nextToken
         }
+        subcategories {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -791,6 +800,16 @@ export const createDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategories {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -829,6 +848,16 @@ export const updateDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategories {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -864,6 +893,16 @@ export const deleteDepartment = /* GraphQL */ `
           projectCreatedById
           projectLastUpdatedById
           projectGalleryId
+        }
+        nextToken
+      }
+      subcategories {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -1034,6 +1073,16 @@ export const createSubcategory = /* GraphQL */ `
         }
         nextToken
       }
+      departments {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1057,6 +1106,16 @@ export const updateSubcategory = /* GraphQL */ `
         }
         nextToken
       }
+      departments {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1074,6 +1133,16 @@ export const deleteSubcategory = /* GraphQL */ `
         items {
           id
           projectID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      departments {
+        items {
+          id
+          departmentID
           subcategoryID
           createdAt
           updatedAt
@@ -1307,6 +1376,9 @@ export const createProjectSubcategories = /* GraphQL */ `
         projects {
           nextToken
         }
+        departments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1399,6 +1471,9 @@ export const updateProjectSubcategories = /* GraphQL */ `
         projects {
           nextToken
         }
+        departments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1489,6 +1564,9 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        departments {
           nextToken
         }
         createdAt
@@ -2041,6 +2119,120 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDepartmentSubcategories = /* GraphQL */ `
+  mutation CreateDepartmentSubcategories(
+    $input: CreateDepartmentSubcategoriesInput!
+    $condition: ModelDepartmentSubcategoriesConditionInput
+  ) {
+    createDepartmentSubcategories(input: $input, condition: $condition) {
+      id
+      departmentID
+      subcategoryID
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      subcategory {
+        id
+        name
+        projects {
+          nextToken
+        }
+        departments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDepartmentSubcategories = /* GraphQL */ `
+  mutation UpdateDepartmentSubcategories(
+    $input: UpdateDepartmentSubcategoriesInput!
+    $condition: ModelDepartmentSubcategoriesConditionInput
+  ) {
+    updateDepartmentSubcategories(input: $input, condition: $condition) {
+      id
+      departmentID
+      subcategoryID
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      subcategory {
+        id
+        name
+        projects {
+          nextToken
+        }
+        departments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDepartmentSubcategories = /* GraphQL */ `
+  mutation DeleteDepartmentSubcategories(
+    $input: DeleteDepartmentSubcategoriesInput!
+    $condition: ModelDepartmentSubcategoriesConditionInput
+  ) {
+    deleteDepartmentSubcategories(input: $input, condition: $condition) {
+      id
+      departmentID
+      subcategoryID
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      subcategory {
+        id
+        name
+        projects {
+          nextToken
+        }
+        departments {
           nextToken
         }
         createdAt

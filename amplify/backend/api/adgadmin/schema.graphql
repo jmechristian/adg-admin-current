@@ -66,6 +66,8 @@ type Department @model {
   id: ID!
   name: String!
   projects: [Project] @hasMany
+  subcategories: [Subcategory]
+    @manyToMany(relationName: "DepartmentSubcategories")
 }
 
 type ImageObject @model {
@@ -81,6 +83,7 @@ type Subcategory @model {
   id: ID!
   name: String!
   projects: [Project] @manyToMany(relationName: "ProjectSubcategories")
+  departments: [Department] @manyToMany(relationName: "DepartmentSubcategories")
 }
 
 type BuildingType @model {

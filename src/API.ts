@@ -249,6 +249,7 @@ export type Department = {
   id: string,
   name: string,
   projects?: ModelProjectConnection | null,
+  subcategories?: ModelDepartmentSubcategoriesConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -257,6 +258,33 @@ export type ModelProjectConnection = {
   __typename: "ModelProjectConnection",
   items:  Array<Project | null >,
   nextToken?: string | null,
+};
+
+export type ModelDepartmentSubcategoriesConnection = {
+  __typename: "ModelDepartmentSubcategoriesConnection",
+  items:  Array<DepartmentSubcategories | null >,
+  nextToken?: string | null,
+};
+
+export type DepartmentSubcategories = {
+  __typename: "DepartmentSubcategories",
+  id: string,
+  departmentID: string,
+  subcategoryID: string,
+  department: Department,
+  subcategory: Subcategory,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type Subcategory = {
+  __typename: "Subcategory",
+  id: string,
+  name: string,
+  projects?: ModelProjectSubcategoriesConnection | null,
+  departments?: ModelDepartmentSubcategoriesConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelProjectSubcategoriesConnection = {
@@ -272,15 +300,6 @@ export type ProjectSubcategories = {
   subcategoryID: string,
   project: Project,
   subcategory: Subcategory,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type Subcategory = {
-  __typename: "Subcategory",
-  id: string,
-  name: string,
-  projects?: ModelProjectSubcategoriesConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -628,6 +647,30 @@ export type DeleteProjectProjectTypesInput = {
   id: string,
 };
 
+export type CreateDepartmentSubcategoriesInput = {
+  id?: string | null,
+  departmentID: string,
+  subcategoryID: string,
+};
+
+export type ModelDepartmentSubcategoriesConditionInput = {
+  departmentID?: ModelIDInput | null,
+  subcategoryID?: ModelIDInput | null,
+  and?: Array< ModelDepartmentSubcategoriesConditionInput | null > | null,
+  or?: Array< ModelDepartmentSubcategoriesConditionInput | null > | null,
+  not?: ModelDepartmentSubcategoriesConditionInput | null,
+};
+
+export type UpdateDepartmentSubcategoriesInput = {
+  id: string,
+  departmentID?: string | null,
+  subcategoryID?: string | null,
+};
+
+export type DeleteDepartmentSubcategoriesInput = {
+  id: string,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -793,6 +836,15 @@ export type ModelProjectProjectTypesFilterInput = {
   and?: Array< ModelProjectProjectTypesFilterInput | null > | null,
   or?: Array< ModelProjectProjectTypesFilterInput | null > | null,
   not?: ModelProjectProjectTypesFilterInput | null,
+};
+
+export type ModelDepartmentSubcategoriesFilterInput = {
+  id?: ModelIDInput | null,
+  departmentID?: ModelIDInput | null,
+  subcategoryID?: ModelIDInput | null,
+  and?: Array< ModelDepartmentSubcategoriesFilterInput | null > | null,
+  or?: Array< ModelDepartmentSubcategoriesFilterInput | null > | null,
+  not?: ModelDepartmentSubcategoriesFilterInput | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -1319,6 +1371,10 @@ export type CreateProjectMutation = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1458,6 +1514,10 @@ export type UpdateProjectMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1601,6 +1661,10 @@ export type DeleteProjectMutation = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1687,6 +1751,18 @@ export type CreateDepartmentMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1729,6 +1805,18 @@ export type UpdateDepartmentMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1768,6 +1856,18 @@ export type DeleteDepartmentMutation = {
         projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1957,6 +2057,18 @@ export type CreateSubcategoryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1984,6 +2096,18 @@ export type UpdateSubcategoryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2005,6 +2129,18 @@ export type DeleteSubcategoryMutation = {
         __typename: "ProjectSubcategories",
         id: string,
         projectID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
         subcategoryID: string,
         createdAt: string,
         updatedAt: string,
@@ -2275,6 +2411,10 @@ export type CreateProjectSubcategoriesMutation = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -2380,6 +2520,10 @@ export type UpdateProjectSubcategoriesMutation = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -2483,6 +2627,10 @@ export type DeleteProjectSubcategoriesMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -3123,6 +3271,144 @@ export type DeleteProjectProjectTypesMutation = {
   } | null,
 };
 
+export type CreateDepartmentSubcategoriesMutationVariables = {
+  input: CreateDepartmentSubcategoriesInput,
+  condition?: ModelDepartmentSubcategoriesConditionInput | null,
+};
+
+export type CreateDepartmentSubcategoriesMutation = {
+  createDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateDepartmentSubcategoriesMutationVariables = {
+  input: UpdateDepartmentSubcategoriesInput,
+  condition?: ModelDepartmentSubcategoriesConditionInput | null,
+};
+
+export type UpdateDepartmentSubcategoriesMutation = {
+  updateDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteDepartmentSubcategoriesMutationVariables = {
+  input: DeleteDepartmentSubcategoriesInput,
+  condition?: ModelDepartmentSubcategoriesConditionInput | null,
+};
+
+export type DeleteDepartmentSubcategoriesMutation = {
+  deleteDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -3448,6 +3734,10 @@ export type GetProjectQuery = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -3624,6 +3914,18 @@ export type GetDepartmentQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3644,6 +3946,10 @@ export type ListDepartmentsQuery = {
       name: string,
       projects?:  {
         __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -3757,6 +4063,18 @@ export type GetSubcategoryQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3777,6 +4095,10 @@ export type ListSubcategoriesQuery = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -3980,6 +4302,10 @@ export type GetProjectSubcategoriesQuery = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -4339,6 +4665,86 @@ export type ListProjectProjectTypesQuery = {
       },
       projectType:  {
         __typename: "ProjectType",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetDepartmentSubcategoriesQueryVariables = {
+  id: string,
+};
+
+export type GetDepartmentSubcategoriesQuery = {
+  getDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListDepartmentSubcategoriesQueryVariables = {
+  filter?: ModelDepartmentSubcategoriesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDepartmentSubcategoriesQuery = {
+  listDepartmentSubcategories?:  {
+    __typename: "ModelDepartmentSubcategoriesConnection",
+    items:  Array< {
+      __typename: "DepartmentSubcategories",
+      id: string,
+      departmentID: string,
+      subcategoryID: string,
+      department:  {
+        __typename: "Department",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+      subcategory:  {
+        __typename: "Subcategory",
         id: string,
         name: string,
         createdAt: string,
@@ -4825,6 +5231,10 @@ export type OnCreateProjectSubscription = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -4959,6 +5369,10 @@ export type OnUpdateProjectSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -5097,6 +5511,10 @@ export type OnDeleteProjectSubscription = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -5178,6 +5596,18 @@ export type OnCreateDepartmentSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5215,6 +5645,18 @@ export type OnUpdateDepartmentSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5249,6 +5691,18 @@ export type OnDeleteDepartmentSubscription = {
         projectCreatedById?: string | null,
         projectLastUpdatedById?: string | null,
         projectGalleryId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategories?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -5418,6 +5872,18 @@ export type OnCreateSubcategorySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5440,6 +5906,18 @@ export type OnUpdateSubcategorySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5456,6 +5934,18 @@ export type OnDeleteSubcategorySubscription = {
         __typename: "ProjectSubcategories",
         id: string,
         projectID: string,
+        subcategoryID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    departments?:  {
+      __typename: "ModelDepartmentSubcategoriesConnection",
+      items:  Array< {
+        __typename: "DepartmentSubcategories",
+        id: string,
+        departmentID: string,
         subcategoryID: string,
         createdAt: string,
         updatedAt: string,
@@ -5691,6 +6181,10 @@ export type OnCreateProjectSubcategoriesSubscription = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -5791,6 +6285,10 @@ export type OnUpdateProjectSubcategoriesSubscription = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -5889,6 +6387,10 @@ export type OnDeleteProjectSubcategoriesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -6489,6 +6991,129 @@ export type OnDeleteProjectProjectTypesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateDepartmentSubcategoriesSubscription = {
+  onCreateDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateDepartmentSubcategoriesSubscription = {
+  onUpdateDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteDepartmentSubcategoriesSubscription = {
+  onDeleteDepartmentSubcategories?:  {
+    __typename: "DepartmentSubcategories",
+    id: string,
+    departmentID: string,
+    subcategoryID: string,
+    department:  {
+      __typename: "Department",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    subcategory:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,

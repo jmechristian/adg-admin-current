@@ -281,6 +281,9 @@ export const getProject = /* GraphQL */ `
         projects {
           nextToken
         }
+        subcategories {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -434,6 +437,16 @@ export const getDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategories {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -450,6 +463,9 @@ export const listDepartments = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        subcategories {
           nextToken
         }
         createdAt
@@ -546,6 +562,16 @@ export const getSubcategory = /* GraphQL */ `
         }
         nextToken
       }
+      departments {
+        items {
+          id
+          departmentID
+          subcategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -562,6 +588,9 @@ export const listSubcategories = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        departments {
           nextToken
         }
         createdAt
@@ -730,6 +759,9 @@ export const getProjectSubcategories = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        departments {
           nextToken
         }
         createdAt
@@ -1056,6 +1088,75 @@ export const listProjectProjectTypes = /* GraphQL */ `
           projectGalleryId
         }
         projectType {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getDepartmentSubcategories = /* GraphQL */ `
+  query GetDepartmentSubcategories($id: ID!) {
+    getDepartmentSubcategories(id: $id) {
+      id
+      departmentID
+      subcategoryID
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      subcategory {
+        id
+        name
+        projects {
+          nextToken
+        }
+        departments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDepartmentSubcategories = /* GraphQL */ `
+  query ListDepartmentSubcategories(
+    $filter: ModelDepartmentSubcategoriesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDepartmentSubcategories(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        departmentID
+        subcategoryID
+        department {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        subcategory {
           id
           name
           createdAt
