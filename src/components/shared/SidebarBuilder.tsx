@@ -317,13 +317,16 @@ const SidebarBuilder = ({
       </div>
       <div className='flex flex-col gap-3'>
         <div className='w-full text-sm text-gray-400'>
-          Description:{' '}
+          Description:{' (450 char is the sweet spot.)'}
           <textarea
             className='w-full bg-transparent text-white text-sm mt-2 p-2 border border-gray-700 rounded'
             value={project.description || ''}
             onChange={(e) => project.onDescriptionChange?.(e.target.value)}
-            rows={8}
+            rows={12}
           />
+          <div className='w-full text-xs text-gray-400'>
+            {project.description?.length || 0} / 450
+          </div>
         </div>
       </div>
       <div className='flex flex-col gap-1'>
