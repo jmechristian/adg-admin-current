@@ -15,6 +15,8 @@ import {
   getDepartmentSubcategories,
   listDepartmentSubcategories,
   listProjectSubcategories,
+  listProjectBuildingTypes,
+  listProjectProjectTypes,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -29,6 +31,7 @@ import {
   deleteImageObject,
   updateLocation,
   deleteProjectSubcategories as deleteProjectSubcategoriesMutation,
+  deleteProjectProjectTypes as deleteProjectProjectTypesMutation,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -43,6 +46,8 @@ import {
   Status,
   DepartmentSubcategory,
   ProjectSubcategory,
+  ProjectProjectType,
+  ProjectBuildingType,
 } from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
@@ -536,6 +541,44 @@ export const getProjectSubcategoriesByProjectId = async (projectId: string) => {
     listProjectSubcategories: { items: ProjectSubcategory[] };
   }>;
   return projectSubcategories.data.listProjectSubcategories.items;
+};
+
+export const getProjectProjectTypesByProjectId = async (projectId: string) => {
+  const projectProjectTypes = (await client.graphql({
+    query: listProjectProjectTypes,
+    variables: {
+      filter: {
+        projectID: { eq: projectId },
+      },
+    },
+  })) as GraphQLResult<{
+    listProjectProjectTypes: { items: ProjectProjectType[] };
+  }>;
+  return projectProjectTypes.data.listProjectProjectTypes.items;
+};
+
+export const getProjectBuildingTypesByProjectId = async (projectId: string) => {
+  const projectBuildingTypes = (await client.graphql({
+    query: listProjectBuildingTypes,
+    variables: {
+      filter: {
+        projectID: { eq: projectId },
+      },
+    },
+  })) as GraphQLResult<{
+    listProjectBuildingTypes: { items: ProjectBuildingType[] };
+  }>;
+  return projectBuildingTypes.data.listProjectBuildingTypes.items;
+};
+
+export const deleteProjectProjectTypes = async (
+  projectProjectTypeId: string
+) => {
+  const projectProjectType = (await client.graphql({
+    query: deleteProjectProjectTypesMutation,
+    variables: { input: { id: projectProjectTypeId } },
+  })) as GraphQLResult<{ deleteProjectProjectType: { id: string } }>;
+  return projectProjectType;
 };
 
 export const getProjectTypes = async () => {

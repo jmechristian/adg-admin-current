@@ -32,10 +32,6 @@ export const SubcategorySelect = ({
     const fetchSubcategories = async () => {
       const subcategories = await getSubcategories(departmentId);
       setAllSubcategories(subcategories.map((s) => s.subcategory));
-      console.log(
-        'subcategories',
-        subcategories.map((s) => s.subcategory)
-      );
     };
     if (departmentId) {
       fetchSubcategories();
@@ -48,7 +44,6 @@ export const SubcategorySelect = ({
         projectId
       );
       setProjectSubcategories(projectSubcategories);
-      console.log('projectSubcategories', projectSubcategories);
     };
     if (projectId) {
       fetchProjectSubcategories();

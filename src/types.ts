@@ -147,6 +147,18 @@ export interface ProjectSubcategory {
   subcategory: Subcategory;
 }
 
+export interface ProjectProjectType {
+  id: string;
+  projectID: string;
+  projectType: ProjectType;
+}
+
+export interface ProjectBuildingType {
+  id: string;
+  projectID: string;
+  buildingType: BuildingType;
+}
+
 export interface BuildingType {
   id: string;
   name: string;

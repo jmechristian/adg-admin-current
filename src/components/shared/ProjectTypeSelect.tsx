@@ -1,7 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getProjectTypes, createNewProjectProjectType } from '@/helpers/api';
-import { ProjectType } from '@/types';
+import {
+  getProjectTypes,
+  getProjectProjectTypesByProjectId,
+  deleteProjectProjectTypes,
+  createNewProjectProjectType,
+} from '@/helpers/api';
+import { ProjectType, ProjectProjectType } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const ProjectTypeSelect = ({
@@ -19,6 +24,9 @@ export const ProjectTypeSelect = ({
   const [allProjectTypes, setAllProjectTypes] = useState<ProjectType[]>([]);
   const [selectedProjectTypes, setSelectedProjectTypes] =
     useState<ProjectType[]>(currentProjectTypes);
+  const [projectProjectTypes, setProjectProjectTypes] = useState<
+    ProjectProjectType[]
+  >([]);
 
   useEffect(() => {
     const fetchProjectTypes = async () => {
@@ -28,7 +36,26 @@ export const ProjectTypeSelect = ({
     fetchProjectTypes();
   }, []);
 
-  const handleProjectTypeClick = (projectType: ProjectType) => {
+  useEffect(() => {
+    const fetchProjectProjectTypes = async () => {
+      const projectProjectTypes = await getProjectProjectTypesByProjectId(
+        projectId
+      );
+      setProjectProjectTypes(projectProjectTypes);
+    };
+    if (projectId) {
+      fetchProjectProjectTypes();
+    }
+  }, [projectId]);
+
+  const refreshProjectProjectTypes = async () => {
+    const projectProjectTypes = await getProjectProjectTypesByProjectId(
+      projectId
+    );
+    setProjectProjectTypes(projectProjectTypes);
+  };
+
+  const handleProjectTypeClick = async (projectType: ProjectType) => {
     // Ensure we're working with an array
     const currentSelected = Array.isArray(selectedProjectTypes)
       ? selectedProjectTypes
@@ -44,9 +71,20 @@ export const ProjectTypeSelect = ({
       setSelectedProjectTypes(
         currentSelected.filter((selected) => selected.id !== projectType.id)
       );
+      const projectProjectType = projectProjectTypes.find(
+        (p) => p.projectType.id === projectType.id
+      );
+      if (projectProjectType) {
+        await deleteProjectProjectTypes(projectProjectType.id);
+      }
+      refreshProject();
+      refreshProjectProjectTypes();
     } else {
       // Add if not selected
       setSelectedProjectTypes([...currentSelected, projectType]);
+      await createNewProjectProjectType(projectId, projectType.id);
+      refreshProject();
+      refreshProjectProjectTypes();
     }
   };
 
