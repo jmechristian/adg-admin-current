@@ -20,7 +20,7 @@ const navigation = [
   { name: 'Projects', href: '/', current: false },
   { name: 'Architecture', href: '/architecture', current: false },
   {
-    name: 'Commercial Interiors',
+    name: 'Interiors',
     href: '/commercial-interiors',
     current: false,
   },

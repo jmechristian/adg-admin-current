@@ -280,23 +280,13 @@ const SidebarBuilder = ({
           </div>
         </div>
       </div>
-      {/* <div className='flex flex-col gap-1'>
-        <div
-          className='w-full aspect-video bg-cover bg-center bg-no-repeat bg-slate-500'
-          style={{
-            backgroundImage: `url(${
-              project.gallery.images.items[0]?.url ||
-              'https://placehold.co/600x400'
-            })`,
-          }}
-        ></div>
-      </div> */}
 
       <div className='flex flex-col gap-3'>
         <SubcategorySelect
           currentSubcategories={
             project.subcategories?.items.map((s) => s.subcategory) || []
           }
+          departmentId={project.department.id}
           projectId={project.id}
           refreshProject={refreshProject}
         />
@@ -327,6 +317,17 @@ const SidebarBuilder = ({
           <div className='w-full text-xs text-gray-400'>
             {project.description?.length || 0} / 450
           </div>
+        </div>
+      </div>
+      <div className='flex flex-col gap-3'>
+        <div className='w-full text-sm text-gray-400'>
+          Collaborators:{' '}
+          <textarea
+            className='w-full bg-transparent text-white text-sm mt-2 p-2 border border-gray-700 rounded'
+            value={project.collaborators || ''}
+            onChange={(e) => project.onCollaboratorsChange?.(e.target.value)}
+            rows={2}
+          />
         </div>
       </div>
       <div className='flex flex-col gap-1'>

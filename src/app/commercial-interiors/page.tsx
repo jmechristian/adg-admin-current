@@ -21,7 +21,7 @@ export default function CommercialInteriors() {
         setProjects(
           res.filter(
             (project: Project) =>
-              project.department.name === 'Commercial Interiors'
+              project.department.id === '0cd75086-b396-4c52-a907-5b52fb6aeedd'
           )
         );
       } finally {

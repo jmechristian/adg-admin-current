@@ -87,6 +87,13 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
     }));
   };
 
+  const handleCollaboratorsChange = (newCollaborators: string) => {
+    setEditedProject((prev) => ({
+      ...prev,
+      collaborators: newCollaborators,
+    }));
+  };
+
   return (
     <div className='grid grid-cols-10 w-full'>
       <div className='col-span-8 border'>
@@ -116,7 +123,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
           <TwoColIntro
             id={editedProject.id}
             description={editedProject.description || ''}
-            collaborators={[]}
+            collaborators={editedProject.collaborators || ''}
             size={editedProject.size || 'Enter Size'}
             subcategory={
               editedProject.subcategories?.items.map(
@@ -161,6 +168,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             onLocationChange: handleLocationChange,
             onQuoteChange: handleQuoteChange,
             onQuoteAttributionChange: handleQuoteAttributionChange,
+            onCollaboratorsChange: handleCollaboratorsChange,
           }}
           onProjectUpdate={handleProjectUpdate}
           refreshProject={refreshProject}

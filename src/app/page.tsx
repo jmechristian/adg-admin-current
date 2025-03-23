@@ -62,7 +62,8 @@ export default function Home() {
   const architectureCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) => project?.department?.name === 'Architecture'
+          (project: Project) =>
+            project?.department?.id === '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
         ).length
       : 0;
   }, [projects]);
@@ -71,7 +72,7 @@ export default function Home() {
     return projects.length > 0
       ? projects.filter(
           (project: Project) =>
-            project?.department?.name === 'Commercial Interiors'
+            project?.department?.id === '0cd75086-b396-4c52-a907-5b52fb6aeedd'
         ).length
       : 0;
   }, [projects]);
@@ -79,7 +80,8 @@ export default function Home() {
   const brandingCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) => project?.department?.name === 'Branding'
+          (project: Project) =>
+            project?.department?.id === '4dfd71af-51a3-4af9-874f-da260e081f08'
         ).length
       : 0;
   }, [projects]);
@@ -87,7 +89,8 @@ export default function Home() {
   const akresCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) => project?.department?.name === 'AkRes'
+          (project: Project) =>
+            project?.department?.id === '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
         ).length
       : 0;
   }, [projects]);
@@ -123,14 +126,14 @@ export default function Home() {
                     onClick={() => handleFilterClick('Architecture')}
                   />
                   <HeaderItem
-                    title='Commercial Interiors'
+                    title='Interiors'
                     count={commercialInteriorsCount}
                     bgColor={`bg-lime-300/60 ${
-                      activeFilter === 'Commercial Interiors'
+                      activeFilter === 'Interiors'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Commercial Interiors')}
+                    onClick={() => handleFilterClick('Interiors')}
                   />
                   <HeaderItem
                     title='Branding'
@@ -143,14 +146,14 @@ export default function Home() {
                     onClick={() => handleFilterClick('Branding')}
                   />
                   <HeaderItem
-                    title='AkRes'
+                    title='Residential'
                     count={akresCount}
                     bgColor={`bg-orange-400/80 ${
-                      activeFilter === 'AkRes'
+                      activeFilter === 'Residential'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('AkRes')}
+                    onClick={() => handleFilterClick('Residential')}
                   />
                 </>
               )}

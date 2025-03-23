@@ -20,7 +20,8 @@ export default function CommercialInteriors() {
         const res = await listAllProjects();
         setProjects(
           res.filter(
-            (project: Project) => project.department.name === 'Branding'
+            (project: Project) =>
+              project.department.id === '4dfd71af-51a3-4af9-874f-da260e081f08'
           )
         );
       } finally {
@@ -134,7 +135,7 @@ export default function CommercialInteriors() {
             <div className='flex flex-col gap-2 divide-y divide-gray-300'>
               {currentProjects.length > 0 &&
                 currentProjects
-                  .sort((a, b) => a.oldId.localeCompare(b.oldId))
+                  .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: Project) => (
                     <ProjectItem key={project.id} project={project} />
                   ))}

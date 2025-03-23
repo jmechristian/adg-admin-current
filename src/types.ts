@@ -99,6 +99,7 @@ export interface Project {
   onLocationChange?: (location: string) => void;
   onQuoteChange?: (quote: string) => void;
   onQuoteAttributionChange?: (quoteAttribution: string) => void;
+  onCollaboratorsChange?: (collaborators: string) => void;
 }
 
 export interface Department {
@@ -117,6 +118,26 @@ export interface Subcategory {
   id: string;
   name: string;
   projects?: Project[];
+}
+
+export interface DepartmentSubcategory {
+  id: string;
+  departmentID: string;
+  subcategoryID: string;
+  department: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  subcategory: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface BuildingType {
