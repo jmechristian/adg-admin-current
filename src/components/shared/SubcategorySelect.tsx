@@ -60,6 +60,7 @@ export const SubcategorySelect = ({
       projectId
     );
     setProjectSubcategories(projectSubcategories);
+    setSelectedSubcategories(projectSubcategories.map((ps) => ps.subcategory));
   };
 
   const handleActiveSubcategoryClick = async (subcategory: Subcategory) => {
