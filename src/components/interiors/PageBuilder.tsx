@@ -124,21 +124,27 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             id={editedProject.id}
             description={editedProject.description || ''}
             collaborators={editedProject.collaborators || ''}
-            size={editedProject.size || 'Enter Size'}
+            size={editedProject.size || ''}
             subcategory={
-              editedProject.subcategories?.items.map(
-                (s) => s.subcategory.name
-              ) || []
+              editedProject.subcategories?.items.length > 0
+                ? editedProject.subcategories?.items.map(
+                    (s) => s.subcategory.name
+                  )
+                : null
             }
             project_type={
-              editedProject.project_type?.items.map(
-                (p) => p.projectType.name
-              ) || 'Choose Project Type'
+              editedProject.project_type?.items.length > 0
+                ? editedProject.project_type?.items.map(
+                    (p) => p.projectType.name
+                  )
+                : null
             }
             building_type={
-              editedProject.building_type?.items.map(
-                (b) => b.buildingType.name
-              ) || 'Choose Building Type'
+              editedProject.building_type?.items.length > 0
+                ? editedProject.building_type?.items.map(
+                    (b) => b.buildingType.name
+                  )
+                : null
             }
           />
           {editedProject.quote && (
