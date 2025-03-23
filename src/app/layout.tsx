@@ -21,7 +21,7 @@ const navigation = [
   { name: 'Architecture', href: '/architecture', current: false },
   {
     name: 'Interiors',
-    href: '/commercial-interiors',
+    href: '/interiors',
     current: false,
   },
   { name: 'Branding', href: '/branding', current: false },

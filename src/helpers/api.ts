@@ -14,6 +14,7 @@ import {
   listGalleries,
   getDepartmentSubcategories,
   listDepartmentSubcategories,
+  listProjectSubcategories,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -41,6 +42,7 @@ import {
   Location,
   Status,
   DepartmentSubcategory,
+  ProjectSubcategory,
 } from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
@@ -520,6 +522,20 @@ export const getSubcategories = async (departmentId: string) => {
     listDepartmentSubcategories: { items: DepartmentSubcategory[] };
   }>;
   return subcategories.data.listDepartmentSubcategories.items;
+};
+
+export const getProjectSubcategoriesByProjectId = async (projectId: string) => {
+  const projectSubcategories = (await client.graphql({
+    query: listProjectSubcategories,
+    variables: {
+      filter: {
+        projectID: { eq: projectId },
+      },
+    },
+  })) as GraphQLResult<{
+    listProjectSubcategories: { items: ProjectSubcategory[] };
+  }>;
+  return projectSubcategories.data.listProjectSubcategories.items;
 };
 
 export const getProjectTypes = async () => {

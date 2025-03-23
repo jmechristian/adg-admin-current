@@ -140,6 +140,13 @@ export interface DepartmentSubcategory {
   updatedAt: string;
 }
 
+export interface ProjectSubcategory {
+  id: string;
+  projectID: string;
+  subcategoryID: string;
+  subcategory: Subcategory;
+}
+
 export interface BuildingType {
   id: string;
   name: string;
