@@ -1,7 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { createNewProjectBuildingType, getBuildingTypes } from '@/helpers/api';
-import { BuildingType } from '@/types';
+import {
+  createNewProjectBuildingType,
+  deleteProjectBuildingTypes,
+  getBuildingTypes,
+  getProjectBuildingTypesByProjectId,
+} from '@/helpers/api';
+import { BuildingType, ProjectBuildingType } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const BuildingTypeSelector = ({
@@ -19,6 +24,9 @@ export const BuildingTypeSelector = ({
   const [allBuildingTypes, setAllBuildingTypes] = useState<BuildingType[]>([]);
   const [selectedBuildingTypes, setSelectedBuildingTypes] =
     useState<BuildingType[]>(currentBuildingTypes);
+  const [projectBuildingTypes, setProjectBuildingTypes] = useState<
+    ProjectBuildingType[]
+  >([]);
 
   useEffect(() => {
     const fetchBuildingTypes = async () => {
@@ -28,7 +36,25 @@ export const BuildingTypeSelector = ({
     fetchBuildingTypes();
   }, []);
 
-  const handleBuildingTypeClick = (buildingType: BuildingType) => {
+  useEffect(() => {
+    const fetchProjectBuildingTypes = async () => {
+      const projectBuildingTypes = await getProjectBuildingTypesByProjectId(
+        projectId
+      );
+      setProjectBuildingTypes(projectBuildingTypes);
+    };
+    if (projectId) {
+      fetchProjectBuildingTypes();
+    }
+  }, [projectId]);
+
+  const refreshProjectBuildingTypes = async () => {
+    const projectBuildingTypes = await getProjectBuildingTypesByProjectId(
+      projectId
+    );
+    setProjectBuildingTypes(projectBuildingTypes);
+  };
+  const handleBuildingTypeClick = async (buildingType: BuildingType) => {
     // Ensure we're working with an array
     const currentSelected = Array.isArray(selectedBuildingTypes)
       ? selectedBuildingTypes
@@ -44,9 +70,20 @@ export const BuildingTypeSelector = ({
       setSelectedBuildingTypes(
         currentSelected.filter((selected) => selected.id !== buildingType.id)
       );
+      const projectBuildingType = projectBuildingTypes.find(
+        (p) => p.buildingType.id === buildingType.id
+      );
+      if (projectBuildingType) {
+        await deleteProjectBuildingTypes(projectBuildingType.id);
+      }
+      refreshProject();
+      refreshProjectBuildingTypes();
     } else {
       // Add if not selected
       setSelectedBuildingTypes([...currentSelected, buildingType]);
+      await createNewProjectBuildingType(projectId, buildingType.id);
+      refreshProject();
+      refreshProjectBuildingTypes();
     }
   };
 

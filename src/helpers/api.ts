@@ -32,6 +32,7 @@ import {
   updateLocation,
   deleteProjectSubcategories as deleteProjectSubcategoriesMutation,
   deleteProjectProjectTypes as deleteProjectProjectTypesMutation,
+  deleteProjectBuildingTypes as deleteProjectBuildingTypesMutation,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -579,6 +580,16 @@ export const deleteProjectProjectTypes = async (
     variables: { input: { id: projectProjectTypeId } },
   })) as GraphQLResult<{ deleteProjectProjectType: { id: string } }>;
   return projectProjectType;
+};
+
+export const deleteProjectBuildingTypes = async (
+  projectBuildingTypeId: string
+) => {
+  const projectBuildingType = (await client.graphql({
+    query: deleteProjectBuildingTypesMutation,
+    variables: { input: { id: projectBuildingTypeId } },
+  })) as GraphQLResult<{ deleteProjectBuildingType: { id: string } }>;
+  return projectBuildingType;
 };
 
 export const getProjectTypes = async () => {
