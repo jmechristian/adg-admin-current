@@ -13,13 +13,11 @@ export const SubcategorySelect = ({
   currentSubcategories,
   projectId,
   departmentId,
-  onSubcategoryChange,
   refreshProject,
 }: {
   currentSubcategories: Subcategory[];
   projectId: string;
   departmentId: string;
-  onSubcategoryChange?: (subcategories: Subcategory[]) => void;
   refreshProject: () => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -57,8 +55,26 @@ export const SubcategorySelect = ({
     }
   }, [projectId]);
 
-  const handleSubcategoryClick = (subcategory: Subcategory) => {
-    console.log('subcategory', subcategory);
+  const refreshProjectSubcategories = async () => {
+    const projectSubcategories = await getProjectSubcategoriesByProjectId(
+      projectId
+    );
+    setProjectSubcategories(projectSubcategories);
+  };
+
+  const handleActiveSubcategoryClick = async (subcategory: Subcategory) => {
+    const projectSubcategory = projectSubcategories.find(
+      (ps) => ps.subcategory.id === subcategory.id
+    );
+    if (projectSubcategory) {
+      await deleteProjectSubcategories(projectSubcategory.id);
+      refreshProject();
+      refreshProjectSubcategories();
+    } else {
+      await createNewProjectSubcategories(projectId, subcategory.id);
+      refreshProject();
+      refreshProjectSubcategories();
+    }
   };
 
   const handleSaveSubcategories = async () => {
@@ -66,6 +82,21 @@ export const SubcategorySelect = ({
       setShowModal(false);
     } catch (error) {
       console.error('Error saving subcategories:', error);
+    }
+  };
+
+  const handleSubcategoryClick = async (subcategory: Subcategory) => {
+    const projectSubcategory = projectSubcategories.find(
+      (ps) => ps.subcategory.id === subcategory.id
+    );
+    if (projectSubcategory) {
+      await deleteProjectSubcategories(projectSubcategory.id);
+      refreshProject();
+      refreshProjectSubcategories();
+    } else {
+      await createNewProjectSubcategories(projectId, subcategory.id);
+      refreshProject();
+      refreshProjectSubcategories();
     }
   };
 
@@ -112,7 +143,11 @@ export const SubcategorySelect = ({
                 return (
                   <div
                     key={subcategory.id}
-                    onClick={() => handleSubcategoryClick(subcategory)}
+                    onClick={
+                      isSelected
+                        ? () => handleActiveSubcategoryClick(subcategory)
+                        : () => handleSubcategoryClick(subcategory)
+                    }
                     className={`cursor-pointer p-2 rounded ${
                       isSelected ? 'bg-brand text-white' : 'hover:bg-gray-100'
                     }`}

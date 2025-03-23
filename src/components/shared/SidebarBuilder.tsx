@@ -16,7 +16,6 @@ import {
   createNewLocation,
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
-import { updateProject } from '@/graphql/mutations';
 
 // Add type for image
 interface ImageObject {
