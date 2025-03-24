@@ -221,7 +221,6 @@ export interface ProjectObject {
   description: string;
   projectLocationId: string;
   locationString: string;
-  departmentProjectsId: string;
   link: string;
   status: Status;
   projectCreatedById: string;

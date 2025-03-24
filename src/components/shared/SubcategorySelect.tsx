@@ -6,37 +6,40 @@ import {
   deleteProjectSubcategories,
   getProjectSubcategoriesByProjectId,
 } from '@/helpers/api';
-import { ProjectSubcategory, Subcategory } from '@/types';
+import {
+  ProjectSubcategory,
+  Subcategory,
+  DepartmentSubcategory,
+} from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const SubcategorySelect = ({
-  currentSubcategories,
   projectId,
-  departmentId,
   refreshProject,
 }: {
-  currentSubcategories: Subcategory[];
   projectId: string;
-  departmentId: string;
   refreshProject: () => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [allSubcategories, setAllSubcategories] = useState<Subcategory[]>([]);
+  const [allSubcategories, setAllSubcategories] = useState<
+    DepartmentSubcategory[]
+  >([]);
   const [projectSubcategories, setProjectSubcategories] = useState<
     ProjectSubcategory[]
   >([]);
-  const [selectedSubcategories, setSelectedSubcategories] =
-    useState<Subcategory[]>(currentSubcategories);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<
+    ProjectSubcategory[]
+  >([]);
 
   useEffect(() => {
     const fetchSubcategories = async () => {
-      const subcategories = await getSubcategories(departmentId);
-      setAllSubcategories(subcategories.map((s) => s.subcategory));
+      const subcategories = await getSubcategories();
+      setAllSubcategories(subcategories);
+      console.log('allSubcategories', subcategories);
     };
-    if (departmentId) {
-      fetchSubcategories();
-    }
-  }, [departmentId]);
+
+    fetchSubcategories();
+  }, []);
 
   useEffect(() => {
     const fetchProjectSubcategories = async () => {
@@ -44,6 +47,7 @@ export const SubcategorySelect = ({
         projectId
       );
       setProjectSubcategories(projectSubcategories);
+      setSelectedSubcategories(projectSubcategories);
     };
     if (projectId) {
       fetchProjectSubcategories();
@@ -55,7 +59,7 @@ export const SubcategorySelect = ({
       projectId
     );
     setProjectSubcategories(projectSubcategories);
-    setSelectedSubcategories(projectSubcategories.map((ps) => ps.subcategory));
+    setSelectedSubcategories(projectSubcategories);
   };
 
   const handleActiveSubcategoryClick = async (subcategory: Subcategory) => {
@@ -111,8 +115,8 @@ export const SubcategorySelect = ({
               key={subcategory.id}
               className='text-white font-semibold text-sm px-2 my-1'
             >
-              {subcategory.name ? (
-                subcategory.name
+              {subcategory.subcategory.name ? (
+                subcategory.subcategory.name
               ) : (
                 <div className='text-gray-400'>No Subcategory</div>
               )}
@@ -123,35 +127,59 @@ export const SubcategorySelect = ({
         )}
       </div>
       {showModal && (
-        <div className='absolute z-10 top-8 left-0 w-full h-full bg-black bg-opacity-50'>
-          <div className='bg-white p-4 rounded-md w-full flex flex-col gap-2'>
+        <div className='fixed z-10 top-1/2 w-fit left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-50'>
+          <div className='bg-white p-4 rounded-md w-full flex flex-col gap-4'>
             <div className='flex items-center justify-between'>
               <div className='font-brand-bold'>Select Subcategories</div>
               <div className='cursor-pointer' onClick={handleSaveSubcategories}>
                 <MdSave color='black' size={18} />
               </div>
             </div>
-            <div className='flex flex-col gap-2'>
-              {allSubcategories.map((subcategory) => {
-                const isSelected = projectSubcategories.some(
-                  (selected) => selected.subcategory.id === subcategory.id
-                );
-                return (
-                  <div
-                    key={subcategory.id}
-                    onClick={
-                      isSelected
-                        ? () => handleActiveSubcategoryClick(subcategory)
-                        : () => handleSubcategoryClick(subcategory)
-                    }
-                    className={`cursor-pointer p-2 rounded ${
-                      isSelected ? 'bg-brand text-white' : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    {subcategory.name}
+
+            <div className='grid grid-cols-5 gap-4'>
+              {Object.entries(
+                allSubcategories.reduce((acc, item) => {
+                  const deptId = item.department.id;
+                  if (!acc[deptId]) {
+                    acc[deptId] = {
+                      name: item.department.name,
+                      subcategories: [],
+                    };
+                  }
+                  acc[deptId].subcategories.push(item.subcategory);
+                  return acc;
+                }, {} as Record<string, { name: string; subcategories: any[] }>)
+              ).map(([deptId, dept]) => (
+                <div key={deptId} className='flex flex-col gap-2'>
+                  <div className='font-brand-bold text-sm text-gray-700 border-b pb-2'>
+                    {dept.name}
                   </div>
-                );
-              })}
+                  <div className='flex flex-col gap-1'>
+                    {dept.subcategories.map((subcategory) => {
+                      const isSelected = projectSubcategories.some(
+                        (selected) => selected.subcategory.id === subcategory.id
+                      );
+                      return (
+                        <div
+                          key={subcategory.id}
+                          onClick={
+                            isSelected
+                              ? () => handleActiveSubcategoryClick(subcategory)
+                              : () => handleSubcategoryClick(subcategory)
+                          }
+                          className={`cursor-pointer p-2 rounded text-sm ${
+                            isSelected
+                              ? 'bg-brand text-white'
+                              : 'hover:bg-gray-100'
+                          }`}
+                        >
+                          {subcategory.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

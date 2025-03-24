@@ -1,5 +1,6 @@
-import { Location, Status } from '@/types';
-import { useState } from 'react';
+import { Location, Status, Department } from '@/types';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import useLayoutStore from '@/store/useLayoutStore';
 import useAuthStore from '@/store/useAuthStore';
 import Map, { Marker } from 'react-map-gl/mapbox';
@@ -12,6 +13,7 @@ import {
 import { GraphQLResult } from 'aws-amplify/api';
 import { updateProject } from '@/graphql/mutations';
 import { generateClient } from 'aws-amplify/api';
+import { getDepartments, createProjectDepartments } from '@/helpers/api';
 
 const client = generateClient();
 
@@ -23,36 +25,17 @@ if (!MAPBOX_TOKEN) {
   );
 }
 
-const departments = [
-  {
-    id: '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7',
-    name: 'Architecture',
-  },
-  {
-    id: '4dfd71af-51a3-4af9-874f-da260e081f08',
-    name: 'Branding',
-  },
-  {
-    id: '0cd75086-b396-4c52-a907-5b52fb6aeedd',
-    name: 'Commercial Interiors',
-  },
-  {
-    id: '6cd6cac5-1533-45e3-8e9a-d4e1472def9a',
-    name: 'AkRes',
-  },
-];
-
 interface NewProject {
   name: string;
   description: string;
   projectLocationId: string;
   locationString: string;
-  departmentProjectsId: string;
   link: string;
   projectCreatedById: string;
 }
 
 const ProjectCreateModal = () => {
+  const router = useRouter();
   const toggleModal = useLayoutStore((state) => state.toggleModal);
   const user = useAuthStore((state) => state.user);
   const [project, setProject] = useState<NewProject>({
@@ -60,7 +43,6 @@ const ProjectCreateModal = () => {
     description: '',
     projectLocationId: '',
     locationString: '',
-    departmentProjectsId: '',
     link: '',
     projectCreatedById: user?.id,
   });
@@ -78,6 +60,15 @@ const ProjectCreateModal = () => {
     latitude: number;
     longitude: number;
   });
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
+  useEffect(() => {
+    const getAllDepartments = async () => {
+      const departments = await getDepartments();
+      setDepartments(departments);
+    };
+    getAllDepartments();
+  }, []);
 
   // Handle map click
   const handleMapClick = async (event: any) => {
@@ -129,6 +120,16 @@ const ProjectCreateModal = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!project.name.trim()) {
+      alert('Please enter a project name');
+      return;
+    }
+
+    if (selectedDepartments.length === 0) {
+      alert('Please select at least one department');
+      return;
+    }
+
     // Create slug from project name
     const slug = project.name.toLowerCase().replace(/\s+/g, '-');
 
@@ -145,7 +146,6 @@ const ProjectCreateModal = () => {
       description: project.description,
       projectLocationId: location.id,
       locationString: formData.name,
-      departmentProjectsId: project.departmentProjectsId,
       link: slug,
       status: Status.DRAFT,
       projectCreatedById: user?.id,
@@ -169,7 +169,15 @@ const ProjectCreateModal = () => {
         },
       },
     });
+
+    await selectedDepartments.forEach(async (departmentId) => {
+      await createProjectDepartments(
+        newProject.data.createProject.id,
+        departmentId
+      );
+    });
     toggleModal();
+    router.push(`/projects/${newProject.data.createProject.id}`);
   };
 
   return (
@@ -179,7 +187,7 @@ const ProjectCreateModal = () => {
           Create New Project
         </h2>
         <form onSubmit={handleSubmit} className='flex flex-col h-full'>
-          <div className='grid grid-cols-2 gap-4'>
+          <div className='grid grid-cols-2 gap-10'>
             <div className='mb-4'>
               <label
                 htmlFor='name'
@@ -202,25 +210,27 @@ const ProjectCreateModal = () => {
                 htmlFor='department'
                 className='block text-sm font-medium text-gray-700'
               >
-                Department
+                Departments
               </label>
-              <select
-                id='department'
-                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
-                value={project.departmentProjectsId}
-                onChange={(e) =>
-                  setProject({
-                    ...project,
-                    departmentProjectsId: e.target.value,
-                  })
-                }
-              >
+              <div className='flex flex-wrap gap-2 mt-1'>
                 {departments.map((department) => (
-                  <option key={department.id} value={department.id}>
+                  <div key={department.id} className='flex items-center gap-2'>
+                    <input
+                      type='checkbox'
+                      id={department.id}
+                      checked={selectedDepartments.includes(department.id)}
+                      onChange={(e) =>
+                        setSelectedDepartments((prev) =>
+                          e.target.checked
+                            ? [...prev, department.id]
+                            : prev.filter((id) => id !== department.id)
+                        )
+                      }
+                    />
                     {department.name}
-                  </option>
+                  </div>
                 ))}
-              </select>
+              </div>
             </div>
           </div>
           <div className='mb-4'>

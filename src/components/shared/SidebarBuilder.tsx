@@ -282,10 +282,6 @@ const SidebarBuilder = ({
 
       <div className='flex flex-col gap-3'>
         <SubcategorySelect
-          currentSubcategories={
-            project.subcategories?.items.map((s) => s.subcategory) || []
-          }
-          departmentId={project.departments.items[0].department.id}
           projectId={project.id}
           refreshProject={refreshProject}
         />
