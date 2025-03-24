@@ -208,7 +208,7 @@ const SidebarBuilder = ({
     <div className='flex flex-col gap-7'>
       <div className='flex flex-col gap-3'>
         <div className='w-full uppercase text-xs text-gray-400'>
-          {project.department.name}
+          {project.departments.items[0].department.name}
         </div>
         <div className='w-full text-sm text-gray-400'>
           Title:{' '}
@@ -285,7 +285,7 @@ const SidebarBuilder = ({
           currentSubcategories={
             project.subcategories?.items.map((s) => s.subcategory) || []
           }
-          departmentId={project.department.id}
+          departmentId={project.departments.items[0].department.id}
           projectId={project.id}
           refreshProject={refreshProject}
         />

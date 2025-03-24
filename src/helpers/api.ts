@@ -452,9 +452,13 @@ export const getProjectById = async (id: string) => {
             id
             name
           }
-          department {
-            name
-            id
+          departments {
+            items {
+              department {
+                name
+                id
+              }
+            }
           }
           description
           featured

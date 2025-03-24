@@ -114,6 +114,14 @@ export interface Project {
       };
     }[];
   };
+  subcategories: {
+    items: {
+      subcategory: {
+        id: string;
+        name: string;
+      };
+    }[];
+  };
   onDescriptionChange?: (description: string) => void;
   onNameChange?: (name: string) => void;
   onSizeChange?: (size: string) => void;
