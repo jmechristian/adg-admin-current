@@ -206,9 +206,9 @@ const SidebarBuilder = ({
 
   return (
     <div className='flex flex-col gap-7'>
-      <div className='flex flex-col gap-3'>
-        <div className='w-full uppercase text-xs text-gray-400'>
-          {project.departments.items[0].department.name}
+      <div className='flex flex-col gap-5'>
+        <div className='w-full uppercase text-sm text-gray-300'>
+          {project.departments.items.map((d) => d.department.name).join(', ')}
         </div>
         <div className='w-full text-sm text-gray-400'>
           Title:{' '}
