@@ -71,7 +71,8 @@ export default function Media() {
 
     // Get department and normalize it
     const departmentName =
-      gallery.project?.department?.name?.toLowerCase() || '';
+      gallery.project?.departments?.items[0]?.department?.name?.toLowerCase() ||
+      '';
     // Check if it's either 'commercial interiors' or 'interiors'
     const isInteriors =
       departmentName === 'commercial interiors' ||

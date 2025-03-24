@@ -834,8 +834,13 @@ export const listProjectsWithLocations = async () => {
     query MyQuery {
   listProjects(limit: 300) {
     items {
-      department {
-        name
+      departments {
+        items {
+          department {
+            id
+            name
+          }
+        }
       }
       gallery {
         images(limit: 1) {
@@ -879,9 +884,13 @@ export const getGalleries = async () => {
           project {
             id
             name
-            department {
-              id
-              name
+            departments {
+              items {
+                department {
+                  id
+                  name
+                }
+              }
             }
           }
           images {

@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { listAllProjects } from '../../helpers/api';
-import { Project } from '@/types';
+import { getProjectsWithDepartments, listAllProjects } from '../../helpers/api';
+import { Project, ProjectWithDepartments } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 import BrandingIcon from '@/components/shared/BrandingIcon';
 import useLayoutStore from '@/store/useLayoutStore';
 export default function CommercialInteriors() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,11 +17,12 @@ export default function CommercialInteriors() {
   useEffect(() => {
     const getProjects = async () => {
       try {
-        const res = await listAllProjects();
+        const res = await getProjectsWithDepartments();
         setProjects(
           res.filter(
-            (project: Project) =>
-              project.department.id === '4dfd71af-51a3-4af9-874f-da260e081f08'
+            (project: ProjectWithDepartments) =>
+              project.departments.items[0].department.id ===
+              '4dfd71af-51a3-4af9-874f-da260e081f08'
           )
         );
       } finally {
@@ -41,12 +42,14 @@ export default function CommercialInteriors() {
         return 0;
       })
       .filter(
-        (project: Project) =>
+        (project: ProjectWithDepartments) =>
           project?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ??
           false
       )
-      .filter((project: Project) =>
-        activeFilter ? project?.department?.name === activeFilter : true
+      .filter((project: ProjectWithDepartments) =>
+        activeFilter
+          ? project?.departments?.items[0]?.department?.name === activeFilter
+          : true
       );
   }, [projects, searchTerm, activeFilter]);
 
@@ -136,7 +139,7 @@ export default function CommercialInteriors() {
               {currentProjects.length > 0 &&
                 currentProjects
                   .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((project: Project) => (
+                  .map((project: ProjectWithDepartments) => (
                     <ProjectItem key={project.id} project={project} />
                   ))}
             </div>

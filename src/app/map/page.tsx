@@ -10,8 +10,12 @@ import AkresIcon from '@/components/shared/AkresIcon';
 import InteriorsIcon from '@/components/shared/InteriorsIcon';
 
 interface ProjectWithLocation {
-  department: {
-    name: string;
+  departments: {
+    items: {
+      department: {
+        name: string;
+      };
+    }[];
   };
   gallery: {
     images: {
@@ -107,7 +111,7 @@ const LocationSidebar = ({
           >
             <div className='font-semibold'>{location.name}</div>
             <div className='text-sm text-gray-500'>
-              {location.department.name}
+              {location.departments.items[0].department.name}
             </div>
             <div className='text-xs text-gray-400'>
               {location.location.address}
@@ -189,13 +193,15 @@ const MapPage = () => {
     }
 
     return filtered.filter((location) =>
-      activeFilters.includes(location.department.name.toLowerCase())
+      activeFilters.includes(
+        location.departments.items[0].department.name.toLowerCase()
+      )
     );
   }, [locations, searchQuery, activeFilters]);
 
   const markers = useMemo(() => {
     return filteredLocations.map((location) => {
-      const icon = getMarkerIcon(location.department.name);
+      const icon = getMarkerIcon(location.departments.items[0].department.name);
 
       return (
         <Marker
@@ -249,7 +255,7 @@ const MapPage = () => {
           <div className='flex justify-between items-center pb-3 border-b border-gray-300'>
             <div className='flex flex-col gap-0'>
               <div className='text-sm text-gray-500'>
-                {location.department.name}
+                {location.departments.items[0].department.name}
               </div>
               <h2 className='text-xl font-bold'>{location.name}</h2>
             </div>
