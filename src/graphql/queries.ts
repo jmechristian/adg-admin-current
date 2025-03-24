@@ -131,11 +131,8 @@ export const getGallery = /* GraphQL */ `
           updatedAt
           galleryProjectId
         }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
+        departments {
+          nextToken
         }
         subcategories {
           nextToken
@@ -146,9 +143,9 @@ export const getGallery = /* GraphQL */ `
         project_type {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
-        departmentProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -186,9 +183,9 @@ export const listGalleries = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -263,9 +260,9 @@ export const getProject = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -275,17 +272,15 @@ export const getProject = /* GraphQL */ `
         updatedAt
         galleryProjectId
       }
-      department {
-        id
-        name
-        projects {
-          nextToken
+      departments {
+        items {
+          id
+          projectID
+          departmentID
+          createdAt
+          updatedAt
         }
-        subcategories {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
       subcategories {
         items {
@@ -317,9 +312,9 @@ export const getProject = /* GraphQL */ `
         }
         nextToken
       }
+      displayOrder
       createdAt
       updatedAt
-      departmentProjectsId
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
@@ -380,11 +375,8 @@ export const listProjects = /* GraphQL */ `
           updatedAt
           galleryProjectId
         }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
+        departments {
+          nextToken
         }
         subcategories {
           nextToken
@@ -395,9 +387,9 @@ export const listProjects = /* GraphQL */ `
         project_type {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
-        departmentProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -415,25 +407,10 @@ export const getDepartment = /* GraphQL */ `
       projects {
         items {
           id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
+          projectID
+          departmentID
           createdAt
           updatedAt
-          departmentProjectsId
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
         }
         nextToken
       }
@@ -447,6 +424,7 @@ export const getDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      displayOrder
       createdAt
       updatedAt
     }
@@ -468,6 +446,7 @@ export const listDepartments = /* GraphQL */ `
         subcategories {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -501,9 +480,9 @@ export const getImageObject = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -572,6 +551,7 @@ export const getSubcategory = /* GraphQL */ `
         }
         nextToken
       }
+      displayOrder
       createdAt
       updatedAt
     }
@@ -593,6 +573,7 @@ export const listSubcategories = /* GraphQL */ `
         departments {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -615,6 +596,7 @@ export const getBuildingType = /* GraphQL */ `
         }
         nextToken
       }
+      displayOrder
       createdAt
       updatedAt
     }
@@ -633,6 +615,7 @@ export const listBuildingTypes = /* GraphQL */ `
         projects {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -655,6 +638,7 @@ export const getProjectType = /* GraphQL */ `
         }
         nextToken
       }
+      displayOrder
       createdAt
       updatedAt
     }
@@ -672,6 +656,148 @@ export const listProjectTypes = /* GraphQL */ `
         name
         projects {
           nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getProjectDepartments = /* GraphQL */ `
+  query GetProjectDepartments($id: ID!) {
+    getProjectDepartments(id: $id) {
+      id
+      projectID
+      departmentID
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listProjectDepartments = /* GraphQL */ `
+  query ListProjectDepartments(
+    $filter: ModelProjectDepartmentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProjectDepartments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        projectID
+        departmentID
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        department {
+          id
+          name
+          displayOrder
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -732,11 +858,8 @@ export const getProjectSubcategories = /* GraphQL */ `
           updatedAt
           galleryProjectId
         }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
+        departments {
+          nextToken
         }
         subcategories {
           nextToken
@@ -747,9 +870,9 @@ export const getProjectSubcategories = /* GraphQL */ `
         project_type {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
-        departmentProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -764,6 +887,7 @@ export const getProjectSubcategories = /* GraphQL */ `
         departments {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -801,9 +925,9 @@ export const listProjectSubcategories = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -812,6 +936,7 @@ export const listProjectSubcategories = /* GraphQL */ `
         subcategory {
           id
           name
+          displayOrder
           createdAt
           updatedAt
         }
@@ -874,11 +999,8 @@ export const getProjectBuildingTypes = /* GraphQL */ `
           updatedAt
           galleryProjectId
         }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
+        departments {
+          nextToken
         }
         subcategories {
           nextToken
@@ -889,9 +1011,9 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         project_type {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
-        departmentProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -903,6 +1025,7 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         projects {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -940,9 +1063,9 @@ export const listProjectBuildingTypes = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -951,6 +1074,7 @@ export const listProjectBuildingTypes = /* GraphQL */ `
         buildingType {
           id
           name
+          displayOrder
           createdAt
           updatedAt
         }
@@ -1013,11 +1137,8 @@ export const getProjectProjectTypes = /* GraphQL */ `
           updatedAt
           galleryProjectId
         }
-        department {
-          id
-          name
-          createdAt
-          updatedAt
+        departments {
+          nextToken
         }
         subcategories {
           nextToken
@@ -1028,9 +1149,9 @@ export const getProjectProjectTypes = /* GraphQL */ `
         project_type {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
-        departmentProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1042,6 +1163,7 @@ export const getProjectProjectTypes = /* GraphQL */ `
         projects {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -1079,9 +1201,9 @@ export const listProjectProjectTypes = /* GraphQL */ `
           size
           gridOrder
           status
+          displayOrder
           createdAt
           updatedAt
-          departmentProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1090,6 +1212,7 @@ export const listProjectProjectTypes = /* GraphQL */ `
         projectType {
           id
           name
+          displayOrder
           createdAt
           updatedAt
         }
@@ -1115,6 +1238,7 @@ export const getDepartmentSubcategories = /* GraphQL */ `
         subcategories {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -1127,6 +1251,7 @@ export const getDepartmentSubcategories = /* GraphQL */ `
         departments {
           nextToken
         }
+        displayOrder
         createdAt
         updatedAt
       }
@@ -1153,12 +1278,14 @@ export const listDepartmentSubcategories = /* GraphQL */ `
         department {
           id
           name
+          displayOrder
           createdAt
           updatedAt
         }
         subcategory {
           id
           name
+          displayOrder
           createdAt
           updatedAt
         }

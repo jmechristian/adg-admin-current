@@ -55,19 +55,21 @@ type Project @model {
   gridOrder: Int
   status: Status!
   gallery: Gallery @hasOne
-  department: Department! @belongsTo
+  departments: [Department] @manyToMany(relationName: "ProjectDepartments")
   subcategories: [Subcategory] @manyToMany(relationName: "ProjectSubcategories")
   building_type: [BuildingType]
     @manyToMany(relationName: "ProjectBuildingTypes")
   project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
+  displayOrder: Int
 }
 
 type Department @model {
   id: ID!
   name: String!
-  projects: [Project] @hasMany
+  projects: [Project] @manyToMany(relationName: "ProjectDepartments")
   subcategories: [Subcategory]
     @manyToMany(relationName: "DepartmentSubcategories")
+  displayOrder: Int
 }
 
 type ImageObject @model {
@@ -84,16 +86,19 @@ type Subcategory @model {
   name: String!
   projects: [Project] @manyToMany(relationName: "ProjectSubcategories")
   departments: [Department] @manyToMany(relationName: "DepartmentSubcategories")
+  displayOrder: Int
 }
 
 type BuildingType @model {
   id: ID!
   name: String!
   projects: [Project] @manyToMany(relationName: "ProjectBuildingTypes")
+  displayOrder: Int
 }
 
 type ProjectType @model {
   id: ID!
   name: String!
   projects: [Project] @manyToMany(relationName: "ProjectProjectTypes")
+  displayOrder: Int
 }

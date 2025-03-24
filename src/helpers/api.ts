@@ -33,6 +33,7 @@ import {
   deleteProjectSubcategories as deleteProjectSubcategoriesMutation,
   deleteProjectProjectTypes as deleteProjectProjectTypesMutation,
   deleteProjectBuildingTypes as deleteProjectBuildingTypesMutation,
+  createProjectDepartments as createProjectDepartmentsMutation,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -49,6 +50,7 @@ import {
   ProjectSubcategory,
   ProjectProjectType,
   ProjectBuildingType,
+  ProjectWithDepartments,
 } from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
@@ -1095,4 +1097,67 @@ export const deleteImage = async (imageId: string) => {
     variables: { input: { id: imageId } },
   });
   return res;
+};
+
+export const createProjectDepartments = async (
+  projectId: string,
+  departmentId: string
+) => {
+  const res = await client.graphql({
+    query: createProjectDepartmentsMutation,
+    variables: { input: { projectID: projectId, departmentID: departmentId } },
+  });
+  return res;
+};
+
+export const getProjectsWithDepartments = async () => {
+  const customQuery = `
+    query MyQuery($nextToken: String) {
+      listProjects(limit: 1000, nextToken: $nextToken) {
+        items {
+          createdAt
+          departments {
+            items {
+              department {
+                id
+                name
+              }
+            }
+          }
+          description
+          displayOrder
+          featured
+          projectGalleryId
+          name
+          locationString
+          link
+          id
+          size
+          status
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  `;
+
+  let allItems: any[] = [];
+  let nextToken: string | null = null;
+
+  do {
+    const response = (await client.graphql({
+      query: customQuery,
+      variables: { nextToken },
+    })) as GraphQLResult<{
+      listProjects: {
+        items: Array<ProjectWithDepartments>;
+        nextToken: string | null;
+      };
+    }>;
+
+    allItems = [...allItems, ...response.data.listProjects.items];
+    nextToken = response.data.listProjects.nextToken;
+  } while (nextToken);
+
+  return allItems;
 };

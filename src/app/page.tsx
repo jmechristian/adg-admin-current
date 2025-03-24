@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { listAllProjects } from '../helpers/api';
+import { getProjectsWithDepartments } from '../helpers/api';
 import HeaderItem from '@/components/shared/HeaderItem';
-import { Project } from '@/types';
+import { ProjectWithDepartments } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 import useLayoutStore from '@/store/useLayoutStore';
 
 export default function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +18,8 @@ export default function Home() {
   useEffect(() => {
     const getProjects = async () => {
       try {
-        const res = await listAllProjects();
+        const res = await getProjectsWithDepartments();
+        console.log(res);
         setProjects(res);
       } finally {
         setLoading(false);
@@ -37,12 +38,14 @@ export default function Home() {
         return 0;
       })
       .filter(
-        (project: Project) =>
+        (project: ProjectWithDepartments) =>
           project?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ??
           false
       )
-      .filter((project: Project) =>
-        activeFilter ? project?.department?.name === activeFilter : true
+      .filter((project: ProjectWithDepartments) =>
+        activeFilter
+          ? project?.departments?.items[0]?.department?.name === activeFilter
+          : true
       );
   }, [projects, searchTerm, activeFilter]);
 
@@ -62,8 +65,9 @@ export default function Home() {
   const architectureCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) =>
-            project?.department?.id === '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
+          (project: ProjectWithDepartments) =>
+            project?.departments?.items[0]?.department?.id ===
+            '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
         ).length
       : 0;
   }, [projects]);
@@ -71,8 +75,9 @@ export default function Home() {
   const commercialInteriorsCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) =>
-            project?.department?.id === '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+          (project: ProjectWithDepartments) =>
+            project?.departments?.items[0]?.department?.id ===
+            '0cd75086-b396-4c52-a907-5b52fb6aeedd'
         ).length
       : 0;
   }, [projects]);
@@ -80,8 +85,9 @@ export default function Home() {
   const brandingCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) =>
-            project?.department?.id === '4dfd71af-51a3-4af9-874f-da260e081f08'
+          (project: ProjectWithDepartments) =>
+            project?.departments?.items[0]?.department?.id ===
+            '4dfd71af-51a3-4af9-874f-da260e081f08'
         ).length
       : 0;
   }, [projects]);
@@ -89,8 +95,9 @@ export default function Home() {
   const akresCount = useMemo(() => {
     return projects.length > 0
       ? projects.filter(
-          (project: Project) =>
-            project?.department?.id === '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+          (project: ProjectWithDepartments) =>
+            project?.departments?.items[0]?.department?.id ===
+            '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
         ).length
       : 0;
   }, [projects]);
@@ -226,7 +233,7 @@ export default function Home() {
               {currentProjects.length > 0 &&
                 currentProjects
                   .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((project: Project) => (
+                  .map((project: ProjectWithDepartments) => (
                     <ProjectItem key={project.id} project={project} />
                   ))}
             </div>

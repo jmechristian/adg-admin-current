@@ -1,12 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Gallery, Project, GalleryResponse } from '@/types';
+import {
+  Gallery,
+  ProjectWithDepartments,
+  GalleryResponse,
+  Department,
+} from '@/types';
 import { getProjectGallery } from '@/helpers/api';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 
-const ProjectItem = ({ project }: { project: Project }) => {
+const ProjectItem = ({ project }: { project: ProjectWithDepartments }) => {
   console.log(project);
   const [gallery, setGallery] = useState<Gallery | null>(null);
   const [isClicked, setIsClicked] = useState(false);
@@ -15,7 +20,7 @@ const ProjectItem = ({ project }: { project: Project }) => {
   useEffect(() => {
     const fetchGallery = async () => {
       const projectGallery = (await getProjectGallery(
-        project.gallery.id
+        project.projectGalleryId
       )) as GalleryResponse;
       setGallery(projectGallery.data.getGallery);
     };
@@ -27,7 +32,9 @@ const ProjectItem = ({ project }: { project: Project }) => {
 
   const handleClick = () => {
     setIsClicked(true);
-    const catSlug = project.department.name.toLowerCase().replace(/\s+/g, '-');
+    const catSlug = project.departments.items[0].department.name
+      .toLowerCase()
+      .replace(/\s+/g, '-');
 
     // Reset the click state after a brief delay
     setTimeout(() => setIsClicked(false), 200);
@@ -55,7 +62,11 @@ const ProjectItem = ({ project }: { project: Project }) => {
         </div>
         <div className='flex flex-col gap-1'>
           <div className='font-brand-bold'>{project.name}</div>
-          <div className='text-sm text-gray-500'>{project.department.name}</div>
+          <div className='text-sm text-gray-500'>
+            {project.departments.items
+              .map((department: any) => department.department.name)
+              .join(', ')}
+          </div>
         </div>
       </div>
       <div className='col-span-2 text-xs'>{project.locationString}</div>

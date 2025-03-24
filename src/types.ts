@@ -45,6 +45,28 @@ export interface Gallery {
   };
   project: Project;
 }
+export interface ProjectWithDepartments {
+  createdAt: string;
+  departments: {
+    items: Array<{
+      department: {
+        id: string;
+        name: string;
+      };
+    }>;
+  };
+  description: string;
+  displayOrder: number;
+  featured: boolean;
+  projectGalleryId: string;
+  name: string;
+  locationString: string;
+  link: string;
+  id: string;
+  size: string;
+  status: string;
+  updatedAt: string;
+}
 
 export interface Project {
   createdAt: string;
