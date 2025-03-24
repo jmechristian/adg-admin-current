@@ -90,10 +90,9 @@ export interface Project {
   status: Status;
   hero?: ImageObject;
   gallery: Gallery;
-  department: Department;
-  subcategories: {
+  departments: {
     items: {
-      subcategory: {
+      department: {
         id: string;
         name: string;
       };
