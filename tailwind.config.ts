@@ -17,6 +17,10 @@ export default {
         commercialInteriors: '#bef264',
         branding: '#bef26499',
         akres: '#bef26499',
+        'brand-light-gray': '#e6e6e6',
+        'brand-gray': '#524f4f',
+        'brand-peach': '#f5e5de',
+        'brand-brown': '#b0a69c',
       },
       fontFamily: {
         'brand-book': 'Gotham Book',

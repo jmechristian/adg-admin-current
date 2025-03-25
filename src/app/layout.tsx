@@ -61,7 +61,7 @@ export default function RootLayout({
         <div className='min-h-full'>
           <Disclosure
             as='nav'
-            className='bg-gray-900 py-2 px-10  border-b-4 border-b-brand '
+            className='bg-gray-900 py-2 px-10  border-b border-b-brand-brown '
           >
             <div>
               <div className='flex h-16 items-center justify-between w-full'>
@@ -110,7 +110,7 @@ export default function RootLayout({
                         <MenuButton className='relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
                           <span className='absolute -inset-1.5' />
                           <span className='sr-only'>Open user menu</span>
-                          <div className='aspect-square size-8 rounded-full bg-brand ring-2 ring-white/60 flex items-center justify-center'>
+                          <div className='aspect-square size-8 rounded-full bg-brand-gray ring-2 ring-white/60 flex items-center justify-center'>
                             <div className='font-brandSerif text-white text-2xl'>
                               {user.name.charAt(0)}
                             </div>

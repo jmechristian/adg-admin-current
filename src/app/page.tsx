@@ -6,6 +6,7 @@ import HeaderItem from '@/components/shared/HeaderItem';
 import { ProjectWithDepartments } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 import useLayoutStore from '@/store/useLayoutStore';
+import { MdRefresh } from 'react-icons/md';
 
 export default function Home() {
   const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
@@ -44,7 +45,9 @@ export default function Home() {
       )
       .filter((project: ProjectWithDepartments) =>
         activeFilter
-          ? project?.departments?.items[0]?.department?.name === activeFilter
+          ? project?.departments?.items.some(
+              (department) => department.department.name === activeFilter
+            )
           : true
       );
   }, [projects, searchTerm, activeFilter]);
@@ -64,40 +67,60 @@ export default function Home() {
 
   const architectureCount = useMemo(() => {
     return projects.length > 0
-      ? projects.filter(
-          (project: ProjectWithDepartments) =>
-            project?.departments?.items[0]?.department?.id ===
-            '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
+      ? projects.filter((project: ProjectWithDepartments) =>
+          project?.departments?.items.some(
+            (department) =>
+              department.department.id ===
+              '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
+          )
         ).length
       : 0;
   }, [projects]);
 
   const commercialInteriorsCount = useMemo(() => {
     return projects.length > 0
-      ? projects.filter(
-          (project: ProjectWithDepartments) =>
-            project?.departments?.items[0]?.department?.id ===
-            '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+      ? projects.filter((project: ProjectWithDepartments) =>
+          project?.departments?.items.some(
+            (department) =>
+              department.department.id ===
+              '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+          )
         ).length
       : 0;
   }, [projects]);
 
   const brandingCount = useMemo(() => {
     return projects.length > 0
-      ? projects.filter(
-          (project: ProjectWithDepartments) =>
-            project?.departments?.items[0]?.department?.id ===
-            '4dfd71af-51a3-4af9-874f-da260e081f08'
+      ? projects.filter((project: ProjectWithDepartments) =>
+          project?.departments?.items.some(
+            (department) =>
+              department.department.id ===
+              '4dfd71af-51a3-4af9-874f-da260e081f08'
+          )
         ).length
       : 0;
   }, [projects]);
 
   const akresCount = useMemo(() => {
     return projects.length > 0
-      ? projects.filter(
-          (project: ProjectWithDepartments) =>
-            project?.departments?.items[0]?.department?.id ===
-            '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+      ? projects.filter((project: ProjectWithDepartments) =>
+          project?.departments?.items.some(
+            (department) =>
+              department.department.id ===
+              '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+          )
+        ).length
+      : 0;
+  }, [projects]);
+
+  const millworkCount = useMemo(() => {
+    return projects.length > 0
+      ? projects.filter((project: ProjectWithDepartments) =>
+          project?.departments?.items.some(
+            (department) =>
+              department.department.id ===
+              '763080b2-dddf-45e6-ab08-c540a84d8b07'
+          )
         ).length
       : 0;
   }, [projects]);
@@ -109,10 +132,10 @@ export default function Home() {
 
   return (
     <div className='flex flex-col'>
-      <header className='bg-gray-900 pt-4 pb-6'>
+      <header className='bg-gray-900 pt-6 pb-6'>
         <div className='mx-auto max-w-7xl'>
           <div className='flex flex-col gap-2.5'>
-            <div className='grid grid-cols-4 gap-5'>
+            <div className='grid grid-cols-5 gap-5'>
               {loading ? (
                 [...Array(4)].map((_, index) => (
                   <div
@@ -125,7 +148,7 @@ export default function Home() {
                   <HeaderItem
                     title='Architecture'
                     count={architectureCount}
-                    bgColor={`bg-indigo-200/70 ${
+                    bgColor={`bg-brand-gray ${
                       activeFilter === 'Architecture'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
@@ -135,7 +158,7 @@ export default function Home() {
                   <HeaderItem
                     title='Interiors'
                     count={commercialInteriorsCount}
-                    bgColor={`bg-lime-300/60 ${
+                    bgColor={`bg-brand-gray ${
                       activeFilter === 'Interiors'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
@@ -145,7 +168,7 @@ export default function Home() {
                   <HeaderItem
                     title='Branding'
                     count={brandingCount}
-                    bgColor={`bg-yellow-400/80 ${
+                    bgColor={`bg-brand-gray ${
                       activeFilter === 'Branding'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
@@ -155,12 +178,22 @@ export default function Home() {
                   <HeaderItem
                     title='Residential'
                     count={akresCount}
-                    bgColor={`bg-orange-400/80 ${
+                    bgColor={`bg-brand-gray ${
                       activeFilter === 'Residential'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
                     onClick={() => handleFilterClick('Residential')}
+                  />
+                  <HeaderItem
+                    title='Millwork'
+                    count={millworkCount}
+                    bgColor={`bg-brand-gray ${
+                      activeFilter === 'Millwork'
+                        ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
+                        : ''
+                    }`}
+                    onClick={() => handleFilterClick('Millwork')}
                   />
                 </>
               )}
@@ -185,16 +218,31 @@ export default function Home() {
           </>
         ) : (
           <>
-            <div className='w-full border-b-2 pb-2 flex justify-between items-center'>
-              <div className='font-brand-bold text-2xl'>All Projects</div>
+            <div className='w-full border-b-2 pb-4 flex justify-between items-center'>
+              <div className='flex items-center gap-1'>
+                <div className='font-brand-bold text-2xl'>All Projects</div>
+                <div className='text-2xl text-gray-500 ml-1'>
+                  {filteredProjects.length} projects
+                </div>
+                <div
+                  className='cursor-pointer'
+                  onClick={() => {
+                    setActiveFilter('');
+                    setSearchTerm('');
+                    setCurrentPage(1);
+                  }}
+                >
+                  <MdRefresh className='text-gray-500' size={24} />
+                </div>
+              </div>
               <button
                 onClick={toggleModal}
-                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'
+                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-lg'
               >
                 Create New +
               </button>
             </div>
-            <div className='flex justify-between items-center mt-5 mb-4'>
+            <div className='flex justify-between items-center mt-5 mb-4 border-b-2 pb-4'>
               <input
                 type='text'
                 placeholder='Search by name'
@@ -203,12 +251,12 @@ export default function Home() {
                 className='mb-4 p-2 border border-gray-300 w-[60%]'
               />
               <div className='flex justify-between items-center gap-2 text-sm mb-4'>
-                <label>
+                <label className='flex items-center gap-1'>
                   Show
                   <select
                     value={itemsPerPage}
                     onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                    className='mx-1 p-2 border border-gray-300 text-sm'
+                    className='p-1.5 border border-gray-300 text-sm w-16'
                   >
                     <option value={10}>10</option>
                     <option value={25}>25</option>
