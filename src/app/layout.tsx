@@ -112,8 +112,8 @@ export default function RootLayout({
                         <MenuButton className='relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
                           <span className='absolute -inset-1.5' />
                           <span className='sr-only'>Open user menu</span>
-                          <div className='aspect-square size-8 rounded-full bg-brand-gray ring-2 ring-white/60 flex items-center justify-center'>
-                            <div className='font-brandSerif text-white text-2xl'>
+                          <div className='aspect-square size-8 rounded-full bg-indigo-900 ring-2 ring-white/60 flex items-center justify-center'>
+                            <div className='font-brand-serif text-white text-xl leading-none'>
                               {user.name.charAt(0)}
                             </div>
                           </div>

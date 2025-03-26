@@ -17,22 +17,26 @@ interface HeaderItemProps {
 const HeaderItem = ({ title, count, bgColor, onClick }: HeaderItemProps) => {
   return (
     <div
-      className={`flex flex-col gap-4 ${bgColor} rounded-xl p-4`}
+      className={`flex flex-col gap-4 ${bgColor} rounded-xl px-4 pt-3 pb-4`}
       onClick={onClick}
     >
-      <div className='font-brand text-lg text-brand-peach'>{title}</div>
+      <div className='font-brand text-2xl text-brand-peach font-brand-serif'>
+        {title}
+      </div>
       <div className='flex items-center justify-between w-full'>
-        <div className='text-white font-brandBold text-4xl'>{count}</div>
+        <div className='text-white font-brand-serif text-3xl ml-1 leading-none'>
+          {count}
+        </div>
         {title === 'Architecture' ? (
-          <MdArchitecture className='text-white/60 text-4xl' />
+          <MdArchitecture className='text-white/60 text-3xl' />
         ) : title === 'Interiors' ? (
-          <MdChair className='text-white/60 text-4xl' />
+          <MdChair className='text-white/60 text-3xl' />
         ) : title === 'Residential' ? (
-          <MdHome className='text-white/60 text-4xl' />
+          <MdHome className='text-white/60 text-3xl' />
         ) : title === 'Millwork' ? (
-          <MdBathroom className='text-white/60 text-4xl' />
+          <MdBathroom className='text-white/60 text-3xl' />
         ) : (
-          <MdCategory className='text-white/60 text-4xl' />
+          <MdCategory className='text-white/60 text-3xl' />
         )}
       </div>
     </div>

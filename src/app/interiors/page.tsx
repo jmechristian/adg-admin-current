@@ -70,7 +70,7 @@ export default function CommercialInteriors() {
       .filter((project: ProjectWithDepartments) =>
         activeFilter
           ? project.subcategories?.items.some(
-              (item) => item.subcategory.subcategory.name === activeFilter
+              (item) => item.subcategory.name === activeFilter
             )
           : true
       );
@@ -128,7 +128,7 @@ export default function CommercialInteriors() {
               </div>
               <button
                 onClick={toggleModal}
-                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-lg'
+                className='bg-brand hover:bg-brand-brown transition-colors duration-300 text-white px-4 py-2 rounded-md font-brand-bold text-lg'
               >
                 Create New +
               </button>
@@ -163,9 +163,7 @@ export default function CommercialInteriors() {
               {subcategories.map((subcategory) => {
                 const count = projects.filter((project) =>
                   project.subcategories?.items.some(
-                    (item) =>
-                      item.subcategory.subcategory.name ===
-                      subcategory.subcategory.name
+                    (item) => item.subcategory.name === activeFilter
                   )
                 ).length;
 

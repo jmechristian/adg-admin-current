@@ -66,6 +66,14 @@ export interface ProjectWithDepartments {
   size: string;
   status: string;
   updatedAt: string;
+  subcategories: {
+    items: Array<{
+      subcategory: {
+        id: string;
+        name: string;
+      };
+    }>;
+  };
 }
 
 export interface Project {

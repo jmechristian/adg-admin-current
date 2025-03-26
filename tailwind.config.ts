@@ -12,7 +12,7 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        brand: '#d50057',
+        brand: '#524f4f',
         architecture: 'rgb(199 210 254)',
         commercialInteriors: '#bef264',
         branding: '#bef26499',

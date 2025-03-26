@@ -220,8 +220,8 @@ export default function Home() {
           <>
             <div className='w-full border-b-2 pb-4 flex justify-between items-center'>
               <div className='flex items-center gap-1'>
-                <div className='font-brand-bold text-2xl'>All Projects</div>
-                <div className='text-2xl text-gray-500 ml-1'>
+                <div className='font-brand-bold text-xl'>All Projects</div>
+                <div className='text-xl text-gray-500 ml-1'>
                   {filteredProjects.length} projects
                 </div>
                 <div
