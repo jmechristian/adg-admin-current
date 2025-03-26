@@ -1141,6 +1141,14 @@ export const getProjectsWithDepartments = async () => {
               }
             }
           }
+          subcategories {
+            items {
+              subcategory {
+                id
+                name
+              }
+            }
+          }
           description
           displayOrder
           featured

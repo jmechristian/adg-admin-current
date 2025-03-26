@@ -36,6 +36,7 @@ export default function CommercialInteriors() {
               '0cd75086-b396-4c52-a907-5b52fb6aeedd'
           )
         );
+        console.log(res);
       } finally {
         setLoading(false);
       }
@@ -163,14 +164,15 @@ export default function CommercialInteriors() {
               {subcategories.map((subcategory) => {
                 const count = projects.filter((project) =>
                   project.subcategories?.items.some(
-                    (item) => item.subcategory.name === activeFilter
+                    (item) =>
+                      item.subcategory.name === subcategory.subcategory.name
                   )
                 ).length;
 
                 return (
                   <button
                     key={subcategory.id}
-                    className={`px-3 py-1 rounded-md text-sm flex items-center gap-2 ${
+                    className={`px-3 py-1 rounded-md flex items-center gap-2 font-brand-serif ${
                       activeFilter === subcategory.subcategory.name
                         ? 'bg-gray-400 text-white'
                         : 'bg-brand-gray text-white'
@@ -180,7 +182,7 @@ export default function CommercialInteriors() {
                     }
                   >
                     {subcategory.subcategory.name}
-                    <span className='bg-white text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs'>
+                    <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs'>
                       {count}
                     </span>
                   </button>

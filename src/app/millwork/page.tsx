@@ -34,7 +34,7 @@ export default function Residential() {
           res.filter(
             (project: ProjectWithDepartments) =>
               project.departments.items[0].department.id ===
-              '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+              '763080b2-dddf-45e6-ab08-c540a84d8b07'
           )
         );
       } finally {
@@ -47,7 +47,7 @@ export default function Residential() {
   useEffect(() => {
     const getSubcategories = async () => {
       const subcategories = await getSubcategoriesByDepartment(
-        '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+        '763080b2-dddf-45e6-ab08-c540a84d8b07'
       );
       setSubcategories(subcategories);
     };
@@ -112,7 +112,7 @@ export default function Residential() {
             <div className='font-brand-bold text-2xl w-full border-b-2 pb-4 flex justify-between items-center'>
               <div className='flex items-center gap-1'>
                 {/* <InteriorsIcon active={true} /> */}
-                Residential:{' '}
+                Millwork:{' '}
                 <span className='text-gray-500 font-brand-book'>
                   {projects.length} Projects
                 </span>
