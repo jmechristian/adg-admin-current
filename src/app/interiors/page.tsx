@@ -1,13 +1,24 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { getProjectsWithDepartments, listAllProjects } from '../../helpers/api';
+import {
+  getProjectsWithDepartments,
+  getSubcategoriesByDepartment,
+} from '../../helpers/api';
 import useLayoutStore from '@/store/useLayoutStore';
-import { Project, ProjectWithDepartments } from '@/types';
+import {
+  DepartmentSubcategory,
+  Project,
+  ProjectWithDepartments,
+} from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
 import InteriorsIcon from '@/components/shared/InteriorsIcon';
+import { MdRefresh } from 'react-icons/md';
 export default function CommercialInteriors() {
   const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
+  const [subcategories, setSubcategories] = useState<DepartmentSubcategory[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +43,16 @@ export default function CommercialInteriors() {
     getProjects();
   }, []);
 
+  useEffect(() => {
+    const getSubcategories = async () => {
+      const subcategories = await getSubcategoriesByDepartment(
+        '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+      );
+      setSubcategories(subcategories);
+    };
+    getSubcategories();
+  }, []);
+
   const filteredProjects = useMemo(() => {
     if (!projects.length) return [];
 
@@ -48,7 +69,9 @@ export default function CommercialInteriors() {
       )
       .filter((project: ProjectWithDepartments) =>
         activeFilter
-          ? project?.departments?.items[0]?.department?.name === activeFilter
+          ? project.subcategories?.items.some(
+              (item) => item.subcategory.subcategory.name === activeFilter
+            )
           : true
       );
   }, [projects, searchTerm, activeFilter]);
@@ -68,7 +91,7 @@ export default function CommercialInteriors() {
 
   return (
     <div className='flex flex-col'>
-      <div className='max-w-7xl mx-auto flex flex-col gap-7 py-10 w-full'>
+      <div className='max-w-7xl mx-auto flex flex-col gap-5 py-10 w-full'>
         {loading ? (
           <>
             <div className='h-10 w-1/3 bg-gray-200 animate-pulse rounded'></div>
@@ -85,21 +108,33 @@ export default function CommercialInteriors() {
           </>
         ) : (
           <>
-            <div className='font-brand-bold text-2xl w-full border-b-2 pb-2 flex justify-between items-center'>
-              <div className='flex items-center gap-2'>
-                <InteriorsIcon active={true} />
+            <div className='font-brand-bold text-2xl w-full border-b-2 pb-4 flex justify-between items-center'>
+              <div className='flex items-center gap-1'>
+                {/* <InteriorsIcon active={true} /> */}
                 Commercial Interiors:{' '}
-                <span className='text-brand'>{projects.length} Projects</span>
+                <span className='text-gray-500 font-brand-book'>
+                  {projects.length} Projects
+                </span>
+                <div
+                  className='cursor-pointer'
+                  onClick={() => {
+                    setActiveFilter('');
+                    setSearchTerm('');
+                    setCurrentPage(1);
+                  }}
+                >
+                  <MdRefresh className='text-gray-500' size={24} />
+                </div>
               </div>
               <button
-                onClick={() => toggleModal()}
-                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-sm'
+                onClick={toggleModal}
+                className='bg-brand text-white px-4 py-2 rounded-md font-brand-bold text-lg'
               >
                 Create New +
               </button>
             </div>
 
-            <div className='flex justify-between items-center mb-4'>
+            <div className='flex justify-between items-center border-b-2 pb-4'>
               <input
                 type='text'
                 placeholder='Search by name'
@@ -107,13 +142,13 @@ export default function CommercialInteriors() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className='mb-4 p-2 border border-gray-300 w-[60%]'
               />
-              <div className='flex justify-between items-center gap-2 text-sm mb-4'>
-                <label>
+              <div className='flex justify-between items-center gap-2 text-sm mb-2'>
+                <label className='flex items-center gap-1'>
                   Show
                   <select
                     value={itemsPerPage}
                     onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                    className='mx-1 p-2 border border-gray-300 text-sm'
+                    className='p-1.5 border border-gray-300 text-sm w-16'
                   >
                     <option value={10}>10</option>
                     <option value={25}>25</option>
@@ -124,7 +159,36 @@ export default function CommercialInteriors() {
                 </label>
               </div>
             </div>
+            <div className='flex flex-wrap gap-2 mb-4 border-b-2 pb-4'>
+              {subcategories.map((subcategory) => {
+                const count = projects.filter((project) =>
+                  project.subcategories?.items.some(
+                    (item) =>
+                      item.subcategory.subcategory.name ===
+                      subcategory.subcategory.name
+                  )
+                ).length;
 
+                return (
+                  <button
+                    key={subcategory.id}
+                    className={`px-3 py-1 rounded-md text-sm flex items-center gap-2 ${
+                      activeFilter === subcategory.subcategory.name
+                        ? 'bg-gray-400 text-white'
+                        : 'bg-brand-gray text-white'
+                    }`}
+                    onClick={() =>
+                      setActiveFilter(subcategory.subcategory.name)
+                    }
+                  >
+                    {subcategory.subcategory.name}
+                    <span className='bg-white text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs'>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
             <div className='grid grid-cols-12 gap-10 border-b-2 pb-2'>
               <div className='font-brand-bold text-xs col-span-1'>ID</div>
 

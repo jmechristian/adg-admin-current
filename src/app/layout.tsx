@@ -17,7 +17,7 @@ import ProjectCreateModal from '@/components/shared/ProjectCreateModal';
 import './globals.css';
 
 const navigation = [
-  { name: 'Projects', href: '/', current: false },
+  { name: 'All', href: '/', current: false },
   { name: 'Architecture', href: '/architecture', current: false },
   {
     name: 'Interiors',
@@ -25,6 +25,8 @@ const navigation = [
     current: false,
   },
   { name: 'Branding', href: '/branding', current: false },
+  { name: 'Residential', href: '/residential', current: false },
+  { name: 'Millwork', href: '/millwork', current: false },
   { name: 'Map', href: '/map', current: false },
   { name: 'Templates', href: '/templates', current: false },
   { name: 'Gallery', href: '/media', current: false },
@@ -85,7 +87,7 @@ export default function RootLayout({
                           item.current
                             ? 'bg-gray-700 text-white rounded-md px-3 py-1 font-brand'
                             : 'text-gray-400 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-1 font-brand font-medium text-sm'
+                          'rounded-md px-3 py-1 font-brand font-medium'
                         )}
                       >
                         {item.name}

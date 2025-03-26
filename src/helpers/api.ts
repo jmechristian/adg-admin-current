@@ -1178,3 +1178,13 @@ export const getProjectsWithDepartments = async () => {
 
   return allItems;
 };
+
+export const getSubcategoriesByDepartment = async (departmentId: string) => {
+  const subcategories = (await client.graphql({
+    query: listDepartmentSubcategories,
+    variables: { filter: { departmentID: { eq: departmentId } } },
+  })) as GraphQLResult<{
+    listDepartmentSubcategories: { items: DepartmentSubcategory[] };
+  }>;
+  return subcategories.data.listDepartmentSubcategories.items;
+};
