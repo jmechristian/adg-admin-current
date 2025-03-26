@@ -146,7 +146,10 @@ export const SubcategorySelect = ({
                       subcategories: [],
                     };
                   }
-                  acc[deptId].subcategories.push(item.subcategory);
+                  acc[deptId].subcategories.push({
+                    ...item.subcategory,
+                    departmentId: deptId,
+                  });
                   return acc;
                 }, {} as Record<string, { name: string; subcategories: any[] }>)
               ).map(([deptId, dept]) => (

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { getGalleries } from '@/helpers/api';
+import { getGalleries, getFullImageUrl } from '@/helpers/api';
 import ArchitectureIcon from '@/components/shared/ArchitectureIcon';
 import BrandingIcon from '@/components/shared/BrandingIcon';
 import InteriorsIcon from '@/components/shared/InteriorsIcon';
@@ -256,7 +256,7 @@ export default function Media() {
                         onClick={() => setSelectedImage(image)}
                       >
                         <img
-                          src={image.url}
+                          src={getFullImageUrl(image.url)}
                           alt={image.alt || 'Gallery image'}
                           className='object-cover w-full h-full'
                         />
@@ -278,7 +278,7 @@ export default function Media() {
             <div className='flex flex-col gap-4'>
               <div className='aspect-square relative overflow-hidden'>
                 <img
-                  src={selectedImage.url}
+                  src={getFullImageUrl(selectedImage.url)}
                   alt={selectedImage.alt || 'Selected image'}
                   className='object-cover w-full h-full'
                 />

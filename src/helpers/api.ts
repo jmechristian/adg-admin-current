@@ -1196,3 +1196,9 @@ export const getSubcategoriesByDepartment = async (departmentId: string) => {
   }>;
   return subcategories.data.listDepartmentSubcategories.items;
 };
+
+export const getFullImageUrl = (url: string) => {
+  if (!url) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `https://adgadmin170407-dev.s3.us-east-1.amazonaws.com/public/${url}`;
+};

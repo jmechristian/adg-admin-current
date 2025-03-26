@@ -51,6 +51,10 @@ const SidebarBuilder = ({
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [draggedImage, setDraggedImage] = useState<string | null>(null);
   const [sortedImages, setSortedImages] = useState<ImageObject[]>([]);
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>(
+    {}
+  );
+  const [uploading, setUploading] = useState<string[]>([]);
 
   // Initialize the sorted images whenever project changes
   React.useEffect(() => {
@@ -371,7 +375,7 @@ const SidebarBuilder = ({
                   selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
                 } hover:ring-1 hover:ring-gray-400`}
                 style={{
-                  backgroundImage: `url(${image.url})`,
+                  backgroundImage: `url(${getFullImageUrl(image.url)})`,
                 }}
                 onClick={() => setSelectedImage(image)}
               >
@@ -416,8 +420,8 @@ const SidebarBuilder = ({
         <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
           <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
             {/* Left side - Gallery */}
-            <div className='w-8/12 pr-6 overflow-y-auto'>
-              <div className='grid grid-cols-3 gap-4'>
+            <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
+              <div className='grid grid-cols-4 gap-4'>
                 {sortedImages.map((image, index) => (
                   <div
                     key={image.id}
@@ -427,7 +431,7 @@ const SidebarBuilder = ({
                         : ''
                     }`}
                     style={{
-                      backgroundImage: `url(${image.url})`,
+                      backgroundImage: `url(${getFullImageUrl(image.url)})`,
                     }}
                     onClick={() => setSelectedImage(image)}
                   >
@@ -453,6 +457,7 @@ const SidebarBuilder = ({
                       )})`,
                     }}
                   ></div>
+
                   <div className='space-y-4'>
                     <div>
                       <label className='block text-sm text-gray-400'>
@@ -550,81 +555,87 @@ const SidebarBuilder = ({
                 </div>
               ) : (
                 <div className='flex flex-col gap-4'>
-                  <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex items-center justify-center cursor-pointer hover:border-gray-500'>
+                  <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500'>
                     <input
                       type='file'
                       accept='image/*'
+                      multiple
                       className='hidden'
                       onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
+                        const files = Array.from(e.target.files || []);
+                        if (files.length === 0) return;
 
-                        setIsUploading(true);
-                        try {
-                          const uploadedUrl = await uploadAndConvertImage(file);
-                          setSelectedImage({
-                            id: '',
-                            url: uploadedUrl,
-                            order: project.gallery.images.items.length + 1,
-                            alt: newImageAlt,
-                            caption: newImageCaption,
-                          });
-                          setNewImageAlt('');
-                          setNewImageCaption('');
-                          e.target.value = '';
-                        } finally {
-                          setIsUploading(false);
+                        setUploading(files.map((f) => f.name));
+
+                        for (const file of files) {
+                          setUploadProgress((prev) => ({
+                            ...prev,
+                            [file.name]: 0,
+                          }));
+
+                          try {
+                            const uploadedUrl = await uploadAndConvertImage(
+                              file
+                            );
+
+                            await addNewImageObject(
+                              uploadedUrl,
+                              project.gallery.id,
+                              project.gallery.images.items.length + 1,
+                              '',
+                              ''
+                            );
+
+                            setUploadProgress((prev) => ({
+                              ...prev,
+                              [file.name]: 100,
+                            }));
+                          } catch (error) {
+                            console.error(
+                              `Error uploading ${file.name}:`,
+                              error
+                            );
+                          } finally {
+                            setUploading((prev) =>
+                              prev.filter((name) => name !== file.name)
+                            );
+                            onProjectUpdate();
+                          }
                         }
+
+                        e.target.value = '';
                       }}
                     />
                     <div className='text-center'>
                       <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
                       <div className='text-gray-400'>
-                        Click to upload new image
+                        Click to upload images
                       </div>
                     </div>
+
+                    {uploading.length > 0 && (
+                      <div className='mt-4 w-full px-4 space-y-2'>
+                        {uploading.map((filename) => (
+                          <div key={filename} className='text-sm'>
+                            <div className='flex justify-between mb-1'>
+                              <span className='text-gray-700'>{filename}</span>
+                              <span className='text-gray-500'>
+                                {uploadProgress[filename]}%
+                              </span>
+                            </div>
+                            <div className='w-full bg-gray-200 rounded-full h-1.5'>
+                              <div
+                                className='bg-brand h-1.5 rounded-full transition-all duration-300'
+                                style={{
+                                  width: `${uploadProgress[filename]}%`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </label>
-                  <div className='space-y-4'>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Alt Text
-                      </label>
-                      <input
-                        type='text'
-                        value={newImageAlt}
-                        onChange={(e) => setNewImageAlt(e.target.value)}
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                      />
-                    </div>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Caption
-                      </label>
-                      <textarea
-                        value={newImageCaption}
-                        onChange={(e) => setNewImageCaption(e.target.value)}
-                        rows={3}
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                      />
-                    </div>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Order
-                      </label>
-                      <input
-                        type='number'
-                        value={project.gallery.images.items.length + 1}
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                  <button
-                    className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
-                    disabled={isUploading}
-                  >
-                    {isUploading ? 'Uploading...' : 'Upload New Image'}
-                  </button>
                 </div>
               )}
             </div>

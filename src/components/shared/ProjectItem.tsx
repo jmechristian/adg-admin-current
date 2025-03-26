@@ -7,12 +7,11 @@ import {
   GalleryResponse,
   Department,
 } from '@/types';
-import { getProjectGallery } from '@/helpers/api';
+import { getProjectGallery, getFullImageUrl } from '@/helpers/api';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 
 const ProjectItem = ({ project }: { project: ProjectWithDepartments }) => {
-  console.log(project);
   const [gallery, setGallery] = useState<Gallery | null>(null);
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
@@ -55,7 +54,11 @@ const ProjectItem = ({ project }: { project: ProjectWithDepartments }) => {
             className='aspect-video w-[180px]  bg-gray-300 overflow-hidden bg-cover bg-center'
             style={{
               backgroundImage: gallery?.images?.items?.length
-                ? `url(${gallery.images.items[0].url})`
+                ? `url(${getFullImageUrl(
+                    [...gallery.images.items].sort(
+                      (a, b) => (a.order || 0) - (b.order || 0)
+                    )[0].url
+                  )})`
                 : 'none',
             }}
           ></div>
