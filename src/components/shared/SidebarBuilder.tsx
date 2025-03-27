@@ -209,7 +209,7 @@ const SidebarBuilder = ({
   };
 
   return (
-    <div className='flex flex-col gap-7'>
+    <div className='flex flex-col gap-7 h-full'>
       <div className='flex flex-col gap-5'>
         <div className='w-full uppercase text-sm text-gray-300'>
           {project.departments.items.map((d) => d.department.name).join(', ')}
@@ -283,7 +283,6 @@ const SidebarBuilder = ({
           </div>
         </div>
       </div>
-
       <div className='flex flex-col gap-3'>
         <SubcategorySelect
           projectId={project.id}
@@ -352,351 +351,358 @@ const SidebarBuilder = ({
           </div>
         </div>
       </div>
-      <div className='flex flex-col gap-2'>
-        <div className='w-full text-sm text-gray-400 flex justify-between items-center'>
-          <span>Gallery:</span>
-          {isUpdating && (
-            <span className='text-xs text-brand'>Updating order...</span>
-          )}
-        </div>
-        <div className='w-full border border-gray-700 rounded p-2'>
-          <div className='grid grid-cols-3 gap-2'>
-            {sortedImages.map((image, index) => (
-              <div
-                key={image.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, image.id)}
-                onDragOver={handleDragOver}
-                onDragEnter={(e) => handleDragEnter(e, image.id)}
-                onDragLeave={handleDragLeave}
-                onDrop={(e) => handleDrop(e, image.id)}
-                onDragEnd={handleDragEnd}
-                className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
-                  selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
-                } hover:ring-1 hover:ring-gray-400`}
-                style={{
-                  backgroundImage: `url(${getFullImageUrl(image.url)})`,
-                }}
-                onClick={() => setSelectedImage(image)}
-              >
-                <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
-                  <svg
-                    className='w-4 h-4 text-white'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M8 9l4-4 4 4m0 6l-4 4-4-4'
-                    />
-                  </svg>
-                </div>
+      <div className='flex flex-col gap-2 sticky top-2'>
+        <div className='flex flex-col gap-2 top-0'>
+          <div className='w-full text-sm text-gray-400 flex justify-between items-center'>
+            <span>Gallery:</span>
+            {isUpdating && (
+              <span className='text-xs text-brand'>Updating order...</span>
+            )}
+          </div>
+          <div className='w-full border border-gray-700 rounded p-2'>
+            <div className='grid grid-cols-3 gap-2'>
+              {sortedImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, image.id)}
+                  onDragOver={handleDragOver}
+                  onDragEnter={(e) => handleDragEnter(e, image.id)}
+                  onDragLeave={handleDragLeave}
+                  onDrop={(e) => handleDrop(e, image.id)}
+                  onDragEnd={handleDragEnd}
+                  className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
+                    selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
+                  } hover:ring-1 hover:ring-gray-400`}
+                  style={{
+                    backgroundImage: `url(${getFullImageUrl(image.url)})`,
+                  }}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
+                    <svg
+                      className='w-4 h-4 text-white'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M8 9l4-4 4 4m0 6l-4 4-4-4'
+                      />
+                    </svg>
+                  </div>
 
-                {index === 0 && (
-                  <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
-                    HERO
+                  {index === 0 && (
+                    <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
+                      HERO
+                    </div>
+                  )}
+                </div>
+              ))}
+              <button
+                className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
+                onClick={() => {
+                  setSelectedImage(null);
+                  setIsModalOpen(true);
+                }}
+              >
+                <PlusIcon className='w-10 h-10 text-white/50' />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Image Modal */}
+        {isModalOpen && (
+          <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
+            <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
+              {/* Left side - Gallery */}
+              <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
+                <div className='grid grid-cols-4 gap-4'>
+                  {sortedImages.map((image, index) => (
+                    <div
+                      key={image.id}
+                      className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
+                        selectedImage?.id === image.id
+                          ? 'ring-2 ring-blue-500'
+                          : ''
+                      }`}
+                      style={{
+                        backgroundImage: `url(${getFullImageUrl(image.url)})`,
+                      }}
+                      onClick={() => setSelectedImage(image)}
+                    >
+                      {index === 0 && (
+                        <div className='absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
+                          HERO
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right side - Image details */}
+              <div className='w-4/12 pl-6 border-l border-gray-700'>
+                {selectedImage ? (
+                  <div className='flex flex-col gap-4 w-full'>
+                    <div
+                      className='w-full aspect-[4/3] overflow-hidden bg-cover bg-center bg-no-repeat bg-slate-500'
+                      style={{
+                        backgroundImage: `url(${getFullImageUrl(
+                          selectedImage.url
+                        )})`,
+                      }}
+                    ></div>
+
+                    <div className='space-y-4'>
+                      <div>
+                        <label className='block text-sm text-gray-400'>
+                          Alt Text
+                        </label>
+                        <input
+                          type='text'
+                          value={selectedImage.alt || ''}
+                          onChange={(e) =>
+                            handleImageUpdate({ alt: e.target.value })
+                          }
+                          className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                        />
+                      </div>
+                      <div>
+                        <label className='block text-sm text-gray-400'>
+                          Caption
+                        </label>
+                        <textarea
+                          value={selectedImage.caption || ''}
+                          onChange={(e) =>
+                            handleImageUpdate({ caption: e.target.value })
+                          }
+                          rows={3}
+                          className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                        />
+                      </div>
+                      <div>
+                        <label className='block text-sm text-gray-400'>
+                          Order
+                        </label>
+                        <input
+                          type='number'
+                          value={selectedImage.order || 0}
+                          onChange={(e) =>
+                            handleImageUpdate({
+                              order: parseInt(e.target.value, 10),
+                            })
+                          }
+                          className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                        />
+                      </div>
+                    </div>
+                    {selectedImage?.id && (
+                      <div className='flex items-center justify-center gap-4'>
+                        <button
+                          className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
+                          onClick={handleUpdateSelected}
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? 'Updating...' : 'Update Selected'}
+                        </button>
+                        <button
+                          className='w-full bg-red-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
+                          onClick={() => {
+                            handleDeleteImage(selectedImage?.id || '');
+                          }}
+                          disabled={isDeleting}
+                        >
+                          {isDeleting ? 'Deleting...' : 'Delete Selected'}
+                        </button>
+                      </div>
+                    )}
+                    <div className='flex items-center justify-center gap-4 pt-5 border-t border-t-gray-500 mt-5'>
+                      <button
+                        className='w-full bg-white text-black text-sm mt-1 p-2 border border-gray-700 rounded text-center cursor-pointer'
+                        onClick={async () => {
+                          if (selectedImage?.id) {
+                            // If there's an existing image selected, clear the selection
+                            setSelectedImage(null);
+                          } else {
+                            // Handle new image upload logic here
+                            // You might want to trigger the file input or handle the upload differently
+                            try {
+                              const newImageObject = await addNewImageObject(
+                                getFullImageUrl(selectedImage.url),
+                                project.gallery.id,
+                                project.gallery.images.items.length + 1,
+                                selectedImage.caption || '',
+                                selectedImage.alt || ''
+                              );
+                              console.log(newImageObject);
+                              // Call onProjectUpdate after successful upload
+                              onProjectUpdate();
+                              setIsModalOpen(false);
+                            } catch (error) {
+                              console.error(
+                                'Error uploading new image:',
+                                error
+                              );
+                            }
+                          }
+                        }}
+                      >
+                        {selectedImage?.id ? 'Upload New' : 'Upload Image'}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className='flex flex-col gap-4'>
+                    <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500'>
+                      <input
+                        type='file'
+                        accept='image/*'
+                        multiple
+                        className='hidden'
+                        onChange={async (e) => {
+                          const files = Array.from(e.target.files || []);
+                          if (files.length === 0) return;
+
+                          setUploading(files.map((f) => f.name));
+
+                          for (const file of files) {
+                            setUploadProgress((prev) => ({
+                              ...prev,
+                              [file.name]: 0,
+                            }));
+
+                            try {
+                              const uploadedUrl = await uploadAndConvertImage(
+                                file
+                              );
+
+                              await addNewImageObject(
+                                uploadedUrl,
+                                project.gallery.id,
+                                project.gallery.images.items.length + 1,
+                                '',
+                                ''
+                              );
+
+                              setUploadProgress((prev) => ({
+                                ...prev,
+                                [file.name]: 100,
+                              }));
+                            } catch (error) {
+                              console.error(
+                                `Error uploading ${file.name}:`,
+                                error
+                              );
+                            } finally {
+                              setUploading((prev) =>
+                                prev.filter((name) => name !== file.name)
+                              );
+                              onProjectUpdate();
+                            }
+                          }
+
+                          e.target.value = '';
+                        }}
+                      />
+                      <div className='text-center'>
+                        <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
+                        <div className='text-gray-400'>
+                          Click to upload images
+                        </div>
+                      </div>
+
+                      {uploading.length > 0 && (
+                        <div className='mt-4 w-full px-4 space-y-2'>
+                          {uploading.map((filename) => (
+                            <div key={filename} className='text-sm'>
+                              <div className='flex justify-between mb-1'>
+                                <span className='text-gray-700'>
+                                  {filename}
+                                </span>
+                                <span className='text-gray-500'>
+                                  {uploadProgress[filename]}%
+                                </span>
+                              </div>
+                              <div className='w-full bg-gray-200 rounded-full h-1.5'>
+                                <div
+                                  className='bg-brand h-1.5 rounded-full transition-all duration-300'
+                                  style={{
+                                    width: `${uploadProgress[filename]}%`,
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </label>
                   </div>
                 )}
               </div>
-            ))}
-            <button
-              className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
-              onClick={() => {
-                setSelectedImage(null);
-                setIsModalOpen(true);
-              }}
-            >
-              <PlusIcon className='w-10 h-10 text-white/50' />
-            </button>
+
+              {/* Close button */}
+              <button
+                className='absolute top-4 right-4 text-white'
+                onClick={() => setIsModalOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className='flex flex-col gap-0 pt-4 border-t border-t-gray-700'>
+          <div className='w-full text-sm text-gray-400'>
+            Created:{' '}
+            <span className='text-white italic'>
+              {formatDate(project.createdAt)}
+            </span>
+          </div>
+          <div className='w-full text-sm text-gray-400'>
+            Updated:{' '}
+            <span className='text-white italic'>
+              {formatDate(project.updatedAt)}
+            </span>
+          </div>
+          <div className='w-full text-sm text-gray-400'>
+            Last Updated By:{' '}
+            <span className='text-white italic'>
+              {project.lastUpdatedBy?.name
+                ? project.lastUpdatedBy.name
+                : project.createdBy.email}
+            </span>
           </div>
         </div>
-      </div>
-
-      {/* Image Modal */}
-      {isModalOpen && (
-        <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
-          <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
-            {/* Left side - Gallery */}
-            <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
-              <div className='grid grid-cols-4 gap-4'>
-                {sortedImages.map((image, index) => (
-                  <div
-                    key={image.id}
-                    className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
-                      selectedImage?.id === image.id
-                        ? 'ring-2 ring-blue-500'
-                        : ''
-                    }`}
-                    style={{
-                      backgroundImage: `url(${getFullImageUrl(image.url)})`,
-                    }}
-                    onClick={() => setSelectedImage(image)}
-                  >
-                    {index === 0 && (
-                      <div className='absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
-                        HERO
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right side - Image details */}
-            <div className='w-4/12 pl-6 border-l border-gray-700'>
-              {selectedImage ? (
-                <div className='flex flex-col gap-4 w-full'>
-                  <div
-                    className='w-full aspect-[4/3] overflow-hidden bg-cover bg-center bg-no-repeat bg-slate-500'
-                    style={{
-                      backgroundImage: `url(${getFullImageUrl(
-                        selectedImage.url
-                      )})`,
-                    }}
-                  ></div>
-
-                  <div className='space-y-4'>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Alt Text
-                      </label>
-                      <input
-                        type='text'
-                        value={selectedImage.alt || ''}
-                        onChange={(e) =>
-                          handleImageUpdate({ alt: e.target.value })
-                        }
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                      />
-                    </div>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Caption
-                      </label>
-                      <textarea
-                        value={selectedImage.caption || ''}
-                        onChange={(e) =>
-                          handleImageUpdate({ caption: e.target.value })
-                        }
-                        rows={3}
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                      />
-                    </div>
-                    <div>
-                      <label className='block text-sm text-gray-400'>
-                        Order
-                      </label>
-                      <input
-                        type='number'
-                        value={selectedImage.order || 0}
-                        onChange={(e) =>
-                          handleImageUpdate({
-                            order: parseInt(e.target.value, 10),
-                          })
-                        }
-                        className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
-                      />
-                    </div>
-                  </div>
-                  {selectedImage?.id && (
-                    <div className='flex items-center justify-center gap-4'>
-                      <button
-                        className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
-                        onClick={handleUpdateSelected}
-                        disabled={isUpdating}
-                      >
-                        {isUpdating ? 'Updating...' : 'Update Selected'}
-                      </button>
-                      <button
-                        className='w-full bg-red-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded disabled:opacity-50'
-                        onClick={() => {
-                          handleDeleteImage(selectedImage?.id || '');
-                        }}
-                        disabled={isDeleting}
-                      >
-                        {isDeleting ? 'Deleting...' : 'Delete Selected'}
-                      </button>
-                    </div>
-                  )}
-                  <div className='flex items-center justify-center gap-4 pt-5 border-t border-t-gray-500 mt-5'>
-                    <button
-                      className='w-full bg-white text-black text-sm mt-1 p-2 border border-gray-700 rounded text-center cursor-pointer'
-                      onClick={async () => {
-                        if (selectedImage?.id) {
-                          // If there's an existing image selected, clear the selection
-                          setSelectedImage(null);
-                        } else {
-                          // Handle new image upload logic here
-                          // You might want to trigger the file input or handle the upload differently
-                          try {
-                            const newImageObject = await addNewImageObject(
-                              getFullImageUrl(selectedImage.url),
-                              project.gallery.id,
-                              project.gallery.images.items.length + 1,
-                              selectedImage.caption || '',
-                              selectedImage.alt || ''
-                            );
-                            console.log(newImageObject);
-                            // Call onProjectUpdate after successful upload
-                            onProjectUpdate();
-                            setIsModalOpen(false);
-                          } catch (error) {
-                            console.error('Error uploading new image:', error);
-                          }
-                        }
-                      }}
-                    >
-                      {selectedImage?.id ? 'Upload New' : 'Upload Image'}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className='flex flex-col gap-4'>
-                  <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500'>
-                    <input
-                      type='file'
-                      accept='image/*'
-                      multiple
-                      className='hidden'
-                      onChange={async (e) => {
-                        const files = Array.from(e.target.files || []);
-                        if (files.length === 0) return;
-
-                        setUploading(files.map((f) => f.name));
-
-                        for (const file of files) {
-                          setUploadProgress((prev) => ({
-                            ...prev,
-                            [file.name]: 0,
-                          }));
-
-                          try {
-                            const uploadedUrl = await uploadAndConvertImage(
-                              file
-                            );
-
-                            await addNewImageObject(
-                              uploadedUrl,
-                              project.gallery.id,
-                              project.gallery.images.items.length + 1,
-                              '',
-                              ''
-                            );
-
-                            setUploadProgress((prev) => ({
-                              ...prev,
-                              [file.name]: 100,
-                            }));
-                          } catch (error) {
-                            console.error(
-                              `Error uploading ${file.name}:`,
-                              error
-                            );
-                          } finally {
-                            setUploading((prev) =>
-                              prev.filter((name) => name !== file.name)
-                            );
-                            onProjectUpdate();
-                          }
-                        }
-
-                        e.target.value = '';
-                      }}
-                    />
-                    <div className='text-center'>
-                      <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
-                      <div className='text-gray-400'>
-                        Click to upload images
-                      </div>
-                    </div>
-
-                    {uploading.length > 0 && (
-                      <div className='mt-4 w-full px-4 space-y-2'>
-                        {uploading.map((filename) => (
-                          <div key={filename} className='text-sm'>
-                            <div className='flex justify-between mb-1'>
-                              <span className='text-gray-700'>{filename}</span>
-                              <span className='text-gray-500'>
-                                {uploadProgress[filename]}%
-                              </span>
-                            </div>
-                            <div className='w-full bg-gray-200 rounded-full h-1.5'>
-                              <div
-                                className='bg-brand h-1.5 rounded-full transition-all duration-300'
-                                style={{
-                                  width: `${uploadProgress[filename]}%`,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </label>
-                </div>
-              )}
-            </div>
-
-            {/* Close button */}
-            <button
-              className='absolute top-4 right-4 text-white'
-              onClick={() => setIsModalOpen(false)}
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className='flex flex-col gap-0 pt-4 border-t border-t-gray-700'>
-        <div className='w-full text-sm text-gray-400'>
-          Created:{' '}
-          <span className='text-white italic'>
-            {formatDate(project.createdAt)}
-          </span>
-        </div>
-        <div className='w-full text-sm text-gray-400'>
-          Updated:{' '}
-          <span className='text-white italic'>
-            {formatDate(project.updatedAt)}
-          </span>
-        </div>
-        <div className='w-full text-sm text-gray-400'>
-          Last Updated By:{' '}
-          <span className='text-white italic'>
-            {project.lastUpdatedBy?.name
-              ? project.lastUpdatedBy.name
-              : project.createdBy.email}
-          </span>
-        </div>
-      </div>
-      <div className='grid grid-cols-2 gap-4 pt-4 border-t border-t-gray-700'>
-        {project.status === 'DRAFT' ? (
-          <>
+        <div className='grid grid-cols-2 gap-4 pt-4 border-t border-t-gray-700'>
+          {project.status === 'DRAFT' ? (
+            <>
+              <button
+                onClick={handleSaveProject}
+                className='px-4 py-3 text-sm text-white bg-gray-700 rounded hover:bg-gray-600'
+              >
+                Save
+              </button>
+              <button
+                onClick={handlePublishProject}
+                className='px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
+              >
+                Publish
+              </button>
+            </>
+          ) : (
             <button
               onClick={handleSaveProject}
-              className='px-4 py-3 text-sm text-white bg-gray-700 rounded hover:bg-gray-600'
+              className='col-span-2 px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
             >
-              Save
+              Save Changes
             </button>
-            <button
-              onClick={handlePublishProject}
-              className='px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
-            >
-              Publish
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={handleSaveProject}
-            className='col-span-2 px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
-          >
-            Save Changes
-          </button>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
