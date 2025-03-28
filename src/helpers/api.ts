@@ -473,6 +473,9 @@ export const getProjectById = async (id: string) => {
                 url
                 alt
                 caption
+                centerX
+                centerY
+                zoom
               }
             }
           }

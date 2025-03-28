@@ -391,6 +391,9 @@ const SidebarBuilder = ({
                   } hover:ring-1 hover:ring-gray-400`}
                   style={{
                     backgroundImage: `url("${getFullImageUrl(image.url)}")`,
+                    backgroundPosition: `${image.centerX || 50}% ${
+                      image.centerY || 50
+                    }%`,
                   }}
                   onClick={() => setSelectedImage(image)}
                 >
