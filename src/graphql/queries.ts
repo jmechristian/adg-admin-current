@@ -79,6 +79,8 @@ export const getGallery = /* GraphQL */ `
           alt
           caption
           order
+          centerX
+          centerY
           createdAt
           updatedAt
           galleryImagesId
@@ -121,6 +123,9 @@ export const getGallery = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -237,6 +242,17 @@ export const getProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
+      quotes {
+        items {
+          id
+          text
+          attribution
+          createdAt
+          updatedAt
+          projectQuotesId
+        }
+        nextToken
+      }
       collaborators
       size
       gridOrder
@@ -365,6 +381,9 @@ export const listProjects = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -394,6 +413,128 @@ export const listProjects = /* GraphQL */ `
         projectCreatedById
         projectLastUpdatedById
         projectGalleryId
+      }
+      nextToken
+    }
+  }
+`;
+export const getQuote = /* GraphQL */ `
+  query GetQuote($id: ID!) {
+    getQuote(id: $id) {
+      id
+      text
+      attribution
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      projectQuotesId
+    }
+  }
+`;
+export const listQuotes = /* GraphQL */ `
+  query ListQuotes(
+    $filter: ModelQuoteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        text
+        attribution
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        projectQuotesId
       }
       nextToken
     }
@@ -493,6 +634,8 @@ export const getImageObject = /* GraphQL */ `
         galleryProjectId
       }
       order
+      centerX
+      centerY
       createdAt
       updatedAt
       galleryImagesId
@@ -518,6 +661,8 @@ export const listImageObjects = /* GraphQL */ `
           galleryProjectId
         }
         order
+        centerX
+        centerY
         createdAt
         updatedAt
         galleryImagesId
@@ -707,6 +852,9 @@ export const getProjectDepartments = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -848,6 +996,9 @@ export const getProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -989,6 +1140,9 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1127,6 +1281,9 @@ export const getProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder

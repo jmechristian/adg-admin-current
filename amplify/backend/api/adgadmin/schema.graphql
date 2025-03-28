@@ -50,6 +50,7 @@ type Project @model {
   link: String!
   quote: String
   quoteAttribution: String
+  quotes: [Quote] @hasMany
   collaborators: String
   size: String
   gridOrder: Int
@@ -61,6 +62,13 @@ type Project @model {
     @manyToMany(relationName: "ProjectBuildingTypes")
   project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
   displayOrder: Int
+}
+
+type Quote @model {
+  id: ID!
+  text: String!
+  attribution: String
+  project: Project @belongsTo
 }
 
 type Department @model {
@@ -79,6 +87,8 @@ type ImageObject @model {
   caption: String
   gallery: Gallery @belongsTo
   order: Int
+  centerX: Float
+  centerY: Float
 }
 
 type Subcategory @model {

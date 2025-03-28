@@ -24,6 +24,8 @@ interface ImageObject {
   alt?: string;
   caption?: string;
   order?: number;
+  centerX?: number;
+  centerY?: number;
 }
 
 const getFullImageUrl = (url: string) => {
@@ -470,13 +472,37 @@ const SidebarBuilder = ({
                 {selectedImage ? (
                   <div className='flex flex-col gap-4 w-full'>
                     <div
-                      className='w-full aspect-[4/3] overflow-hidden bg-cover bg-center bg-no-repeat bg-slate-500'
+                      className='w-full aspect-[4/3] bg-cover bg-center bg-no-repeat bg-slate-500 relative cursor-crosshair'
                       style={{
-                        backgroundImage: `url(${getFullImageUrl(
+                        backgroundImage: `url("${getFullImageUrl(
                           selectedImage.url
-                        )})`,
+                        )}")`,
+                        backgroundPosition: `${selectedImage.centerX || 50}% ${
+                          selectedImage.centerY || 50
+                        }%`,
                       }}
-                    ></div>
+                      onClick={(e) => {
+                        // Get click coordinates relative to the element
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                        // Update the image with new center points
+                        handleImageUpdate({
+                          centerX: Math.round(x),
+                          centerY: Math.round(y),
+                        });
+                      }}
+                    >
+                      {/* Optional: Add a visual indicator of the center point */}
+                      <div
+                        className='absolute w-2 h-2 bg-blue-500 rounded-full transform -translate-x-1/2 -translate-y-1/2'
+                        style={{
+                          left: `${selectedImage.centerX || 50}%`,
+                          top: `${selectedImage.centerY || 50}%`,
+                        }}
+                      />
+                    </div>
 
                     <div className='space-y-4'>
                       <div>
@@ -519,6 +545,38 @@ const SidebarBuilder = ({
                           }
                           className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
                         />
+                      </div>
+                      <div className='grid grid-cols-2 gap-5'>
+                        <div>
+                          <label className='block text-sm text-gray-400'>
+                            Center X
+                          </label>
+                          <input
+                            type='number'
+                            value={selectedImage.centerX || 0}
+                            onChange={(e) =>
+                              handleImageUpdate({
+                                centerX: parseInt(e.target.value, 10),
+                              })
+                            }
+                            className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                          />
+                        </div>
+                        <div>
+                          <label className='block text-sm text-gray-400'>
+                            Center Y
+                          </label>
+                          <input
+                            type='number'
+                            value={selectedImage.centerY || 0}
+                            onChange={(e) =>
+                              handleImageUpdate({
+                                centerY: parseInt(e.target.value, 10),
+                              })
+                            }
+                            className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                          />
+                        </div>
                       </div>
                     </div>
                     {selectedImage?.id && (

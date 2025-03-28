@@ -91,6 +91,8 @@ export const onCreateGallery = /* GraphQL */ `
           alt
           caption
           order
+          centerX
+          centerY
           createdAt
           updatedAt
           galleryImagesId
@@ -133,6 +135,9 @@ export const onCreateGallery = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -180,6 +185,8 @@ export const onUpdateGallery = /* GraphQL */ `
           alt
           caption
           order
+          centerX
+          centerY
           createdAt
           updatedAt
           galleryImagesId
@@ -222,6 +229,9 @@ export const onUpdateGallery = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -269,6 +279,8 @@ export const onDeleteGallery = /* GraphQL */ `
           alt
           caption
           order
+          centerX
+          centerY
           createdAt
           updatedAt
           galleryImagesId
@@ -311,6 +323,9 @@ export const onDeleteGallery = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -385,6 +400,17 @@ export const onCreateProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
+      quotes {
+        items {
+          id
+          text
+          attribution
+          createdAt
+          updatedAt
+          projectQuotesId
+        }
+        nextToken
+      }
       collaborators
       size
       gridOrder
@@ -508,6 +534,17 @@ export const onUpdateProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
+      quotes {
+        items {
+          id
+          text
+          attribution
+          createdAt
+          updatedAt
+          projectQuotesId
+        }
+        nextToken
+      }
       collaborators
       size
       gridOrder
@@ -631,6 +668,17 @@ export const onDeleteProject = /* GraphQL */ `
       link
       quote
       quoteAttribution
+      quotes {
+        items {
+          id
+          text
+          attribution
+          createdAt
+          updatedAt
+          projectQuotesId
+        }
+        nextToken
+      }
       collaborators
       size
       gridOrder
@@ -713,6 +761,249 @@ export const onDeleteProject = /* GraphQL */ `
       projectCreatedById
       projectLastUpdatedById
       projectGalleryId
+    }
+  }
+`;
+export const onCreateQuote = /* GraphQL */ `
+  subscription OnCreateQuote {
+    onCreateQuote {
+      id
+      text
+      attribution
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      projectQuotesId
+    }
+  }
+`;
+export const onUpdateQuote = /* GraphQL */ `
+  subscription OnUpdateQuote {
+    onUpdateQuote {
+      id
+      text
+      attribution
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      projectQuotesId
+    }
+  }
+`;
+export const onDeleteQuote = /* GraphQL */ `
+  subscription OnDeleteQuote {
+    onDeleteQuote {
+      id
+      text
+      attribution
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      createdAt
+      updatedAt
+      projectQuotesId
     }
   }
 `;
@@ -848,6 +1139,8 @@ export const onCreateImageObject = /* GraphQL */ `
         galleryProjectId
       }
       order
+      centerX
+      centerY
       createdAt
       updatedAt
       galleryImagesId
@@ -893,6 +1186,8 @@ export const onUpdateImageObject = /* GraphQL */ `
         galleryProjectId
       }
       order
+      centerX
+      centerY
       createdAt
       updatedAt
       galleryImagesId
@@ -938,6 +1233,8 @@ export const onDeleteImageObject = /* GraphQL */ `
         galleryProjectId
       }
       order
+      centerX
+      centerY
       createdAt
       updatedAt
       galleryImagesId
@@ -1205,6 +1502,9 @@ export const onCreateProjectDepartments = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1295,6 +1595,9 @@ export const onUpdateProjectDepartments = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1385,6 +1688,9 @@ export const onDeleteProjectDepartments = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1475,6 +1781,9 @@ export const onCreateProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1565,6 +1874,9 @@ export const onUpdateProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1655,6 +1967,9 @@ export const onDeleteProjectSubcategories = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1745,6 +2060,9 @@ export const onCreateProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1832,6 +2150,9 @@ export const onUpdateProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -1919,6 +2240,9 @@ export const onDeleteProjectBuildingTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -2006,6 +2330,9 @@ export const onCreateProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -2093,6 +2420,9 @@ export const onUpdateProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
@@ -2180,6 +2510,9 @@ export const onDeleteProjectProjectTypes = /* GraphQL */ `
         link
         quote
         quoteAttribution
+        quotes {
+          nextToken
+        }
         collaborators
         size
         gridOrder
