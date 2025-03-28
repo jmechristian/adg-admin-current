@@ -989,8 +989,7 @@ export const addNewImageObject = async (
   caption: string,
   alt: string,
   centerX: number,
-  centerY: number,
-  zoom: number
+  centerY: number
 ) => {
   const addToGallery = await client.graphql({
     query: createImageObject,
@@ -1003,7 +1002,6 @@ export const addNewImageObject = async (
         alt: caption,
         centerX: centerX,
         centerY: centerY,
-        zoom: zoom,
       },
     },
   });
@@ -1017,13 +1015,12 @@ export const updateImage = async (
   caption: string,
   alt: string,
   centerX: number,
-  centerY: number,
-  zoom: number
+  centerY: number
 ) => {
   const updateImage = await client.graphql({
     query: updateImageObject,
     variables: {
-      input: { id: imageId, url, order, caption, alt, centerX, centerY, zoom },
+      input: { id: imageId, url, order, caption, alt, centerX, centerY },
     },
   });
   return updateImage;
