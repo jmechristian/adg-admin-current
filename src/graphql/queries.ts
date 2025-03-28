@@ -81,6 +81,7 @@ export const getGallery = /* GraphQL */ `
           order
           centerX
           centerY
+          zoom
           createdAt
           updatedAt
           galleryImagesId
@@ -636,6 +637,7 @@ export const getImageObject = /* GraphQL */ `
       order
       centerX
       centerY
+      zoom
       createdAt
       updatedAt
       galleryImagesId
@@ -663,6 +665,7 @@ export const listImageObjects = /* GraphQL */ `
         order
         centerX
         centerY
+        zoom
         createdAt
         updatedAt
         galleryImagesId

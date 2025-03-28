@@ -93,6 +93,7 @@ export const onCreateGallery = /* GraphQL */ `
           order
           centerX
           centerY
+          zoom
           createdAt
           updatedAt
           galleryImagesId
@@ -187,6 +188,7 @@ export const onUpdateGallery = /* GraphQL */ `
           order
           centerX
           centerY
+          zoom
           createdAt
           updatedAt
           galleryImagesId
@@ -281,6 +283,7 @@ export const onDeleteGallery = /* GraphQL */ `
           order
           centerX
           centerY
+          zoom
           createdAt
           updatedAt
           galleryImagesId
@@ -1141,6 +1144,7 @@ export const onCreateImageObject = /* GraphQL */ `
       order
       centerX
       centerY
+      zoom
       createdAt
       updatedAt
       galleryImagesId
@@ -1188,6 +1192,7 @@ export const onUpdateImageObject = /* GraphQL */ `
       order
       centerX
       centerY
+      zoom
       createdAt
       updatedAt
       galleryImagesId
@@ -1235,6 +1240,7 @@ export const onDeleteImageObject = /* GraphQL */ `
       order
       centerX
       centerY
+      zoom
       createdAt
       updatedAt
       galleryImagesId

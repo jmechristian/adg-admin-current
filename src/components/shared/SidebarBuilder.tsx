@@ -26,6 +26,7 @@ interface ImageObject {
   order?: number;
   centerX?: number;
   centerY?: number;
+  zoom?: number;
 }
 
 const getFullImageUrl = (url: string) => {
@@ -89,7 +90,10 @@ const SidebarBuilder = ({
         selectedImage.url,
         selectedImage.order || 0,
         selectedImage.caption || '',
-        selectedImage.alt || selectedImage.caption || ''
+        selectedImage.alt || selectedImage.caption || '',
+        selectedImage.centerX || 0,
+        selectedImage.centerY || 0,
+        selectedImage.zoom || 1
       );
     } finally {
       refreshProject();
@@ -198,7 +202,10 @@ const SidebarBuilder = ({
           item.url,
           item.order || 0,
           item.caption || '',
-          item.alt || item.caption || ''
+          item.alt || item.caption || '',
+          item.centerX || 0,
+          item.centerY || 0,
+          item.zoom || 1
         );
       }
       refreshProject();
@@ -426,10 +433,10 @@ const SidebarBuilder = ({
         {/* Image Modal */}
         {isModalOpen && (
           <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
-            <div className='bg-gray-800 p-6 rounded-lg w-full max-w-5xl h-5/6 flex'>
+            <div className='bg-gray-800 px-6 py-8 rounded-lg w-full max-w-5xl flex'>
               {/* Left side - Gallery */}
               <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
-                <div className='grid grid-cols-4 gap-4'>
+                <div className='grid grid-cols-4 gap-4 py-4'>
                   {sortedImages.map((image, index) => {
                     // Debug log to check image data
                     if (!image.url) {
@@ -472,7 +479,7 @@ const SidebarBuilder = ({
                 {selectedImage ? (
                   <div className='flex flex-col gap-4 w-full'>
                     <div
-                      className='w-full aspect-[4/3] bg-cover bg-center bg-no-repeat bg-slate-500 relative cursor-crosshair'
+                      className='w-full aspect-[4/3] bg-no-repeat bg-slate-500 relative cursor-crosshair'
                       style={{
                         backgroundImage: `url("${getFullImageUrl(
                           selectedImage.url
@@ -480,28 +487,47 @@ const SidebarBuilder = ({
                         backgroundPosition: `${selectedImage.centerX || 50}% ${
                           selectedImage.centerY || 50
                         }%`,
+                        backgroundSize: `${(selectedImage.zoom || 1) * 100}%`,
                       }}
                       onClick={(e) => {
-                        // Get click coordinates relative to the element
                         const rect = e.currentTarget.getBoundingClientRect();
                         const x = ((e.clientX - rect.left) / rect.width) * 100;
                         const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-                        // Update the image with new center points
                         handleImageUpdate({
                           centerX: Math.round(x),
                           centerY: Math.round(y),
                         });
                       }}
                     >
-                      {/* Optional: Add a visual indicator of the center point */}
-                      <div
-                        className='absolute w-2 h-2 bg-blue-500 rounded-full transform -translate-x-1/2 -translate-y-1/2'
-                        style={{
-                          left: `${selectedImage.centerX || 50}%`,
-                          top: `${selectedImage.centerY || 50}%`,
-                        }}
-                      />
+                      {/* Zoom controls */}
+                      <div className='absolute bottom-2 right-2 flex gap-2'>
+                        <button
+                          className='p-2 bg-black/50 text-white rounded-full'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleImageUpdate({
+                              zoom: (selectedImage.zoom || 1) + 0.2,
+                            });
+                          }}
+                        >
+                          +
+                        </button>
+                        <button
+                          className='p-2 bg-black/50 text-white rounded-full'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleImageUpdate({
+                              zoom: Math.max(
+                                1,
+                                (selectedImage.zoom || 1) - 0.2
+                              ),
+                            });
+                          }}
+                        >
+                          -
+                        </button>
+                      </div>
                     </div>
 
                     <div className='space-y-4'>
@@ -546,7 +572,7 @@ const SidebarBuilder = ({
                           className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
                         />
                       </div>
-                      <div className='grid grid-cols-2 gap-5'>
+                      <div className='grid grid-cols-3 gap-5'>
                         <div>
                           <label className='block text-sm text-gray-400'>
                             Center X
@@ -572,6 +598,21 @@ const SidebarBuilder = ({
                             onChange={(e) =>
                               handleImageUpdate({
                                 centerY: parseInt(e.target.value, 10),
+                              })
+                            }
+                            className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                          />
+                        </div>
+                        <div>
+                          <label className='block text-sm text-gray-400'>
+                            Zoom
+                          </label>
+                          <input
+                            type='number'
+                            value={selectedImage.zoom || 1}
+                            onChange={(e) =>
+                              handleImageUpdate({
+                                zoom: parseInt(e.target.value, 10),
                               })
                             }
                             className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
@@ -615,7 +656,10 @@ const SidebarBuilder = ({
                                 project.gallery.id,
                                 project.gallery.images.items.length + 1,
                                 selectedImage.caption || '',
-                                selectedImage.alt || ''
+                                selectedImage.alt || '',
+                                selectedImage.centerX || 0,
+                                selectedImage.centerY || 0,
+                                selectedImage.zoom || 1
                               );
                               console.log(newImageObject);
                               // Call onProjectUpdate after successful upload
@@ -664,7 +708,10 @@ const SidebarBuilder = ({
                                 project.gallery.id,
                                 project.gallery.images.items.length + 1,
                                 '',
-                                ''
+                                '',
+                                0,
+                                0,
+                                1
                               );
 
                               setUploadProgress((prev) => ({

@@ -89,6 +89,7 @@ type ImageObject @model {
   order: Int
   centerX: Float
   centerY: Float
+  zoom: Float
 }
 
 type Subcategory @model {
