@@ -64,6 +64,12 @@ const SidebarBuilder = ({
           (a, b) => (a.order || 0) - (b.order || 0)
         )
       );
+      console.log(
+        'Sorted images:',
+        [...project.gallery.images.items].sort(
+          (a, b) => (a.order || 0) - (b.order || 0)
+        )
+      );
     }
   }, [project.gallery.images.items]);
 
@@ -375,7 +381,7 @@ const SidebarBuilder = ({
                     selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
                   } hover:ring-1 hover:ring-gray-400`}
                   style={{
-                    backgroundImage: `url(${getFullImageUrl(image.url)})`,
+                    backgroundImage: `url("${getFullImageUrl(image.url)}")`,
                   }}
                   onClick={() => setSelectedImage(image)}
                 >
@@ -422,26 +428,40 @@ const SidebarBuilder = ({
               {/* Left side - Gallery */}
               <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
                 <div className='grid grid-cols-4 gap-4'>
-                  {sortedImages.map((image, index) => (
-                    <div
-                      key={image.id}
-                      className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
-                        selectedImage?.id === image.id
-                          ? 'ring-2 ring-blue-500'
-                          : ''
-                      }`}
-                      style={{
-                        backgroundImage: `url(${getFullImageUrl(image.url)})`,
-                      }}
-                      onClick={() => setSelectedImage(image)}
-                    >
-                      {index === 0 && (
-                        <div className='absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
-                          HERO
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                  {sortedImages.map((image, index) => {
+                    // Debug log to check image data
+                    if (!image.url) {
+                      console.warn('Image missing URL:', image);
+                    }
+
+                    return (
+                      <div
+                        key={image.id}
+                        className={`aspect-square bg-cover bg-center bg-no-repeat cursor-pointer relative ${
+                          selectedImage?.id === image.id
+                            ? 'ring-2 ring-blue-500'
+                            : ''
+                        }`}
+                        style={{
+                          backgroundImage: `url("${getFullImageUrl(
+                            image.url
+                          )}")`,
+                        }}
+                        onClick={() => setSelectedImage(image)}
+                      >
+                        {index === 0 && (
+                          <div className='absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
+                            HERO
+                          </div>
+                        )}
+                        {!image.url && (
+                          <div className='absolute inset-0 flex items-center justify-center text-white text-sm'>
+                            Missing Image URL
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

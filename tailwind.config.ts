@@ -25,6 +25,7 @@ export default {
       fontFamily: {
         'brand-book': 'Gotham Book',
         'brand-bold': 'Gotham Bold',
+        'brand-medium': 'Gotham Medium',
         'brand-serif': 'calluna',
       },
     },
