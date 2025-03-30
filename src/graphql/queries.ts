@@ -248,6 +248,7 @@ export const getProject = /* GraphQL */ `
           id
           text
           attribution
+          displayOrder
           createdAt
           updatedAt
           projectQuotesId
@@ -494,6 +495,7 @@ export const getQuote = /* GraphQL */ `
         projectLastUpdatedById
         projectGalleryId
       }
+      displayOrder
       createdAt
       updatedAt
       projectQuotesId
@@ -533,6 +535,7 @@ export const listQuotes = /* GraphQL */ `
           projectLastUpdatedById
           projectGalleryId
         }
+        displayOrder
         createdAt
         updatedAt
         projectQuotesId

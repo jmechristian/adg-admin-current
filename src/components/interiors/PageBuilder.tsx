@@ -146,12 +146,12 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
                 : null
             }
           />
-          {editedProject.quote && (
+          {/* {editedProject.quote && (
             <ProjectQuote
               quote={editedProject.quote || ''}
               attribution={editedProject.quoteAttribution || ''}
             />
-          )}
+          )} */}
           <CascadingGallery
             images={
               editedProject.gallery.images.items.length > 1
@@ -160,6 +160,9 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
                     .slice(1)
                 : images
             }
+            quotes={editedProject.quotes.items.sort(
+              (a, b) => (a.displayOrder || 0) - (b.displayOrder || 0)
+            )}
           />
         </div>
       </div>

@@ -69,6 +69,7 @@ type Quote @model {
   text: String!
   attribution: String
   project: Project @belongsTo
+  displayOrder: Int
 }
 
 type Department @model {

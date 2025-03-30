@@ -35,6 +35,9 @@ import {
   deleteProjectProjectTypes as deleteProjectProjectTypesMutation,
   deleteProjectBuildingTypes as deleteProjectBuildingTypesMutation,
   createProjectDepartments as createProjectDepartmentsMutation,
+  updateQuote,
+  deleteQuote,
+  createQuote,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -53,6 +56,7 @@ import {
   ProjectBuildingType,
   ProjectWithDepartments,
   Department,
+  Quote,
 } from '@/types';
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
@@ -508,6 +512,15 @@ export const getProjectById = async (id: string) => {
           }
           quote
           quoteAttribution
+          quotes {
+        items {
+              attribution
+              displayOrder
+              id
+              projectQuotesId
+              text
+            }
+          }
           size
           status
           subcategories {
@@ -1210,4 +1223,42 @@ export const getFullImageUrl = (url: string) => {
   if (!url) return url;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   return `https://adgadmin170407-dev.s3.us-east-1.amazonaws.com/public/${url}`;
+};
+
+export const updateSelectedQuote = async (quote: Quote) => {
+  const res = await client.graphql({
+    query: updateQuote,
+    variables: {
+      input: {
+        id: quote.id,
+        text: quote.text,
+        attribution: quote.attribution,
+        displayOrder: quote.displayOrder,
+      },
+    },
+  });
+  return res;
+};
+
+export const deleteSelectedQuote = async (quoteId: string) => {
+  const res = await client.graphql({
+    query: deleteQuote,
+    variables: { input: { id: quoteId } },
+  });
+  return res;
+};
+
+export const createNewQuote = async (quote: Quote) => {
+  const res = await client.graphql({
+    query: createQuote,
+    variables: {
+      input: {
+        text: quote.text,
+        projectQuotesId: quote.projectQuoteId,
+        displayOrder: quote.displayOrder,
+        attribution: quote.attribution,
+      },
+    },
+  });
+  return res;
 };

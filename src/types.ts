@@ -122,6 +122,9 @@ export interface Project {
       };
     }[];
   };
+  quotes: {
+    items: Quote[];
+  };
   subcategories: {
     items: {
       subcategory: {
@@ -155,6 +158,14 @@ export interface Subcategory {
   id: string;
   name: string;
   projects?: Project[];
+}
+
+export interface Quote {
+  id: string;
+  text: string;
+  attribution: string;
+  projectQuoteId: string;
+  displayOrder: number;
 }
 
 export interface DepartmentSubcategory {

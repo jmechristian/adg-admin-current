@@ -408,6 +408,7 @@ export const onCreateProject = /* GraphQL */ `
           id
           text
           attribution
+          displayOrder
           createdAt
           updatedAt
           projectQuotesId
@@ -542,6 +543,7 @@ export const onUpdateProject = /* GraphQL */ `
           id
           text
           attribution
+          displayOrder
           createdAt
           updatedAt
           projectQuotesId
@@ -676,6 +678,7 @@ export const onDeleteProject = /* GraphQL */ `
           id
           text
           attribution
+          displayOrder
           createdAt
           updatedAt
           projectQuotesId
@@ -842,6 +845,7 @@ export const onCreateQuote = /* GraphQL */ `
         projectLastUpdatedById
         projectGalleryId
       }
+      displayOrder
       createdAt
       updatedAt
       projectQuotesId
@@ -923,6 +927,7 @@ export const onUpdateQuote = /* GraphQL */ `
         projectLastUpdatedById
         projectGalleryId
       }
+      displayOrder
       createdAt
       updatedAt
       projectQuotesId
@@ -1004,6 +1009,7 @@ export const onDeleteQuote = /* GraphQL */ `
         projectLastUpdatedById
         projectGalleryId
       }
+      displayOrder
       createdAt
       updatedAt
       projectQuotesId

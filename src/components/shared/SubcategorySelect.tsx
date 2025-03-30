@@ -10,16 +10,20 @@ import {
   ProjectSubcategory,
   Subcategory,
   DepartmentSubcategory,
+  Department,
 } from '@/types';
 import { MdEdit, MdSave } from 'react-icons/md';
 
 export const SubcategorySelect = ({
   projectId,
   refreshProject,
+  departments,
 }: {
   projectId: string;
   refreshProject: () => void;
+  departments: { name: string; id: string }[];
 }) => {
+  console.log('departments', departments);
   const [showModal, setShowModal] = useState(false);
   const [allSubcategories, setAllSubcategories] = useState<
     DepartmentSubcategory[]
@@ -160,7 +164,11 @@ export const SubcategorySelect = ({
                   <div className='flex flex-col gap-1'>
                     {dept.subcategories.map((subcategory) => {
                       const isSelected = projectSubcategories.some(
-                        (selected) => selected.subcategory.id === subcategory.id
+                        (selected) =>
+                          selected.subcategory.id === subcategory.id &&
+                          departments.some(
+                            (dept) => dept.id === subcategory.departmentId
+                          )
                       );
                       return (
                         <div

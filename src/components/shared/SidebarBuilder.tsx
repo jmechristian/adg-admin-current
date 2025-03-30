@@ -6,6 +6,7 @@ import { Project } from '@/types';
 import { SubcategorySelect } from './SubcategorySelect';
 import { ProjectTypeSelect } from './ProjectTypeSelect';
 import { BuildingTypeSelector } from './BuildingTypeSelector';
+import FilterPreview from './FilterPreview';
 import {
   updateImage,
   uploadAndConvertImage,
@@ -16,6 +17,7 @@ import {
   createNewLocation,
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
+import QuoteManager from './QuoteManager';
 
 // Add type for image
 interface ImageObject {
@@ -57,6 +59,8 @@ const SidebarBuilder = ({
     {}
   );
   const [uploading, setUploading] = useState<string[]>([]);
+
+  console.log(project);
 
   // Initialize the sorted images whenever project changes
   React.useEffect(() => {
@@ -294,11 +298,21 @@ const SidebarBuilder = ({
             )}
           </div>
         </div>
+        <div className='w-full flex flex-col gap-1'>
+          <div className='text-sm text-gray-400'>Preview</div>
+          <div className='w-full aspect-video'>
+            <FilterPreview project={project} />
+          </div>
+        </div>
       </div>
       <div className='flex flex-col gap-3'>
         <SubcategorySelect
           projectId={project.id}
           refreshProject={refreshProject}
+          departments={project.departments.items.map((item) => ({
+            id: item.department.id,
+            name: item.department.name,
+          }))}
         />
         <ProjectTypeSelect
           currentProjectTypes={
@@ -340,99 +354,89 @@ const SidebarBuilder = ({
           />
         </div>
       </div>
-      <div className='flex flex-col gap-1'>
-        <div className='w-full text-sm text-gray-400'>
-          Quote:{' '}
-          <textarea
-            className='w-full bg-transparent text-white text-sm mt-2 p-2 border border-gray-700 rounded'
-            value={project.quote || ''}
-            onChange={(e) => project.onQuoteChange?.(e.target.value)}
-            rows={3}
-          />
-        </div>
-        <div className='flex flex-col gap-1'>
-          <div className='w-full text-sm text-gray-400'>
-            Quote Attribution:{' '}
-            <input
-              className='w-full bg-transparent text-white text-sm mt-2 p-2 border border-gray-700 rounded'
-              value={project.quoteAttribution || ''}
-              onChange={(e) =>
-                project.onQuoteAttributionChange?.(e.target.value)
-              }
+
+      <div className='flex flex-col sticky top-3'>
+        <div className='flex flex-col gap-6 top-0'>
+          <div className='flex flex-col gap-1'>
+            <div className='w-full text-sm text-gray-400'>Quotes:</div>
+            <QuoteManager
+              quotes={project.quotes.items}
+              refreshProject={refreshProject}
+              projectQuoteId={project.id}
             />
           </div>
-        </div>
-      </div>
-      <div className='flex flex-col gap-2 sticky top-2'>
-        <div className='flex flex-col gap-2 top-0'>
-          <div className='w-full text-sm text-gray-400 flex justify-between items-center'>
-            <span>Gallery:</span>
-            {isUpdating && (
-              <span className='text-xs text-brand'>Updating order...</span>
-            )}
-          </div>
-          <div className='w-full border border-gray-700 rounded p-2'>
-            <div className='grid grid-cols-3 gap-2'>
-              {sortedImages.map((image, index) => (
-                <div
-                  key={image.id}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, image.id)}
-                  onDragOver={handleDragOver}
-                  onDragEnter={(e) => handleDragEnter(e, image.id)}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, image.id)}
-                  onDragEnd={handleDragEnd}
-                  className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
-                    selectedImage?.id === image.id ? 'ring-2 ring-blue-500' : ''
-                  } hover:ring-1 hover:ring-gray-400`}
-                  style={{
-                    backgroundImage: `url("${getFullImageUrl(image.url)}")`,
-                    backgroundPosition: `${image.centerX || 50}% ${
-                      image.centerY || 50
-                    }%`,
-                  }}
-                  onClick={() => setSelectedImage(image)}
-                >
-                  <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
-                    <svg
-                      className='w-4 h-4 text-white'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M8 9l4-4 4 4m0 6l-4 4-4-4'
-                      />
-                    </svg>
-                  </div>
-
-                  {index === 0 && (
-                    <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
-                      HERO
+          <div className='flex flex-col gap-2'>
+            <div className='w-full text-sm text-gray-400 flex justify-between items-center'>
+              <span>Gallery:</span>
+              {isUpdating && (
+                <span className='text-xs text-brand'>Updating order...</span>
+              )}
+            </div>
+            <div className='w-full border border-gray-700 rounded p-2'>
+              <div className='grid grid-cols-3 gap-2'>
+                {sortedImages.map((image, index) => (
+                  <div
+                    key={image.id}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, image.id)}
+                    onDragOver={handleDragOver}
+                    onDragEnter={(e) => handleDragEnter(e, image.id)}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, image.id)}
+                    onDragEnd={handleDragEnd}
+                    className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
+                      selectedImage?.id === image.id
+                        ? 'ring-2 ring-blue-500'
+                        : ''
+                    } hover:ring-1 hover:ring-gray-400`}
+                    style={{
+                      backgroundImage: `url("${getFullImageUrl(image.url)}")`,
+                      backgroundPosition: `${image.centerX || 50}% ${
+                        image.centerY || 50
+                      }%`,
+                    }}
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
+                      <svg
+                        className='w-4 h-4 text-white'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M8 9l4-4 4 4m0 6l-4 4-4-4'
+                        />
+                      </svg>
                     </div>
-                  )}
-                </div>
-              ))}
-              <button
-                className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
-                onClick={() => {
-                  setSelectedImage(null);
-                  setIsModalOpen(true);
-                }}
-              >
-                <PlusIcon className='w-10 h-10 text-white/50' />
-              </button>
+
+                    {index === 0 && (
+                      <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
+                        HERO
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <button
+                  className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
+                  onClick={() => {
+                    setSelectedImage(null);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  <PlusIcon className='w-10 h-10 text-white/50' />
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Image Modal */}
         {isModalOpen && (
-          <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
+          <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center !z-[9999]'>
             <div className='bg-gray-800 px-6 py-8 rounded-lg w-full max-w-5xl flex'>
               {/* Left side - Gallery */}
               <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
