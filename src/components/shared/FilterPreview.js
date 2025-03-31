@@ -28,7 +28,9 @@ const FilterPreview = ({ project }) => {
                 {project.name}
               </h2>
               <div className='uppercase text-white text-sm font-brand-book tracking-wide leading-none'>
-                {project.locationString}
+                {project.previewLocation
+                  ? project.previewLocation
+                  : project.locationString}
               </div>
             </div>
           </>

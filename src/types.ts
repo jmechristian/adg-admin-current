@@ -86,6 +86,7 @@ export interface Project {
   location?: Location;
   locationString?: string;
   projectLocationId?: string;
+  previewLocation?: string;
   createdBy: User;
   lastUpdatedBy?: User | null;
   featured: boolean;
@@ -140,6 +141,7 @@ export interface Project {
   onQuoteChange?: (quote: string) => void;
   onQuoteAttributionChange?: (quoteAttribution: string) => void;
   onCollaboratorsChange?: (collaborators: string) => void;
+  onPreviewLocationChange?: (previewLocation: string) => void;
 }
 
 export interface Department {

@@ -62,6 +62,7 @@ type Project @model {
     @manyToMany(relationName: "ProjectBuildingTypes")
   project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
   displayOrder: Int
+  previewLocation: String
 }
 
 type Quote @model {

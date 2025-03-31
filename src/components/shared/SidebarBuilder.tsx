@@ -133,7 +133,8 @@ const SidebarBuilder = ({
       project.collaborators || '',
       project.size || '',
       project.quote || '',
-      project.quoteAttribution || ''
+      project.quoteAttribution || '',
+      project.previewLocation || ''
     );
     refreshProject();
   };
@@ -297,6 +298,14 @@ const SidebarBuilder = ({
               />
             )}
           </div>
+        </div>
+        <div className='w-full text-sm text-gray-400'>
+          Preview Location:{' '}
+          <input
+            className='text-sm text-white w-full bg-transparent focus:outline-none border-l-0 border-t-0 border-r-0 border-b border-b-gray-700`'
+            value={project.previewLocation || ''}
+            onChange={(e) => project.onPreviewLocationChange?.(e.target.value)}
+          />
         </div>
         <div className='w-full flex flex-col gap-1'>
           <div className='text-sm text-gray-400'>Preview</div>

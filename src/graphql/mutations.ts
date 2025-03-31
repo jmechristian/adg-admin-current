@@ -183,6 +183,7 @@ export const createGallery = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -281,6 +282,7 @@ export const updateGallery = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -379,6 +381,7 @@ export const deleteGallery = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -469,6 +472,7 @@ export const createProject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -521,6 +525,7 @@ export const createProject = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      previewLocation
       createdAt
       updatedAt
       projectLocationId
@@ -607,6 +612,7 @@ export const updateProject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -659,6 +665,7 @@ export const updateProject = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      previewLocation
       createdAt
       updatedAt
       projectLocationId
@@ -745,6 +752,7 @@ export const deleteProject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -797,6 +805,7 @@ export const deleteProject = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      previewLocation
       createdAt
       updatedAt
       projectLocationId
@@ -877,6 +886,7 @@ export const createQuote = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -962,6 +972,7 @@ export const updateQuote = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -1047,6 +1058,7 @@ export const deleteQuote = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -1193,6 +1205,7 @@ export const createImageObject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -1244,6 +1257,7 @@ export const updateImageObject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -1295,6 +1309,7 @@ export const deleteImageObject = /* GraphQL */ `
           gridOrder
           status
           displayOrder
+          previewLocation
           createdAt
           updatedAt
           projectLocationId
@@ -1633,6 +1648,7 @@ export const createProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -1729,6 +1745,7 @@ export const updateProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -1825,6 +1842,7 @@ export const deleteProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -1921,6 +1939,7 @@ export const createProjectSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2017,6 +2036,7 @@ export const updateProjectSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2113,6 +2133,7 @@ export const deleteProjectSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2209,6 +2230,7 @@ export const createProjectBuildingTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2302,6 +2324,7 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2395,6 +2418,7 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2488,6 +2512,7 @@ export const createProjectProjectTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2581,6 +2606,7 @@ export const updateProjectProjectTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId
@@ -2674,6 +2700,7 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        previewLocation
         createdAt
         updatedAt
         projectLocationId

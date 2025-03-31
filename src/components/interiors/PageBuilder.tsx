@@ -93,6 +93,12 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
     }));
   };
 
+  const handlePreviewLocationChange = (newPreviewLocation: string) => {
+    setEditedProject((prev) => ({
+      ...prev,
+      previewLocation: newPreviewLocation,
+    }));
+  };
   return (
     <div className='grid grid-cols-10 w-full'>
       <div className='col-span-8 border'>
@@ -177,6 +183,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             onQuoteChange: handleQuoteChange,
             onQuoteAttributionChange: handleQuoteAttributionChange,
             onCollaboratorsChange: handleCollaboratorsChange,
+            onPreviewLocationChange: handlePreviewLocationChange,
           }}
           onProjectUpdate={handleProjectUpdate}
           refreshProject={refreshProject}

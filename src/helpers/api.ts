@@ -500,6 +500,7 @@ export const getProjectById = async (id: string) => {
             name
           }
           locationString
+          previewLocation
           name
           oldId
           project_type {
@@ -1064,7 +1065,8 @@ export const saveProject = async (
   collaborators: string,
   size: string,
   quote: string,
-  quoteAttribution: string
+  quoteAttribution: string,
+  previewLocation: string
 ) => {
   const res = await client.graphql({
     query: updateProject,
@@ -1079,6 +1081,7 @@ export const saveProject = async (
         size,
         quote,
         quoteAttribution,
+        previewLocation,
       },
     },
   });
