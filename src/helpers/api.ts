@@ -1265,3 +1265,27 @@ export const createNewQuote = async (quote: Quote) => {
   });
   return res;
 };
+
+export const archiveProject = async (projectId: string) => {
+  const res = await client.graphql({
+    query: updateProject,
+    variables: { input: { id: projectId, status: 'ARCHIVED' } },
+  });
+  return res;
+};
+
+export const setDraftProject = async (projectId: string) => {
+  const res = await client.graphql({
+    query: updateProject,
+    variables: { input: { id: projectId, status: 'DRAFT' } },
+  });
+  return res;
+};
+
+export const setPublishedProject = async (projectId: string) => {
+  const res = await client.graphql({
+    query: updateProject,
+    variables: { input: { id: projectId, status: 'PUBLISHED' } },
+  });
+  return res;
+};
