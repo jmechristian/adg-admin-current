@@ -155,6 +155,7 @@ export const createGallery = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -254,6 +255,7 @@ export const updateGallery = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -353,6 +355,7 @@ export const deleteGallery = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -434,6 +437,7 @@ export const createProject = /* GraphQL */ `
       }
       featured
       link
+      slug
       quote
       quoteAttribution
       quotes {
@@ -465,6 +469,7 @@ export const createProject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -574,6 +579,7 @@ export const updateProject = /* GraphQL */ `
       }
       featured
       link
+      slug
       quote
       quoteAttribution
       quotes {
@@ -605,6 +611,7 @@ export const updateProject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -714,6 +721,7 @@ export const deleteProject = /* GraphQL */ `
       }
       featured
       link
+      slug
       quote
       quoteAttribution
       quotes {
@@ -745,6 +753,7 @@ export const deleteProject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -858,6 +867,7 @@ export const createQuote = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -944,6 +954,7 @@ export const updateQuote = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1030,6 +1041,7 @@ export const deleteQuote = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1198,6 +1210,7 @@ export const createImageObject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1250,6 +1263,7 @@ export const updateImageObject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1302,6 +1316,7 @@ export const deleteImageObject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1620,6 +1635,7 @@ export const createProjectDepartments = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1717,6 +1733,7 @@ export const updateProjectDepartments = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1814,6 +1831,7 @@ export const deleteProjectDepartments = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1911,6 +1929,7 @@ export const createProjectSubcategories = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2008,6 +2027,7 @@ export const updateProjectSubcategories = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2105,6 +2125,7 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2202,6 +2223,7 @@ export const createProjectBuildingTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2296,6 +2318,7 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2390,6 +2413,7 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2484,6 +2508,7 @@ export const createProjectProjectTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2578,6 +2603,7 @@ export const updateProjectProjectTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -2672,6 +2698,7 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {

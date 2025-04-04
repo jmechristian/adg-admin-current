@@ -102,7 +102,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
   return (
     <div className='grid grid-cols-10 w-full'>
       <div className='col-span-8 border'>
-        <div className='flex flex-col gap-16 max-w-6xl mx-auto py-12 w-full'>
+        <div className='flex flex-col gap-8 max-w-6xl mx-auto py-12 w-full'>
           <HeadingHero
             title={editedProject.name}
             location={editedProject.locationString || ''}

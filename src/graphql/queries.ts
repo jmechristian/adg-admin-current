@@ -122,6 +122,7 @@ export const getGallery = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -184,6 +185,7 @@ export const listGalleries = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -243,6 +245,7 @@ export const getProject = /* GraphQL */ `
       }
       featured
       link
+      slug
       quote
       quoteAttribution
       quotes {
@@ -274,6 +277,7 @@ export const getProject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -385,6 +389,7 @@ export const listProjects = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -465,6 +470,7 @@ export const getQuote = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -527,6 +533,7 @@ export const listQuotes = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -626,6 +633,7 @@ export const getImageObject = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -864,6 +872,7 @@ export const getProjectDepartments = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -941,6 +950,7 @@ export const listProjectDepartments = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1010,6 +1020,7 @@ export const getProjectSubcategories = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1087,6 +1098,7 @@ export const listProjectSubcategories = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1156,6 +1168,7 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1230,6 +1243,7 @@ export const listProjectBuildingTypes = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1299,6 +1313,7 @@ export const getProjectProjectTypes = /* GraphQL */ `
         }
         featured
         link
+        slug
         quote
         quoteAttribution
         quotes {
@@ -1373,6 +1388,7 @@ export const listProjectProjectTypes = /* GraphQL */ `
           locationString
           featured
           link
+          slug
           quote
           quoteAttribution
           collaborators
@@ -1470,95 +1486,6 @@ export const listDepartmentSubcategories = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const projectBySlug = /* GraphQL */ `
-  query ProjectBySlug(
-    $link: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelProjectFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    projectBySlug(
-      link: $link
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        oldId
-        name
-        description
-        location {
-          id
-          name
-          address
-          description
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        locationString
-        createdBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        lastUpdatedBy {
-          id
-          name
-          email
-          role
-          createdAt
-          updatedAt
-        }
-        featured
-        link
-        quote
-        quoteAttribution
-        quotes {
-          nextToken
-        }
-        collaborators
-        size
-        gridOrder
-        status
-        gallery {
-          id
-          createdAt
-          updatedAt
-          galleryProjectId
-        }
-        departments {
-          nextToken
-        }
-        subcategories {
-          nextToken
-        }
-        building_type {
-          nextToken
-        }
-        project_type {
-          nextToken
-        }
-        displayOrder
-        previewLocation
-        createdAt
-        updatedAt
-        projectLocationId
-        projectCreatedById
-        projectLastUpdatedById
-        projectGalleryId
       }
       nextToken
     }
