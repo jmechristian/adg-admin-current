@@ -997,6 +997,12 @@ export type ModelDepartmentSubcategoriesFilterInput = {
   not?: ModelDepartmentSubcategoriesFilterInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
   condition?: ModelUserConditionInput | null,
@@ -5946,6 +5952,101 @@ export type ListDepartmentSubcategoriesQuery = {
       },
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProjectBySlugQueryVariables = {
+  link: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProjectBySlugQuery = {
+  projectBySlug?:  {
+    __typename: "ModelProjectConnection",
+    items:  Array< {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link: string,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,

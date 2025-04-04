@@ -1475,3 +1475,92 @@ export const listDepartmentSubcategories = /* GraphQL */ `
     }
   }
 `;
+export const projectBySlug = /* GraphQL */ `
+  query ProjectBySlug(
+    $link: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    projectBySlug(
+      link: $link
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        previewLocation
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      nextToken
+    }
+  }
+`;

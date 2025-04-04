@@ -47,7 +47,7 @@ type Project @model {
   createdBy: User @hasOne
   lastUpdatedBy: User @hasOne
   featured: Boolean
-  link: String!
+  link: String! @index(name: "projectBySlug", queryField: "projectBySlug")
   quote: String
   quoteAttribution: String
   quotes: [Quote] @hasMany
