@@ -124,6 +124,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
                   (a, b) => (a.order || 0) - (b.order || 0)
                 )[0]?.caption ?? 'Hero Image',
             }}
+            setModalImage={() => {}}
           />
           <TwoColIntro
             id={editedProject.id}
@@ -169,6 +170,7 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             quotes={editedProject.quotes.items.sort(
               (a, b) => (a.displayOrder || 0) - (b.displayOrder || 0)
             )}
+            setModalImage={() => {}}
           />
         </div>
       </div>
