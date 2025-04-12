@@ -153,6 +153,7 @@ const ProjectCreateModal = () => {
       quote: '',
       quoteAttribution: '',
       collaborators: '',
+      featured: false,
     })) as GraphQLResult<{ createProject: { id: string } }>;
 
     const gallery = (await createNewGallery(
