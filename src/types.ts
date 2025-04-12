@@ -87,6 +87,14 @@ export interface ProjectWithDepartments {
       };
     }>;
   };
+  project_type: {
+    items: {
+      projectType: {
+        id: string;
+        name: string;
+      };
+    }[];
+  };
 }
 
 export interface Project {
