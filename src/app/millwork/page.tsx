@@ -190,15 +190,19 @@ export default function Residential() {
               })}
             </div>
 
-            <div className='grid grid-cols-12 gap-10 border-b-2 pb-2'>
-              <div className='font-brand-bold text-xs col-span-1'>ID</div>
-
-              <div className='font-brand-bold text-xs col-span-5'>Details</div>
-              <div className='font-brand-bold text-xs col-span-1'>Gallery</div>
-              <div className='font-brand-bold text-xs col-span-2'>Size</div>
-              <div className='font-brand-bold text-xs col-span-1'>Updated</div>
-              <div className='font-brand-bold text-xs col-span-1'>Featured</div>
-              <div className='font-brand-bold col-span-1 text-xs'>Status</div>
+            <div className='grid grid-cols-12 gap-5 border-b-2 pb-2'>
+              <div className='font-brand-bold text-xs col-span-4'>Details</div>
+              <div className='font-brand-bold text-xs col-span-2'>
+                Project Type
+              </div>
+              <div className='font-brand-bold text-xs col-span-2'>
+                Building Type
+              </div>
+              <div className='font-brand-bold text-xs col-span-1'>Size</div>
+              <div className='font-brand-bold col-span-1 text-xs'>Featured</div>
+              <div className='font-brand-bold col-span-2 text-xs text-center'>
+                Status
+              </div>
             </div>
             <div className='flex flex-col gap-2 divide-y divide-gray-300'>
               {currentProjects.length > 0 &&

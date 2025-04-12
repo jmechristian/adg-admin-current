@@ -59,13 +59,26 @@ export interface ProjectWithDepartments {
   displayOrder: number;
   featured: boolean;
   projectGalleryId: string;
+  quoteAttribution?: string | null;
+  collaborators?: string | null;
+  projectLocationId?: string | null | undefined;
   name: string;
   locationString: string;
   link: string;
   id: string;
   size: string;
   status: string;
+  quote?: string | null;
+  projectCreatedById?: string;
   updatedAt: string;
+  building_type: {
+    items: Array<{
+      buildingType: {
+        id: string;
+        name: string;
+      };
+    }>;
+  };
   subcategories: {
     items: Array<{
       subcategory: {
@@ -249,4 +262,5 @@ export interface ProjectObject {
   quote: string;
   quoteAttribution: string;
   collaborators: string;
+  featured: boolean;
 }
