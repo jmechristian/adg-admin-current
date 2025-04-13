@@ -31,10 +31,12 @@ export default function Residential() {
       try {
         const res = await getProjectsWithDepartments();
         setProjects(
-          res.filter(
-            (project: ProjectWithDepartments) =>
-              project.departments.items[0].department.id ===
-              '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+          res.filter((project: ProjectWithDepartments) =>
+            project.departments.items.some(
+              (department) =>
+                department.department.id ===
+                '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
+            )
           )
         );
       } finally {

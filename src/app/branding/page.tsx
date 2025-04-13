@@ -31,10 +31,12 @@ export default function CommercialInteriors() {
       try {
         const res = await getProjectsWithDepartments();
         setProjects(
-          res.filter(
-            (project: ProjectWithDepartments) =>
-              project.departments.items[0].department.id ===
-              '4dfd71af-51a3-4af9-874f-da260e081f08'
+          res.filter((project: ProjectWithDepartments) =>
+            project.departments.items.some(
+              (department) =>
+                department.department.id ===
+                '4dfd71af-51a3-4af9-874f-da260e081f08'
+            )
           )
         );
       } finally {
