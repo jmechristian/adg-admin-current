@@ -157,11 +157,13 @@ const FeaturedModal = ({
             >
               <div className='flex flex-col gap-2'>
                 {projects
-                  .sort(
-                    (a, b) =>
-                      a.featuredProjects?.items[0]?.displayOrder -
-                      b.featuredProjects?.items[0]?.displayOrder
-                  )
+                  .sort((a, b) => {
+                    const orderA =
+                      a.featuredProjects?.items[0]?.displayOrder ?? 999;
+                    const orderB =
+                      b.featuredProjects?.items[0]?.displayOrder ?? 999;
+                    return orderA - orderB;
+                  })
                   .map((project, index) => (
                     <SortableItem
                       key={project.id}
