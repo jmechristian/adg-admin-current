@@ -45,6 +45,13 @@ export interface Gallery {
   };
   project: Project;
 }
+
+export interface FeaturedProject {
+  departmentFeaturedProjectsId: string;
+  displayOrder: number;
+  id: string;
+  projectFeaturedProjectsId: string;
+}
 export interface ProjectWithDepartments {
   createdAt: string;
   departments: {
@@ -95,6 +102,14 @@ export interface ProjectWithDepartments {
       };
     }[];
   };
+  featuredProjects: {
+    items: {
+      departmentFeaturedProjectsId: string;
+      displayOrder: number;
+      id: string;
+      projectFeaturedProjectsId: string;
+    }[];
+  } | null;
 }
 
 export interface Project {
@@ -155,6 +170,14 @@ export interface Project {
       };
     }[];
   };
+  featuredProjects: {
+    items: {
+      departmentFeaturedProjectsId: string;
+      displayOrder: number;
+      id: string;
+      projectFeaturedProjectsId: string;
+    }[];
+  } | null;
   onDescriptionChange?: (description: string) => void;
   onNameChange?: (name: string) => void;
   onSizeChange?: (size: string) => void;

@@ -211,7 +211,11 @@ export default function CommercialInteriors() {
                 currentProjects
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: ProjectWithDepartments) => (
-                    <ProjectItem key={project.id} project={project} />
+                    <ProjectItem
+                      key={project.id}
+                      project={project}
+                      departmentId={'0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'}
+                    />
                   ))}
             </div>
             <div className='flex justify-center mt-4'>

@@ -12,8 +12,9 @@ import {
   ProjectWithDepartments,
 } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
-import InteriorsIcon from '@/components/shared/InteriorsIcon';
-import { MdRefresh } from 'react-icons/md';
+import { MdRefresh, MdStar, MdAdd } from 'react-icons/md';
+import FeaturedModal from '@/components/shared/FeaturedModal';
+
 export default function CommercialInteriors() {
   const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
   const [subcategories, setSubcategories] = useState<DepartmentSubcategory[]>(
@@ -25,6 +26,8 @@ export default function CommercialInteriors() {
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [activeFilter, setActiveFilter] = useState('');
   const toggleModal = useLayoutStore((state) => state.toggleModal);
+  const [toggleFeatured, setToggleFeatured] = useState(false);
+
   useEffect(() => {
     const getProjects = async () => {
       try {
@@ -79,6 +82,19 @@ export default function CommercialInteriors() {
       );
   }, [projects, searchTerm, activeFilter]);
 
+  const featuredProjects = useMemo(() => {
+    return projects.filter(
+      (project) =>
+        project.featuredProjects?.items &&
+        project.featuredProjects?.items.length > 0 &&
+        project.featuredProjects?.items.some(
+          (item) =>
+            item.departmentFeaturedProjectsId ===
+            '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+        )
+    );
+  }, [projects]);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentProjects = filteredProjects.slice(
@@ -90,6 +106,18 @@ export default function CommercialInteriors() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  };
+
+  const refetchProjects = async () => {
+    const res = await getProjectsWithDepartments();
+    setProjects(
+      res.filter((project: ProjectWithDepartments) =>
+        project.departments.items.some(
+          (department) =>
+            department.department.id === '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+        )
+      )
+    );
   };
 
   return (
@@ -129,12 +157,26 @@ export default function CommercialInteriors() {
                   <MdRefresh className='text-gray-500' size={24} />
                 </div>
               </div>
-              <button
-                onClick={toggleModal}
-                className='bg-brand hover:bg-brand-brown transition-colors duration-300 text-white px-4 py-2 rounded-md font-brand-bold text-lg'
-              >
-                Create New +
-              </button>
+              <div className='flex items-center gap-1.5'>
+                <button
+                  onClick={() => setToggleFeatured(!toggleFeatured)}
+                  className='bg-brand-brown hover:bg-brand-gray/80 transition-colors duration-300 text-white px-4 py-2 rounded-md font-brand-book text-lg leading-none w-40'
+                >
+                  <div className='flex items-center justify-center gap-1 leading-none'>
+                    <MdStar size={18} />
+                    Featured
+                  </div>
+                </button>
+                <button
+                  onClick={toggleModal}
+                  className='bg-brand hover:bg-brand-gray/80 text-center transition-colors duration-300 text-white py-2 rounded-md font-brand-book text-lg leading-none w-40'
+                >
+                  <div className='flex items-center justify-center gap-1 leading-none'>
+                    <MdAdd size={18} />
+                    Create New
+                  </div>
+                </button>
+              </div>
             </div>
 
             <div className='flex justify-between items-center border-b-2 pb-4'>
@@ -210,7 +252,11 @@ export default function CommercialInteriors() {
                 currentProjects
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: ProjectWithDepartments) => (
-                    <ProjectItem key={project.id} project={project} />
+                    <ProjectItem
+                      key={project.id}
+                      project={project}
+                      departmentId={'0cd75086-b396-4c52-a907-5b52fb6aeedd'}
+                    />
                   ))}
             </div>
             <div className='flex justify-center mt-4'>
@@ -228,6 +274,13 @@ export default function CommercialInteriors() {
                 </button>
               ))}
             </div>
+            {toggleFeatured && (
+              <FeaturedModal
+                featuredProjects={featuredProjects}
+                closeModal={() => setToggleFeatured(false)}
+                refetchProjects={refetchProjects}
+              />
+            )}
           </>
         )}
       </div>

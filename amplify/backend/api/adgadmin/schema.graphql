@@ -31,6 +31,13 @@ type Location @model {
   longitude: Float!
 }
 
+type FeaturedProject @model {
+  id: ID!
+  project: Project @belongsTo
+  displayOrder: Int
+  department: Department @belongsTo
+}
+
 type Gallery @model {
   id: ID!
   images: [ImageObject] @hasMany
@@ -64,6 +71,7 @@ type Project @model {
   project_type: [ProjectType] @manyToMany(relationName: "ProjectProjectTypes")
   displayOrder: Int
   previewLocation: String
+  featuredProjects: [FeaturedProject] @hasMany
 }
 
 type Quote @model {
@@ -81,6 +89,7 @@ type Department @model {
   subcategories: [Subcategory]
     @manyToMany(relationName: "DepartmentSubcategories")
   displayOrder: Int
+  featuredProjects: [FeaturedProject] @hasMany
 }
 
 type ImageObject @model {

@@ -46,7 +46,7 @@ export default function Home() {
       .filter((project: ProjectWithDepartments) =>
         activeFilter
           ? project?.departments?.items.some(
-              (department) => department.department.name === activeFilter
+              (department) => department.department.id === activeFilter
             )
           : true
       );
@@ -149,51 +149,61 @@ export default function Home() {
                     title='Architecture'
                     count={architectureCount}
                     bgColor={`bg-brand-gray ${
-                      activeFilter === 'Architecture'
+                      activeFilter === '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Architecture')}
+                    onClick={() =>
+                      handleFilterClick('0e20ac00-ec5f-464a-86d3-61ddc90e9aa7')
+                    }
                   />
                   <HeaderItem
                     title='Interiors'
                     count={commercialInteriorsCount}
                     bgColor={`bg-brand-gray ${
-                      activeFilter === 'Interiors'
+                      activeFilter === '0cd75086-b396-4c52-a907-5b52fb6aeedd'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Interiors')}
+                    onClick={() =>
+                      handleFilterClick('0cd75086-b396-4c52-a907-5b52fb6aeedd')
+                    }
                   />
                   <HeaderItem
                     title='Branding'
                     count={brandingCount}
                     bgColor={`bg-brand-gray ${
-                      activeFilter === 'Branding'
+                      activeFilter === '4dfd71af-51a3-4af9-874f-da260e081f08'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Branding')}
+                    onClick={() =>
+                      handleFilterClick('4dfd71af-51a3-4af9-874f-da260e081f08')
+                    }
                   />
                   <HeaderItem
                     title='Residential'
                     count={akresCount}
                     bgColor={`bg-brand-gray ${
-                      activeFilter === 'Residential'
+                      activeFilter === '6cd6cac5-1533-45e3-8e9a-d4e1472def9a'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Residential')}
+                    onClick={() =>
+                      handleFilterClick('6cd6cac5-1533-45e3-8e9a-d4e1472def9a')
+                    }
                   />
                   <HeaderItem
                     title='Millwork'
                     count={millworkCount}
                     bgColor={`bg-brand-gray ${
-                      activeFilter === 'Millwork'
+                      activeFilter === '763080b2-dddf-45e6-ab08-c540a84d8b07'
                         ? 'ring-2 ring-white ring-offset-2 transition-all duration-300'
                         : ''
                     }`}
-                    onClick={() => handleFilterClick('Millwork')}
+                    onClick={() =>
+                      handleFilterClick('763080b2-dddf-45e6-ab08-c540a84d8b07')
+                    }
                   />
                 </>
               )}
@@ -287,7 +297,15 @@ export default function Home() {
                 currentProjects
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((project: ProjectWithDepartments) => (
-                    <ProjectItem key={project.id} project={project} />
+                    <ProjectItem
+                      key={project.id}
+                      project={project}
+                      departmentId={
+                        activeFilter
+                          ? activeFilter
+                          : project.departments.items[0].department.id
+                      }
+                    />
                   ))}
             </div>
             <div className='flex justify-center mt-4'>

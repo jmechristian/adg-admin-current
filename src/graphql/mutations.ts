@@ -98,6 +98,321 @@ export const deleteLocation = /* GraphQL */ `
     }
   }
 `;
+export const createFeaturedProject = /* GraphQL */ `
+  mutation CreateFeaturedProject(
+    $input: CreateFeaturedProjectInput!
+    $condition: ModelFeaturedProjectConditionInput
+  ) {
+    createFeaturedProject(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        slug
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        previewLocation
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      displayOrder
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      projectFeaturedProjectsId
+      departmentFeaturedProjectsId
+    }
+  }
+`;
+export const updateFeaturedProject = /* GraphQL */ `
+  mutation UpdateFeaturedProject(
+    $input: UpdateFeaturedProjectInput!
+    $condition: ModelFeaturedProjectConditionInput
+  ) {
+    updateFeaturedProject(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        slug
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        previewLocation
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      displayOrder
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      projectFeaturedProjectsId
+      departmentFeaturedProjectsId
+    }
+  }
+`;
+export const deleteFeaturedProject = /* GraphQL */ `
+  mutation DeleteFeaturedProject(
+    $input: DeleteFeaturedProjectInput!
+    $condition: ModelFeaturedProjectConditionInput
+  ) {
+    deleteFeaturedProject(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        slug
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        previewLocation
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      displayOrder
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      projectFeaturedProjectsId
+      departmentFeaturedProjectsId
+    }
+  }
+`;
 export const createGallery = /* GraphQL */ `
   mutation CreateGallery(
     $input: CreateGalleryInput!
@@ -185,6 +500,9 @@ export const createGallery = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -285,6 +603,9 @@ export const updateGallery = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -385,6 +706,9 @@ export const deleteGallery = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -531,6 +855,17 @@ export const createProject = /* GraphQL */ `
       }
       displayOrder
       previewLocation
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       projectLocationId
@@ -673,6 +1008,17 @@ export const updateProject = /* GraphQL */ `
       }
       displayOrder
       previewLocation
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       projectLocationId
@@ -815,6 +1161,17 @@ export const deleteProject = /* GraphQL */ `
       }
       displayOrder
       previewLocation
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       projectLocationId
@@ -897,6 +1254,9 @@ export const createQuote = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -984,6 +1344,9 @@ export const updateQuote = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1071,6 +1434,9 @@ export const deleteQuote = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1114,6 +1480,17 @@ export const createDepartment = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1148,6 +1525,17 @@ export const updateDepartment = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1182,6 +1570,17 @@ export const deleteDepartment = /* GraphQL */ `
         nextToken
       }
       displayOrder
+      featuredProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectFeaturedProjectsId
+          departmentFeaturedProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1665,6 +2064,9 @@ export const createProjectDepartments = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1682,6 +2084,9 @@ export const createProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1763,6 +2168,9 @@ export const updateProjectDepartments = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1780,6 +2188,9 @@ export const updateProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1861,6 +2272,9 @@ export const deleteProjectDepartments = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1878,6 +2292,9 @@ export const deleteProjectDepartments = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1959,6 +2376,9 @@ export const createProjectSubcategories = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2057,6 +2477,9 @@ export const updateProjectSubcategories = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2155,6 +2578,9 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2253,6 +2679,9 @@ export const createProjectBuildingTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2348,6 +2777,9 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2443,6 +2875,9 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2538,6 +2973,9 @@ export const createProjectProjectTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2633,6 +3071,9 @@ export const updateProjectProjectTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2728,6 +3169,9 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         }
         displayOrder
         previewLocation
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -2769,6 +3213,9 @@ export const createDepartmentSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2809,6 +3256,9 @@ export const updateDepartmentSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2849,6 +3299,9 @@ export const deleteDepartmentSubcategories = /* GraphQL */ `
           nextToken
         }
         displayOrder
+        featuredProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }

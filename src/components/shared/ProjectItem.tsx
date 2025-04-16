@@ -13,15 +13,30 @@ import {
   archiveProject,
   setDraftProject,
   setPublishedProject,
-  setFeaturedProject,
+  createNewFeaturedProject,
 } from '@/helpers/api';
 import { MdArchive, MdEdit, MdCheckCircle, MdBurstMode } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { Switch } from '@headlessui/react';
 
-const ProjectItem = ({ project }: { project: ProjectWithDepartments }) => {
-  console.log(project);
-  const [featured, setFeatured] = useState(project.featured);
+const ProjectItem = ({
+  project,
+  departmentId,
+}: {
+  project: ProjectWithDepartments;
+  departmentId: string;
+}) => {
+  const [featured, setFeatured] = useState(
+    project &&
+      project.featuredProjects &&
+      project.featuredProjects.items &&
+      project.featuredProjects.items.length > 0 &&
+      project.featuredProjects.items.some(
+        (item) =>
+          item.departmentFeaturedProjectsId === departmentId &&
+          item.projectFeaturedProjectsId === project.id
+      )
+  );
   const [gallery, setGallery] = useState<Gallery | null>(null);
   const [isClicked, setIsClicked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -119,7 +134,7 @@ const ProjectItem = ({ project }: { project: ProjectWithDepartments }) => {
           onChange={async () => {
             setLoading(true);
             setFeatured(!featured);
-            await setFeaturedProject(project.id);
+            await createNewFeaturedProject(departmentId, project.id, 0);
             setLoading(false);
           }}
           className={`${

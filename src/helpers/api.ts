@@ -38,6 +38,9 @@ import {
   updateQuote,
   deleteQuote,
   createQuote,
+  createFeaturedProject,
+  updateFeaturedProject,
+  deleteFeaturedProject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -998,6 +1001,24 @@ export const getProjectsWithDepartments = async () => {
               }
             }
           }
+            featuredProjects {
+        items {
+          departmentFeaturedProjectsId
+              displayOrder
+              id
+              projectFeaturedProjectsId
+            }
+          }
+            gallery {
+        images {
+          items {
+            centerX
+            centerY
+            order
+            url
+          }
+        }
+      }
           description
           displayOrder
           featured
@@ -1118,6 +1139,43 @@ export const setFeaturedProject = async (projectId: string) => {
   const res = await client.graphql({
     query: updateProject,
     variables: { input: { id: projectId, featured: true } },
+  });
+  return res;
+};
+
+export const createNewFeaturedProject = async (
+  departmentId: string,
+  projectId: string,
+  order: number
+) => {
+  const res = await client.graphql({
+    query: createFeaturedProject,
+    variables: {
+      input: {
+        departmentFeaturedProjectsId: departmentId,
+        displayOrder: order,
+        projectFeaturedProjectsId: projectId,
+      },
+    },
+  });
+  return res;
+};
+
+export const updateFeaturedProjectOrder = async (
+  projectId: string,
+  order: number
+) => {
+  const res = await client.graphql({
+    query: updateFeaturedProject,
+    variables: { input: { id: projectId, displayOrder: order } },
+  });
+  return res;
+};
+
+export const deleteAFeaturedProject = async (projectId: string) => {
+  const res = await client.graphql({
+    query: deleteFeaturedProject,
+    variables: { input: { id: projectId } },
   });
   return res;
 };
