@@ -14,6 +14,7 @@ import {
   setDraftProject,
   setPublishedProject,
   createNewFeaturedProject,
+  deleteAFeaturedProject,
 } from '@/helpers/api';
 import { MdArchive, MdEdit, MdCheckCircle, MdBurstMode } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
@@ -22,9 +23,11 @@ import { Switch } from '@headlessui/react';
 const ProjectItem = ({
   project,
   departmentId,
+  refetchProjects,
 }: {
   project: ProjectWithDepartments;
   departmentId: string;
+  refetchProjects: () => void;
 }) => {
   const [featured, setFeatured] = useState(
     project &&
@@ -130,11 +133,21 @@ const ProjectItem = ({
       </div>
       <div className='col-span-1 text-xs flex items-center justify-center gap-2'>
         <Switch
-          checked={featured}
+          checked={featured || false}
           onChange={async () => {
             setLoading(true);
             setFeatured(!featured);
-            await createNewFeaturedProject(departmentId, project.id, 0);
+            if (!featured) {
+              await createNewFeaturedProject(departmentId, project.id, 0);
+              refetchProjects();
+            } else {
+              const featuredProjectId =
+                project.featuredProjects?.items?.[0]?.id;
+              if (featuredProjectId) {
+                await deleteAFeaturedProject(featuredProjectId);
+                refetchProjects();
+              }
+            }
             setLoading(false);
           }}
           className={`${
