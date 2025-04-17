@@ -27,7 +27,7 @@ const ProjectItem = ({
 }: {
   project: ProjectWithDepartments;
   departmentId: string;
-  refetchProjects: () => void;
+  refetchProjects?: () => void;
 }) => {
   const [featured, setFeatured] = useState(
     project &&
@@ -139,13 +139,12 @@ const ProjectItem = ({
             setFeatured(!featured);
             if (!featured) {
               await createNewFeaturedProject(departmentId, project.id, 0);
-              refetchProjects();
+              refetchProjects?.();
             } else {
               const featuredProjectId =
                 project.featuredProjects?.items?.[0]?.id;
               if (featuredProjectId) {
                 await deleteAFeaturedProject(featuredProjectId);
-                refetchProjects();
               }
             }
             setLoading(false);
