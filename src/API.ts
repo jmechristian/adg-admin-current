@@ -232,6 +232,7 @@ export type Project = {
   displayOrder?: number | null,
   previewLocation?: string | null,
   featuredProjects?: ModelFeaturedProjectConnection | null,
+  subcategoryProjects?: ModelSubcategoryProjectConnection | null,
   createdAt: string,
   updatedAt: string,
   projectLocationId?: string | null,
@@ -348,6 +349,7 @@ export type Subcategory = {
   id: string,
   name: string,
   projects?: ModelProjectSubcategoriesConnection | null,
+  subcategoryProjects?: ModelSubcategoryProjectConnection | null,
   departments?: ModelDepartmentSubcategoriesConnection | null,
   displayOrder?: number | null,
   createdAt: string,
@@ -369,6 +371,24 @@ export type ProjectSubcategories = {
   subcategory: Subcategory,
   createdAt: string,
   updatedAt: string,
+};
+
+export type ModelSubcategoryProjectConnection = {
+  __typename: "ModelSubcategoryProjectConnection",
+  items:  Array<SubcategoryProject | null >,
+  nextToken?: string | null,
+};
+
+export type SubcategoryProject = {
+  __typename: "SubcategoryProject",
+  id: string,
+  project?: Project | null,
+  subcategory?: Subcategory | null,
+  displayOrder?: number | null,
+  createdAt: string,
+  updatedAt: string,
+  projectSubcategoryProjectsId?: string | null,
+  subcategorySubcategoryProjectsId?: string | null,
 };
 
 export type ModelFeaturedProjectConnection = {
@@ -667,6 +687,33 @@ export type UpdateSubcategoryInput = {
 };
 
 export type DeleteSubcategoryInput = {
+  id: string,
+};
+
+export type CreateSubcategoryProjectInput = {
+  id?: string | null,
+  displayOrder?: number | null,
+  projectSubcategoryProjectsId?: string | null,
+  subcategorySubcategoryProjectsId?: string | null,
+};
+
+export type ModelSubcategoryProjectConditionInput = {
+  displayOrder?: ModelIntInput | null,
+  and?: Array< ModelSubcategoryProjectConditionInput | null > | null,
+  or?: Array< ModelSubcategoryProjectConditionInput | null > | null,
+  not?: ModelSubcategoryProjectConditionInput | null,
+  projectSubcategoryProjectsId?: ModelIDInput | null,
+  subcategorySubcategoryProjectsId?: ModelIDInput | null,
+};
+
+export type UpdateSubcategoryProjectInput = {
+  id: string,
+  displayOrder?: number | null,
+  projectSubcategoryProjectsId?: string | null,
+  subcategorySubcategoryProjectsId?: string | null,
+};
+
+export type DeleteSubcategoryProjectInput = {
   id: string,
 };
 
@@ -984,6 +1031,16 @@ export type ModelSubcategoryConnection = {
   nextToken?: string | null,
 };
 
+export type ModelSubcategoryProjectFilterInput = {
+  id?: ModelIDInput | null,
+  displayOrder?: ModelIntInput | null,
+  and?: Array< ModelSubcategoryProjectFilterInput | null > | null,
+  or?: Array< ModelSubcategoryProjectFilterInput | null > | null,
+  not?: ModelSubcategoryProjectFilterInput | null,
+  projectSubcategoryProjectsId?: ModelIDInput | null,
+  subcategorySubcategoryProjectsId?: ModelIDInput | null,
+};
+
 export type ModelBuildingTypeFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -1254,6 +1311,10 @@ export type CreateFeaturedProjectMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -1376,6 +1437,10 @@ export type UpdateFeaturedProjectMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -1496,6 +1561,10 @@ export type DeleteFeaturedProjectMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1638,6 +1707,10 @@ export type CreateGalleryMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -1756,6 +1829,10 @@ export type UpdateGalleryMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -1872,6 +1949,10 @@ export type DeleteGalleryMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -2051,6 +2132,19 @@ export type CreateProjectMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     projectLocationId?: string | null,
@@ -2221,6 +2315,19 @@ export type UpdateProjectMutation = {
         updatedAt: string,
         projectFeaturedProjectsId?: string | null,
         departmentFeaturedProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2397,6 +2504,19 @@ export type DeleteProjectMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     projectLocationId?: string | null,
@@ -2493,6 +2613,10 @@ export type CreateQuoteMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -2598,6 +2722,10 @@ export type UpdateQuoteMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -2699,6 +2827,10 @@ export type DeleteQuoteMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -3070,6 +3202,19 @@ export type CreateSubcategoryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     departments?:  {
       __typename: "ModelDepartmentSubcategoriesConnection",
       items:  Array< {
@@ -3107,6 +3252,19 @@ export type UpdateSubcategoryMutation = {
         subcategoryID: string,
         createdAt: string,
         updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3150,6 +3308,19 @@ export type DeleteSubcategoryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     departments?:  {
       __typename: "ModelDepartmentSubcategoriesConnection",
       items:  Array< {
@@ -3165,6 +3336,384 @@ export type DeleteSubcategoryMutation = {
     displayOrder?: number | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateSubcategoryProjectMutationVariables = {
+  input: CreateSubcategoryProjectInput,
+  condition?: ModelSubcategoryProjectConditionInput | null,
+};
+
+export type CreateSubcategoryProjectMutation = {
+  createSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
+  } | null,
+};
+
+export type UpdateSubcategoryProjectMutationVariables = {
+  input: UpdateSubcategoryProjectInput,
+  condition?: ModelSubcategoryProjectConditionInput | null,
+};
+
+export type UpdateSubcategoryProjectMutation = {
+  updateSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
+  } | null,
+};
+
+export type DeleteSubcategoryProjectMutationVariables = {
+  input: DeleteSubcategoryProjectInput,
+  condition?: ModelSubcategoryProjectConditionInput | null,
+};
+
+export type DeleteSubcategoryProjectMutation = {
+  deleteSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
   } | null,
 };
 
@@ -3425,6 +3974,10 @@ export type CreateProjectDepartmentsMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -3544,6 +4097,10 @@ export type UpdateProjectDepartmentsMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -3667,6 +4224,10 @@ export type DeleteProjectDepartmentsMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -3788,6 +4349,10 @@ export type CreateProjectSubcategoriesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -3801,6 +4366,10 @@ export type CreateProjectSubcategoriesMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -3905,6 +4474,10 @@ export type UpdateProjectSubcategoriesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -3918,6 +4491,10 @@ export type UpdateProjectSubcategoriesMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -4022,6 +4599,10 @@ export type DeleteProjectSubcategoriesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -4035,6 +4616,10 @@ export type DeleteProjectSubcategoriesMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -4137,6 +4722,10 @@ export type CreateProjectBuildingTypesMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -4252,6 +4841,10 @@ export type UpdateProjectBuildingTypesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -4363,6 +4956,10 @@ export type DeleteProjectBuildingTypesMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -4478,6 +5075,10 @@ export type CreateProjectProjectTypesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -4589,6 +5190,10 @@ export type UpdateProjectProjectTypesMutation = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -4704,6 +5309,10 @@ export type DeleteProjectProjectTypesMutation = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -4767,6 +5376,10 @@ export type CreateDepartmentSubcategoriesMutation = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       departments?:  {
         __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
@@ -4819,6 +5432,10 @@ export type UpdateDepartmentSubcategoriesMutation = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       departments?:  {
         __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
@@ -4869,6 +5486,10 @@ export type DeleteDepartmentSubcategoriesMutation = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -5048,6 +5669,10 @@ export type GetFeaturedProjectQuery = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -5242,6 +5867,10 @@ export type GetGalleryQuery = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -5469,6 +6098,19 @@ export type GetProjectQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     projectLocationId?: string | null,
@@ -5563,6 +6205,10 @@ export type ListProjectsQuery = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -5662,6 +6308,10 @@ export type GetQuoteQuery = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -5923,6 +6573,19 @@ export type GetSubcategoryQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     departments?:  {
       __typename: "ModelDepartmentSubcategoriesConnection",
       items:  Array< {
@@ -5958,6 +6621,10 @@ export type ListSubcategoriesQuery = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       departments?:  {
         __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
@@ -5965,6 +6632,186 @@ export type ListSubcategoriesQuery = {
       displayOrder?: number | null,
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetSubcategoryProjectQueryVariables = {
+  id: string,
+};
+
+export type GetSubcategoryProjectQuery = {
+  getSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
+  } | null,
+};
+
+export type ListSubcategoryProjectsQueryVariables = {
+  filter?: ModelSubcategoryProjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSubcategoryProjectsQuery = {
+  listSubcategoryProjects?:  {
+    __typename: "ModelSubcategoryProjectConnection",
+    items:  Array< {
+      __typename: "SubcategoryProject",
+      id: string,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      subcategory?:  {
+        __typename: "Subcategory",
+        id: string,
+        name: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+      projectSubcategoryProjectsId?: string | null,
+      subcategorySubcategoryProjectsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6162,6 +7009,10 @@ export type GetProjectDepartmentsQuery = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -6336,6 +7187,10 @@ export type GetProjectSubcategoriesQuery = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -6349,6 +7204,10 @@ export type GetProjectSubcategoriesQuery = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -6504,6 +7363,10 @@ export type GetProjectBuildingTypesQuery = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -6672,6 +7535,10 @@ export type GetProjectProjectTypesQuery = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -6786,6 +7653,10 @@ export type GetDepartmentSubcategoriesQuery = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -6998,6 +7869,10 @@ export type OnCreateFeaturedProjectSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -7115,6 +7990,10 @@ export type OnUpdateFeaturedProjectSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -7230,6 +8109,10 @@ export type OnDeleteFeaturedProjectSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -7367,6 +8250,10 @@ export type OnCreateGallerySubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -7480,6 +8367,10 @@ export type OnUpdateGallerySubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -7591,6 +8482,10 @@ export type OnDeleteGallerySubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -7765,6 +8660,19 @@ export type OnCreateProjectSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     projectLocationId?: string | null,
@@ -7930,6 +8838,19 @@ export type OnUpdateProjectSubscription = {
         updatedAt: string,
         projectFeaturedProjectsId?: string | null,
         departmentFeaturedProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -8101,6 +9022,19 @@ export type OnDeleteProjectSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     projectLocationId?: string | null,
@@ -8192,6 +9126,10 @@ export type OnCreateQuoteSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -8292,6 +9230,10 @@ export type OnUpdateQuoteSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -8388,6 +9330,10 @@ export type OnDeleteQuoteSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -8724,6 +9670,19 @@ export type OnCreateSubcategorySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     departments?:  {
       __typename: "ModelDepartmentSubcategoriesConnection",
       items:  Array< {
@@ -8756,6 +9715,19 @@ export type OnUpdateSubcategorySubscription = {
         subcategoryID: string,
         createdAt: string,
         updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -8794,6 +9766,19 @@ export type OnDeleteSubcategorySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    subcategoryProjects?:  {
+      __typename: "ModelSubcategoryProjectConnection",
+      items:  Array< {
+        __typename: "SubcategoryProject",
+        id: string,
+        displayOrder?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        projectSubcategoryProjectsId?: string | null,
+        subcategorySubcategoryProjectsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     departments?:  {
       __typename: "ModelDepartmentSubcategoriesConnection",
       items:  Array< {
@@ -8809,6 +9794,369 @@ export type OnDeleteSubcategorySubscription = {
     displayOrder?: number | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateSubcategoryProjectSubscription = {
+  onCreateSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateSubcategoryProjectSubscription = {
+  onUpdateSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteSubcategoryProjectSubscription = {
+  onDeleteSubcategoryProject?:  {
+    __typename: "SubcategoryProject",
+    id: string,
+    project?:  {
+      __typename: "Project",
+      id: string,
+      oldId?: string | null,
+      name: string,
+      description?: string | null,
+      location?:  {
+        __typename: "Location",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        description?: string | null,
+        latitude: number,
+        longitude: number,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      locationString?: string | null,
+      createdBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      lastUpdatedBy?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        role: Role,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      featured?: boolean | null,
+      link?: string | null,
+      slug?: string | null,
+      quote?: string | null,
+      quoteAttribution?: string | null,
+      quotes?:  {
+        __typename: "ModelQuoteConnection",
+        nextToken?: string | null,
+      } | null,
+      collaborators?: string | null,
+      size?: string | null,
+      gridOrder?: number | null,
+      status: Status,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelProjectDepartmentsConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategories?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      building_type?:  {
+        __typename: "ModelProjectBuildingTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      project_type?:  {
+        __typename: "ModelProjectProjectTypesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      previewLocation?: string | null,
+      featuredProjects?:  {
+        __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      projectLocationId?: string | null,
+      projectCreatedById?: string | null,
+      projectLastUpdatedById?: string | null,
+      projectGalleryId?: string | null,
+    } | null,
+    subcategory?:  {
+      __typename: "Subcategory",
+      id: string,
+      name: string,
+      projects?:  {
+        __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      departments?:  {
+        __typename: "ModelDepartmentSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      displayOrder?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    displayOrder?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    projectSubcategoryProjectsId?: string | null,
+    subcategorySubcategoryProjectsId?: string | null,
   } | null,
 };
 
@@ -9034,6 +10382,10 @@ export type OnCreateProjectDepartmentsSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9148,6 +10500,10 @@ export type OnUpdateProjectDepartmentsSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -9266,6 +10622,10 @@ export type OnDeleteProjectDepartmentsSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9382,6 +10742,10 @@ export type OnCreateProjectSubcategoriesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9395,6 +10759,10 @@ export type OnCreateProjectSubcategoriesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -9494,6 +10862,10 @@ export type OnUpdateProjectSubcategoriesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9507,6 +10879,10 @@ export type OnUpdateProjectSubcategoriesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -9606,6 +10982,10 @@ export type OnDeleteProjectSubcategoriesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9619,6 +10999,10 @@ export type OnDeleteProjectSubcategoriesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {
@@ -9716,6 +11100,10 @@ export type OnCreateProjectBuildingTypesSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -9826,6 +11214,10 @@ export type OnUpdateProjectBuildingTypesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -9932,6 +11324,10 @@ export type OnDeleteProjectBuildingTypesSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -10042,6 +11438,10 @@ export type OnCreateProjectProjectTypesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -10148,6 +11548,10 @@ export type OnUpdateProjectProjectTypesSubscription = {
       previewLocation?: string | null,
       featuredProjects?:  {
         __typename: "ModelFeaturedProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -10258,6 +11662,10 @@ export type OnDeleteProjectProjectTypesSubscription = {
         __typename: "ModelFeaturedProjectConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       projectLocationId?: string | null,
@@ -10316,6 +11724,10 @@ export type OnCreateDepartmentSubcategoriesSubscription = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       departments?:  {
         __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
@@ -10363,6 +11775,10 @@ export type OnUpdateDepartmentSubcategoriesSubscription = {
         __typename: "ModelProjectSubcategoriesConnection",
         nextToken?: string | null,
       } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
+        nextToken?: string | null,
+      } | null,
       departments?:  {
         __typename: "ModelDepartmentSubcategoriesConnection",
         nextToken?: string | null,
@@ -10408,6 +11824,10 @@ export type OnDeleteDepartmentSubcategoriesSubscription = {
       name: string,
       projects?:  {
         __typename: "ModelProjectSubcategoriesConnection",
+        nextToken?: string | null,
+      } | null,
+      subcategoryProjects?:  {
+        __typename: "ModelSubcategoryProjectConnection",
         nextToken?: string | null,
       } | null,
       departments?:  {

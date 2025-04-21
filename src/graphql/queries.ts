@@ -139,6 +139,9 @@ export const getFeaturedProject = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoryProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -309,6 +312,9 @@ export const getGallery = /* GraphQL */ `
         displayOrder
         previewLocation
         featuredProjects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         createdAt
@@ -509,6 +515,17 @@ export const getProject = /* GraphQL */ `
         }
         nextToken
       }
+      subcategoryProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          subcategorySubcategoryProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       projectLocationId
@@ -590,6 +607,9 @@ export const listProjects = /* GraphQL */ `
         displayOrder
         previewLocation
         featuredProjects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         createdAt
@@ -674,6 +694,9 @@ export const getQuote = /* GraphQL */ `
         displayOrder
         previewLocation
         featuredProjects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         createdAt
@@ -898,6 +921,17 @@ export const getSubcategory = /* GraphQL */ `
         }
         nextToken
       }
+      subcategoryProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          subcategorySubcategoryProjectsId
+        }
+        nextToken
+      }
       departments {
         items {
           id
@@ -927,12 +961,174 @@ export const listSubcategories = /* GraphQL */ `
         projects {
           nextToken
         }
+        subcategoryProjects {
+          nextToken
+        }
         departments {
           nextToken
         }
         displayOrder
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getSubcategoryProject = /* GraphQL */ `
+  query GetSubcategoryProject($id: ID!) {
+    getSubcategoryProject(id: $id) {
+      id
+      project {
+        id
+        oldId
+        name
+        description
+        location {
+          id
+          name
+          address
+          description
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        locationString
+        createdBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        lastUpdatedBy {
+          id
+          name
+          email
+          role
+          createdAt
+          updatedAt
+        }
+        featured
+        link
+        slug
+        quote
+        quoteAttribution
+        quotes {
+          nextToken
+        }
+        collaborators
+        size
+        gridOrder
+        status
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        departments {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        building_type {
+          nextToken
+        }
+        project_type {
+          nextToken
+        }
+        displayOrder
+        previewLocation
+        featuredProjects {
+          nextToken
+        }
+        subcategoryProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        projectLocationId
+        projectCreatedById
+        projectLastUpdatedById
+        projectGalleryId
+      }
+      subcategory {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategoryProjects {
+          nextToken
+        }
+        departments {
+          nextToken
+        }
+        displayOrder
+        createdAt
+        updatedAt
+      }
+      displayOrder
+      createdAt
+      updatedAt
+      projectSubcategoryProjectsId
+      subcategorySubcategoryProjectsId
+    }
+  }
+`;
+export const listSubcategoryProjects = /* GraphQL */ `
+  query ListSubcategoryProjects(
+    $filter: ModelSubcategoryProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSubcategoryProjects(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        subcategory {
+          id
+          name
+          displayOrder
+          createdAt
+          updatedAt
+        }
+        displayOrder
+        createdAt
+        updatedAt
+        projectSubcategoryProjectsId
+        subcategorySubcategoryProjectsId
       }
       nextToken
     }
@@ -1095,6 +1291,9 @@ export const getProjectDepartments = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoryProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1249,6 +1448,9 @@ export const getProjectSubcategories = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoryProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1260,6 +1462,9 @@ export const getProjectSubcategories = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         departments {
@@ -1398,6 +1603,9 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         displayOrder
         previewLocation
         featuredProjects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         createdAt
@@ -1548,6 +1756,9 @@ export const getProjectProjectTypes = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoryProjects {
+          nextToken
+        }
         createdAt
         updatedAt
         projectLocationId
@@ -1649,6 +1860,9 @@ export const getDepartmentSubcategories = /* GraphQL */ `
         id
         name
         projects {
+          nextToken
+        }
+        subcategoryProjects {
           nextToken
         }
         departments {

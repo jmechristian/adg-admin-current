@@ -41,6 +41,8 @@ import {
   createFeaturedProject,
   updateFeaturedProject,
   deleteFeaturedProject,
+  createSubcategoryProject,
+  updateSubcategoryProject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -700,6 +702,7 @@ export const listProjectsWithLocations = async () => {
         }
       }
     }
+  }
   `;
 
   const locations = (await client.graphql({
@@ -1176,6 +1179,134 @@ export const deleteAFeaturedProject = async (projectId: string) => {
   const res = await client.graphql({
     query: deleteFeaturedProject,
     variables: { input: { id: projectId } },
+  });
+  return res;
+};
+
+export const createNewSubcategoryProject = async (
+  projectId: string,
+  subcategoryId: string,
+  displayOrder: number
+) => {
+  const res = await client.graphql({
+    query: createSubcategoryProject,
+    variables: {
+      input: {
+        projectSubcategoryProjectsId: projectId,
+        subcategorySubcategoryProjectsId: subcategoryId,
+        displayOrder: displayOrder,
+      },
+    },
+  });
+  return res;
+};
+
+export const getProjectsForNewThing = async () => {
+  const customQuery = `
+    query MyQuery {
+  listDepartmentSubcategories(
+    filter: {departmentID: {eq: "0cd75086-b396-4c52-a907-5b52fb6aeedd"}}
+  ) {
+    items {
+      id
+      subcategory {
+        id
+        name
+        projects {
+          items {
+            projectID
+            subcategoryID
+            project {
+              departments {
+                items {
+                  department {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  `;
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ listDepartmentSubcategories: { items: any[] } }>;
+  return res.data.listDepartmentSubcategories.items;
+};
+
+export const getDepartmentsWithSubcategoryProjects = async () => {
+  const customQuery = `
+    query MyQuery {
+  getDepartment(id: "0cd75086-b396-4c52-a907-5b52fb6aeedd") {
+    id
+    subcategories {
+      items {
+        subcategory {
+          subcategoryProjects {
+            items {
+              displayOrder
+              id
+              project {
+                id
+                name
+              }
+            }
+          }
+          name
+          id
+        }
+        id
+        department {
+          name
+        }
+      }
+    }
+  }
+}
+  `;
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ getDepartment: any }>;
+  return res.data.getDepartment;
+};
+
+export const getProjectsBySubcategory = async (subcategoryId: string) => {
+  const customQuery = `
+    query MyQuery {
+  listSubcategoryProjects(
+    filter: {subcategorySubcategoryProjectsId: {eq: "${subcategoryId}"}}
+  ) {
+    items {
+    id
+      project {
+        id
+        name
+      }
+      displayOrder
+    }
+  }
+}
+  `;
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ listSubcategoryProjects: { items: any[] } }>;
+  return res.data.listSubcategoryProjects.items;
+};
+
+export const updateSubcategoryProjectOrder = async (
+  id: string,
+  displayOrder: number
+) => {
+  const res = await client.graphql({
+    query: updateSubcategoryProject,
+    variables: {
+      input: { id, displayOrder },
+    },
   });
   return res;
 };

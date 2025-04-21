@@ -72,6 +72,7 @@ type Project @model {
   displayOrder: Int
   previewLocation: String
   featuredProjects: [FeaturedProject] @hasMany
+  subcategoryProjects: [SubcategoryProject] @hasMany
 }
 
 type Quote @model {
@@ -108,7 +109,15 @@ type Subcategory @model {
   id: ID!
   name: String!
   projects: [Project] @manyToMany(relationName: "ProjectSubcategories")
+  subcategoryProjects: [SubcategoryProject] @hasMany
   departments: [Department] @manyToMany(relationName: "DepartmentSubcategories")
+  displayOrder: Int
+}
+
+type SubcategoryProject @model {
+  id: ID!
+  project: Project @belongsTo
+  subcategory: Subcategory @belongsTo
   displayOrder: Int
 }
 

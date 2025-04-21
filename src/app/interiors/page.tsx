@@ -12,8 +12,9 @@ import {
   ProjectWithDepartments,
 } from '@/types';
 import ProjectItem from '@/components/shared/ProjectItem';
-import { MdRefresh, MdStar, MdAdd } from 'react-icons/md';
+import { MdRefresh, MdStar, MdAdd, MdApps } from 'react-icons/md';
 import FeaturedModal from '@/components/shared/FeaturedModal';
+import ReorderModal from '@/components/shared/ReorderModal';
 
 export default function CommercialInteriors() {
   const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
@@ -27,7 +28,7 @@ export default function CommercialInteriors() {
   const [activeFilter, setActiveFilter] = useState('');
   const toggleModal = useLayoutStore((state) => state.toggleModal);
   const [toggleFeatured, setToggleFeatured] = useState(false);
-
+  const [toggleReorder, setToggleReorder] = useState({ open: false, id: '' });
   useEffect(() => {
     const getProjects = async () => {
       try {
@@ -41,7 +42,16 @@ export default function CommercialInteriors() {
             )
           )
         );
-        console.log(res);
+        console.log(
+          'interiors projects',
+          res.filter((project: ProjectWithDepartments) =>
+            project.departments.items.some(
+              (department) =>
+                department.department.id ===
+                '0cd75086-b396-4c52-a907-5b52fb6aeedd'
+            )
+          )
+        );
       } finally {
         setLoading(false);
       }
@@ -205,33 +215,53 @@ export default function CommercialInteriors() {
               </div>
             </div>
             <div className='flex flex-wrap gap-2 mb-4 border-b-2 pb-4'>
-              {subcategories.map((subcategory) => {
-                const count = projects.filter((project) =>
-                  project.subcategories?.items.some(
-                    (item) =>
-                      item.subcategory.name === subcategory.subcategory.name
-                  )
-                ).length;
+              {subcategories
+                .sort((a, b) =>
+                  a.subcategory.name.localeCompare(b.subcategory.name)
+                )
+                .map((subcategory) => {
+                  const count = projects.filter((project) =>
+                    project.subcategories?.items.some(
+                      (item) =>
+                        item.subcategory.name === subcategory.subcategory.name
+                    )
+                  ).length;
 
-                return (
-                  <button
-                    key={subcategory.id}
-                    className={`px-3 py-1 rounded-md flex items-center gap-2 font-brand-serif ${
-                      activeFilter === subcategory.subcategory.name
-                        ? 'bg-gray-400 text-white'
-                        : 'bg-brand-gray text-white'
-                    }`}
-                    onClick={() =>
-                      setActiveFilter(subcategory.subcategory.name)
-                    }
-                  >
-                    {subcategory.subcategory.name}
-                    <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs'>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={subcategory.id}
+                      className={`pl-2 pr-1 py-1 rounded-md flex items-center gap-0.5 font-brand-serif ${
+                        activeFilter === subcategory.subcategory.name
+                          ? 'bg-gray-400 text-white'
+                          : 'bg-brand-gray text-white'
+                      }`}
+                    >
+                      <div
+                        className='flex items-center justify-center gap-1'
+                        onClick={() =>
+                          setActiveFilter(subcategory.subcategory.name)
+                        }
+                      >
+                        {subcategory.subcategory.name}
+                        <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs leading-none'>
+                          {count}
+                        </span>
+                      </div>
+
+                      <div
+                        className='flex items-center gap-1 hover:bg-gray-500 rounded-full p-1 text-white hover:text-yellow-300 transition-colors duration-300 ml-1'
+                        onClick={() =>
+                          setToggleReorder({
+                            open: true,
+                            id: subcategory.subcategory.id,
+                          })
+                        }
+                      >
+                        <MdApps size={18} />
+                      </div>
+                    </button>
+                  );
+                })}
             </div>
             <div className='grid grid-cols-12 gap-5 border-b-2 pb-2'>
               <div className='font-brand-bold text-xs col-span-4'>Details</div>
@@ -279,6 +309,13 @@ export default function CommercialInteriors() {
               <FeaturedModal
                 featuredProjects={featuredProjects}
                 closeModal={() => setToggleFeatured(false)}
+                refetchProjects={refetchProjects}
+              />
+            )}
+            {toggleReorder.open && (
+              <ReorderModal
+                subcategoryId={toggleReorder.id}
+                closeModal={() => setToggleReorder({ open: false, id: '' })}
                 refetchProjects={refetchProjects}
               />
             )}
