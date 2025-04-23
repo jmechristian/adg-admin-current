@@ -175,6 +175,9 @@ export const onCreateFeaturedProject = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -280,6 +283,9 @@ export const onUpdateFeaturedProject = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -383,6 +389,9 @@ export const onDeleteFeaturedProject = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt
@@ -852,6 +861,7 @@ export const onCreateProject = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1013,6 +1023,7 @@ export const onUpdateProject = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1174,6 +1185,7 @@ export const onDeleteProject = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1494,6 +1506,18 @@ export const onCreateDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategoriesProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
+          subcategorySubcategoryProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1536,6 +1560,18 @@ export const onUpdateDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategoriesProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
+          subcategorySubcategoryProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1575,6 +1611,18 @@ export const onDeleteDepartment = /* GraphQL */ `
           updatedAt
           projectFeaturedProjectsId
           departmentFeaturedProjectsId
+        }
+        nextToken
+      }
+      subcategoriesProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
+          subcategorySubcategoryProjectsId
         }
         nextToken
       }
@@ -1755,6 +1803,7 @@ export const onCreateSubcategory = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1797,6 +1846,7 @@ export const onUpdateSubcategory = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1839,6 +1889,7 @@ export const onDeleteSubcategory = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1956,10 +2007,30 @@ export const onCreateSubcategoryProject = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       displayOrder
       createdAt
       updatedAt
       projectSubcategoryProjectsId
+      departmentSubcategoriesProjectsId
       subcategorySubcategoryProjectsId
     }
   }
@@ -2061,10 +2132,30 @@ export const onUpdateSubcategoryProject = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       displayOrder
       createdAt
       updatedAt
       projectSubcategoryProjectsId
+      departmentSubcategoriesProjectsId
       subcategorySubcategoryProjectsId
     }
   }
@@ -2166,10 +2257,30 @@ export const onDeleteSubcategoryProject = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       displayOrder
       createdAt
       updatedAt
       projectSubcategoryProjectsId
+      departmentSubcategoriesProjectsId
       subcategorySubcategoryProjectsId
     }
   }
@@ -2396,6 +2507,9 @@ export const onCreateProjectDepartments = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2500,6 +2614,9 @@ export const onUpdateProjectDepartments = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2602,6 +2719,9 @@ export const onDeleteProjectDepartments = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt
@@ -3531,6 +3651,9 @@ export const onCreateDepartmentSubcategories = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -3574,6 +3697,9 @@ export const onUpdateDepartmentSubcategories = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -3615,6 +3741,9 @@ export const onDeleteDepartmentSubcategories = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt

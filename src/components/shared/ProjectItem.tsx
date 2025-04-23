@@ -139,7 +139,6 @@ const ProjectItem = ({
             setFeatured(!featured);
             if (!featured) {
               await createNewFeaturedProject(departmentId, project.id, 0);
-              refetchProjects?.();
             } else {
               const featuredProjectId =
                 project.featuredProjects?.items?.[0]?.id;
@@ -147,6 +146,7 @@ const ProjectItem = ({
                 await deleteAFeaturedProject(featuredProjectId);
               }
             }
+            refetchProjects?.();
             setLoading(false);
           }}
           className={`${

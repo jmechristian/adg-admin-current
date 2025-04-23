@@ -65,10 +65,12 @@ export default function ReorderModal({
   subcategoryId,
   closeModal,
   refetchProjects,
+  departmentId,
 }: {
   subcategoryId: string;
   closeModal: () => void;
   refetchProjects: () => void;
+  departmentId: string;
 }) {
   const [projects, setProjects] = useState<SubcategoryProject[]>([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -82,12 +84,15 @@ export default function ReorderModal({
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const projects = await getProjectsBySubcategory(subcategoryId);
+      const projects = await getProjectsBySubcategory(
+        subcategoryId,
+        departmentId
+      );
       console.log(projects);
       setProjects(projects);
     };
     fetchProjects();
-  }, [subcategoryId]);
+  }, [subcategoryId, departmentId]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;

@@ -315,6 +315,7 @@ export default function CommercialInteriors() {
             {toggleReorder.open && (
               <ReorderModal
                 subcategoryId={toggleReorder.id}
+                departmentId={'0cd75086-b396-4c52-a907-5b52fb6aeedd'}
                 closeModal={() => setToggleReorder({ open: false, id: '' })}
                 refetchProjects={refetchProjects}
               />

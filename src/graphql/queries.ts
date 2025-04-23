@@ -163,6 +163,9 @@ export const getFeaturedProject = /* GraphQL */ `
         featuredProjects {
           nextToken
         }
+        subcategoriesProjects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -522,6 +525,7 @@ export const getProject = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -794,6 +798,18 @@ export const getDepartment = /* GraphQL */ `
         }
         nextToken
       }
+      subcategoriesProjects {
+        items {
+          id
+          displayOrder
+          createdAt
+          updatedAt
+          projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
+          subcategorySubcategoryProjectsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -817,6 +833,9 @@ export const listDepartments = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt
@@ -928,6 +947,7 @@ export const getSubcategory = /* GraphQL */ `
           createdAt
           updatedAt
           projectSubcategoryProjectsId
+          departmentSubcategoriesProjectsId
           subcategorySubcategoryProjectsId
         }
         nextToken
@@ -1072,10 +1092,30 @@ export const getSubcategoryProject = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      department {
+        id
+        name
+        projects {
+          nextToken
+        }
+        subcategories {
+          nextToken
+        }
+        displayOrder
+        featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       displayOrder
       createdAt
       updatedAt
       projectSubcategoryProjectsId
+      departmentSubcategoriesProjectsId
       subcategorySubcategoryProjectsId
     }
   }
@@ -1124,10 +1164,18 @@ export const listSubcategoryProjects = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        department {
+          id
+          name
+          displayOrder
+          createdAt
+          updatedAt
+        }
         displayOrder
         createdAt
         updatedAt
         projectSubcategoryProjectsId
+        departmentSubcategoriesProjectsId
         subcategorySubcategoryProjectsId
       }
       nextToken
@@ -1312,6 +1360,9 @@ export const getProjectDepartments = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt
@@ -1851,6 +1902,9 @@ export const getDepartmentSubcategories = /* GraphQL */ `
         }
         displayOrder
         featuredProjects {
+          nextToken
+        }
+        subcategoriesProjects {
           nextToken
         }
         createdAt

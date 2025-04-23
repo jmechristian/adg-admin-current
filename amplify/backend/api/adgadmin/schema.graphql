@@ -91,6 +91,7 @@ type Department @model {
     @manyToMany(relationName: "DepartmentSubcategories")
   displayOrder: Int
   featuredProjects: [FeaturedProject] @hasMany
+  subcategoriesProjects: [SubcategoryProject] @hasMany
 }
 
 type ImageObject @model {
@@ -118,6 +119,7 @@ type SubcategoryProject @model {
   id: ID!
   project: Project @belongsTo
   subcategory: Subcategory @belongsTo
+  department: Department @belongsTo
   displayOrder: Int
 }
 
