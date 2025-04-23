@@ -223,7 +223,7 @@ const Page = () => {
         {status && <div className='p-4 bg-gray-100 rounded'>{status}</div>}
       </div>
 
-      <div className='grid grid-cols-7 gap-10'>
+      {/* <div className='grid grid-cols-7 gap-10'>
         {items3.map((item: SubcategoryItem) => (
           <div key={item.id}>
             <div>{item.subcategory.name}</div>
@@ -269,7 +269,7 @@ const Page = () => {
               </div>
             </div>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };
