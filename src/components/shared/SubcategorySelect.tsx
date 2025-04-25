@@ -114,6 +114,12 @@ export const SubcategorySelect = ({
       refreshProjectSubcategories();
     } else {
       await createNewProjectSubcategories(projectId, subcategory.id);
+      await createNewSubcategoryProject(
+        projectId,
+        subcategory.id,
+        departmentId || '',
+        0
+      );
       refreshProject();
       refreshProjectSubcategories();
     }
