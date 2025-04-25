@@ -15,8 +15,6 @@ import {
   deleteImage,
   updateCurrentLocation,
   createNewLocation,
-  deleteCurrentSubcategoryProject,
-  createNewSubcategoryProject,
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
 import QuoteManager from './QuoteManager';

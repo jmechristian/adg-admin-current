@@ -88,7 +88,6 @@ export default function ReorderModal({
         subcategoryId,
         departmentId
       );
-      console.log(projects);
       setProjects(projects);
     };
     fetchProjects();
@@ -160,16 +159,22 @@ export default function ReorderModal({
               strategy={verticalListSortingStrategy}
             >
               <div className='flex flex-col gap-2'>
-                {projects
-                  .sort((a, b) => a.displayOrder - b.displayOrder)
-                  .map((project, index) => (
-                    <SortableItem
-                      key={project.id}
-                      id={project.id}
-                      project={project}
-                      index={index}
-                    />
-                  ))}
+                {projects.length > 0 ? (
+                  projects
+                    .sort((a, b) => a.displayOrder - b.displayOrder)
+                    .map((project, index) => (
+                      <SortableItem
+                        key={project.id}
+                        id={project.id}
+                        project={project}
+                        index={index}
+                      />
+                    ))
+                ) : (
+                  <div className='text-center text-gray-500'>
+                    No published projects found
+                  </div>
+                )}
               </div>
             </SortableContext>
           </DndContext>

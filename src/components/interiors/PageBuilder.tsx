@@ -24,7 +24,7 @@ interface PageBuilderProps {
 
 export const PageBuilder = ({ project }: PageBuilderProps) => {
   const [editedProject, setEditedProject] = React.useState(project);
-
+  console.log('editedProject', editedProject);
   const handleProjectUpdate = async () => {
     try {
       const response = (await getProjectById(

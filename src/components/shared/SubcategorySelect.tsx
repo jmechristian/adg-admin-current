@@ -1,10 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   getSubcategories,
   createNewProjectSubcategories,
   deleteProjectSubcategories,
   getProjectSubcategoriesByProjectId,
+  deleteCurrentSubcategoryProject,
+  createNewSubcategoryProject,
 } from '@/helpers/api';
 import {
   ProjectSubcategory,
@@ -23,7 +26,13 @@ export const SubcategorySelect = ({
   refreshProject: () => void;
   departments: { name: string; id: string }[];
 }) => {
-  console.log('departments', departments);
+  const pathname = usePathname();
+  const department = pathname.split('/')[1];
+
+  const departmentId = departments.find(
+    (dept) => dept.name.toLowerCase() === department.toLowerCase()
+  )?.id;
+
   const [showModal, setShowModal] = useState(false);
   const [allSubcategories, setAllSubcategories] = useState<
     DepartmentSubcategory[]
@@ -76,6 +85,12 @@ export const SubcategorySelect = ({
       refreshProjectSubcategories();
     } else {
       await createNewProjectSubcategories(projectId, subcategory.id);
+      await createNewSubcategoryProject(
+        projectId,
+        subcategory.id,
+        departmentId || '',
+        0
+      );
       refreshProject();
       refreshProjectSubcategories();
     }
