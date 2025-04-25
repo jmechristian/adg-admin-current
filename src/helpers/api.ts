@@ -44,6 +44,7 @@ import {
   deleteFeaturedProject,
   createSubcategoryProject,
   updateSubcategoryProject,
+  deleteSubcategoryProject,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1204,6 +1205,14 @@ export const createNewSubcategoryProject = async (
   return res;
 };
 
+export const deleteCurrentSubcategoryProject = async (id: string) => {
+  const res = await client.graphql({
+    query: deleteSubcategoryProject,
+    variables: { input: { id } },
+  });
+  return res;
+};
+
 export const getProjectsForNewThing = async () => {
   const customQuery = `
     query MyQuery {
@@ -1297,6 +1306,7 @@ export const getProjectsBySubcategory = async (
           project {
             id
             name
+            status
           }
           displayOrder
         }
@@ -1306,7 +1316,9 @@ export const getProjectsBySubcategory = async (
   const res = (await client.graphql({
     query: customQuery,
   })) as GraphQLResult<{ listSubcategoryProjects: { items: any[] } }>;
-  return res.data.listSubcategoryProjects.items;
+  return res.data.listSubcategoryProjects.items.filter(
+    (item) => item.project.status === 'PUBLISHED'
+  );
 };
 
 export const updateSubcategoryProjectOrder = async (

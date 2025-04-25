@@ -424,6 +424,30 @@ export const onCreateGallery = /* GraphQL */ `
         }
         nextToken
       }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
+        }
+        nextToken
+      }
       project {
         id
         oldId
@@ -527,6 +551,30 @@ export const onUpdateGallery = /* GraphQL */ `
         }
         nextToken
       }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
+        }
+        nextToken
+      }
       project {
         id
         oldId
@@ -627,6 +675,30 @@ export const onDeleteGallery = /* GraphQL */ `
           createdAt
           updatedAt
           galleryImagesId
+        }
+        nextToken
+      }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
         }
         nextToken
       }
@@ -771,6 +843,12 @@ export const onCreateProject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -935,6 +1013,12 @@ export const onUpdateProject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1095,6 +1179,12 @@ export const onDeleteProject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -1643,6 +1733,12 @@ export const onCreateImageObject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1691,6 +1787,12 @@ export const onUpdateImageObject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -1743,6 +1845,12 @@ export const onDeleteImageObject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1778,6 +1886,318 @@ export const onDeleteImageObject = /* GraphQL */ `
       createdAt
       updatedAt
       galleryImagesId
+    }
+  }
+`;
+export const onCreateVideoObject = /* GraphQL */ `
+  subscription OnCreateVideoObject {
+    onCreateVideoObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const onUpdateVideoObject = /* GraphQL */ `
+  subscription OnUpdateVideoObject {
+    onUpdateVideoObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const onDeleteVideoObject = /* GraphQL */ `
+  subscription OnDeleteVideoObject {
+    onDeleteVideoObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const onCreateGifObject = /* GraphQL */ `
+  subscription OnCreateGifObject {
+    onCreateGifObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
+    }
+  }
+`;
+export const onUpdateGifObject = /* GraphQL */ `
+  subscription OnUpdateGifObject {
+    onUpdateGifObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
+    }
+  }
+`;
+export const onDeleteGifObject = /* GraphQL */ `
+  subscription OnDeleteGifObject {
+    onDeleteGifObject {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
     }
   }
 `;

@@ -270,6 +270,8 @@ export type Gallery = {
   __typename: "Gallery",
   id: string,
   images?: ModelImageObjectConnection | null,
+  gifs?: ModelGifObjectConnection | null,
+  videos?: ModelVideoObjectConnection | null,
   project?: Project | null,
   createdAt: string,
   updatedAt: string,
@@ -296,6 +298,42 @@ export type ImageObject = {
   createdAt: string,
   updatedAt: string,
   galleryImagesId?: string | null,
+};
+
+export type ModelGifObjectConnection = {
+  __typename: "ModelGifObjectConnection",
+  items:  Array<GifObject | null >,
+  nextToken?: string | null,
+};
+
+export type GifObject = {
+  __typename: "GifObject",
+  id: string,
+  url: string,
+  caption?: string | null,
+  gallery?: Gallery | null,
+  order?: number | null,
+  createdAt: string,
+  updatedAt: string,
+  galleryGifsId?: string | null,
+};
+
+export type ModelVideoObjectConnection = {
+  __typename: "ModelVideoObjectConnection",
+  items:  Array<VideoObject | null >,
+  nextToken?: string | null,
+};
+
+export type VideoObject = {
+  __typename: "VideoObject",
+  id: string,
+  url: string,
+  caption?: string | null,
+  gallery?: Gallery | null,
+  order?: number | null,
+  createdAt: string,
+  updatedAt: string,
+  galleryVideosId?: string | null,
 };
 
 export type ModelProjectDepartmentsConnection = {
@@ -669,6 +707,66 @@ export type DeleteImageObjectInput = {
   id: string,
 };
 
+export type CreateVideoObjectInput = {
+  id?: string | null,
+  url: string,
+  caption?: string | null,
+  order?: number | null,
+  galleryVideosId?: string | null,
+};
+
+export type ModelVideoObjectConditionInput = {
+  url?: ModelStringInput | null,
+  caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelVideoObjectConditionInput | null > | null,
+  or?: Array< ModelVideoObjectConditionInput | null > | null,
+  not?: ModelVideoObjectConditionInput | null,
+  galleryVideosId?: ModelIDInput | null,
+};
+
+export type UpdateVideoObjectInput = {
+  id: string,
+  url?: string | null,
+  caption?: string | null,
+  order?: number | null,
+  galleryVideosId?: string | null,
+};
+
+export type DeleteVideoObjectInput = {
+  id: string,
+};
+
+export type CreateGifObjectInput = {
+  id?: string | null,
+  url: string,
+  caption?: string | null,
+  order?: number | null,
+  galleryGifsId?: string | null,
+};
+
+export type ModelGifObjectConditionInput = {
+  url?: ModelStringInput | null,
+  caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelGifObjectConditionInput | null > | null,
+  or?: Array< ModelGifObjectConditionInput | null > | null,
+  not?: ModelGifObjectConditionInput | null,
+  galleryGifsId?: ModelIDInput | null,
+};
+
+export type UpdateGifObjectInput = {
+  id: string,
+  url?: string | null,
+  caption?: string | null,
+  order?: number | null,
+  galleryGifsId?: string | null,
+};
+
+export type DeleteGifObjectInput = {
+  id: string,
+};
+
 export type CreateSubcategoryInput = {
   id?: string | null,
   name: string,
@@ -1020,6 +1118,28 @@ export type ModelImageObjectFilterInput = {
   or?: Array< ModelImageObjectFilterInput | null > | null,
   not?: ModelImageObjectFilterInput | null,
   galleryImagesId?: ModelIDInput | null,
+};
+
+export type ModelVideoObjectFilterInput = {
+  id?: ModelIDInput | null,
+  url?: ModelStringInput | null,
+  caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelVideoObjectFilterInput | null > | null,
+  or?: Array< ModelVideoObjectFilterInput | null > | null,
+  not?: ModelVideoObjectFilterInput | null,
+  galleryVideosId?: ModelIDInput | null,
+};
+
+export type ModelGifObjectFilterInput = {
+  id?: ModelIDInput | null,
+  url?: ModelStringInput | null,
+  caption?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelGifObjectFilterInput | null > | null,
+  or?: Array< ModelGifObjectFilterInput | null > | null,
+  not?: ModelGifObjectFilterInput | null,
+  galleryGifsId?: ModelIDInput | null,
 };
 
 export type ModelSubcategoryFilterInput = {
@@ -1648,6 +1768,34 @@ export type CreateGalleryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     project?:  {
       __typename: "Project",
       id: string,
@@ -1770,6 +1918,34 @@ export type UpdateGalleryMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     project?:  {
       __typename: "Project",
       id: string,
@@ -1889,6 +2065,34 @@ export type DeleteGalleryMutation = {
         createdAt: string,
         updatedAt: string,
         galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2057,6 +2261,14 @@ export type CreateProjectMutation = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -2246,6 +2458,14 @@ export type UpdateProjectMutation = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -2431,6 +2651,14 @@ export type DeleteProjectMutation = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -3089,6 +3317,14 @@ export type CreateImageObjectMutation = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -3145,6 +3381,14 @@ export type UpdateImageObjectMutation = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -3205,6 +3449,14 @@ export type DeleteImageObjectMutation = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -3241,6 +3493,378 @@ export type DeleteImageObjectMutation = {
     createdAt: string,
     updatedAt: string,
     galleryImagesId?: string | null,
+  } | null,
+};
+
+export type CreateVideoObjectMutationVariables = {
+  input: CreateVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
+};
+
+export type CreateVideoObjectMutation = {
+  createVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type UpdateVideoObjectMutationVariables = {
+  input: UpdateVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
+};
+
+export type UpdateVideoObjectMutation = {
+  updateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type DeleteVideoObjectMutationVariables = {
+  input: DeleteVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
+};
+
+export type DeleteVideoObjectMutation = {
+  deleteVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type CreateGifObjectMutationVariables = {
+  input: CreateGifObjectInput,
+  condition?: ModelGifObjectConditionInput | null,
+};
+
+export type CreateGifObjectMutation = {
+  createGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
+  } | null,
+};
+
+export type UpdateGifObjectMutationVariables = {
+  input: UpdateGifObjectInput,
+  condition?: ModelGifObjectConditionInput | null,
+};
+
+export type UpdateGifObjectMutation = {
+  updateGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
+  } | null,
+};
+
+export type DeleteGifObjectMutationVariables = {
+  input: DeleteGifObjectInput,
+  condition?: ModelGifObjectConditionInput | null,
+};
+
+export type DeleteGifObjectMutation = {
+  deleteGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
   } | null,
 };
 
@@ -5961,6 +6585,34 @@ export type GetGalleryQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     project?:  {
       __typename: "Project",
       id: string,
@@ -6072,6 +6724,14 @@ export type ListGalleriesQuery = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -6174,6 +6834,14 @@ export type GetProjectQuery = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -6668,6 +7336,14 @@ export type GetImageObjectQuery = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -6736,6 +7412,188 @@ export type ListImageObjectsQuery = {
       createdAt: string,
       updatedAt: string,
       galleryImagesId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetVideoObjectQueryVariables = {
+  id: string,
+};
+
+export type GetVideoObjectQuery = {
+  getVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type ListVideoObjectsQueryVariables = {
+  filter?: ModelVideoObjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVideoObjectsQuery = {
+  listVideoObjects?:  {
+    __typename: "ModelVideoObjectConnection",
+    items:  Array< {
+      __typename: "VideoObject",
+      id: string,
+      url: string,
+      caption?: string | null,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      order?: number | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryVideosId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetGifObjectQueryVariables = {
+  id: string,
+};
+
+export type GetGifObjectQuery = {
+  getGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
+  } | null,
+};
+
+export type ListGifObjectsQueryVariables = {
+  filter?: ModelGifObjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGifObjectsQuery = {
+  listGifObjects?:  {
+    __typename: "ModelGifObjectConnection",
+    items:  Array< {
+      __typename: "GifObject",
+      id: string,
+      url: string,
+      caption?: string | null,
+      gallery?:  {
+        __typename: "Gallery",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        galleryProjectId?: string | null,
+      } | null,
+      order?: number | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryGifsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -8416,6 +9274,34 @@ export type OnCreateGallerySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     project?:  {
       __typename: "Project",
       id: string,
@@ -8533,6 +9419,34 @@ export type OnUpdateGallerySubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     project?:  {
       __typename: "Project",
       id: string,
@@ -8647,6 +9561,34 @@ export type OnDeleteGallerySubscription = {
         createdAt: string,
         updatedAt: string,
         galleryImagesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    gifs?:  {
+      __typename: "ModelGifObjectConnection",
+      items:  Array< {
+        __typename: "GifObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryGifsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    videos?:  {
+      __typename: "ModelVideoObjectConnection",
+      items:  Array< {
+        __typename: "VideoObject",
+        id: string,
+        url: string,
+        caption?: string | null,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        galleryVideosId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -8810,6 +9752,14 @@ export type OnCreateProjectSubscription = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -8994,6 +9944,14 @@ export type OnUpdateProjectSubscription = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -9174,6 +10132,14 @@ export type OnDeleteProjectSubscription = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -9797,6 +10763,14 @@ export type OnCreateImageObjectSubscription = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -9848,6 +10822,14 @@ export type OnUpdateImageObjectSubscription = {
       id: string,
       images?:  {
         __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
         nextToken?: string | null,
       } | null,
       project?:  {
@@ -9903,6 +10885,14 @@ export type OnDeleteImageObjectSubscription = {
         __typename: "ModelImageObjectConnection",
         nextToken?: string | null,
       } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
       project?:  {
         __typename: "Project",
         id: string,
@@ -9939,6 +10929,348 @@ export type OnDeleteImageObjectSubscription = {
     createdAt: string,
     updatedAt: string,
     galleryImagesId?: string | null,
+  } | null,
+};
+
+export type OnCreateVideoObjectSubscription = {
+  onCreateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type OnUpdateVideoObjectSubscription = {
+  onUpdateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type OnDeleteVideoObjectSubscription = {
+  onDeleteVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryVideosId?: string | null,
+  } | null,
+};
+
+export type OnCreateGifObjectSubscription = {
+  onCreateGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateGifObjectSubscription = {
+  onUpdateGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteGifObjectSubscription = {
+  onDeleteGifObject?:  {
+    __typename: "GifObject",
+    id: string,
+    url: string,
+    caption?: string | null,
+    gallery?:  {
+      __typename: "Gallery",
+      id: string,
+      images?:  {
+        __typename: "ModelImageObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      gifs?:  {
+        __typename: "ModelGifObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      videos?:  {
+        __typename: "ModelVideoObjectConnection",
+        nextToken?: string | null,
+      } | null,
+      project?:  {
+        __typename: "Project",
+        id: string,
+        oldId?: string | null,
+        name: string,
+        description?: string | null,
+        locationString?: string | null,
+        featured?: boolean | null,
+        link?: string | null,
+        slug?: string | null,
+        quote?: string | null,
+        quoteAttribution?: string | null,
+        collaborators?: string | null,
+        size?: string | null,
+        gridOrder?: number | null,
+        status: Status,
+        displayOrder?: number | null,
+        previewLocation?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        projectLocationId?: string | null,
+        projectCreatedById?: string | null,
+        projectLastUpdatedById?: string | null,
+        projectGalleryId?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      galleryProjectId?: string | null,
+    } | null,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    galleryGifsId?: string | null,
   } | null,
 };
 

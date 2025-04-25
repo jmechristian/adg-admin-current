@@ -15,6 +15,8 @@ import {
   deleteImage,
   updateCurrentLocation,
   createNewLocation,
+  deleteCurrentSubcategoryProject,
+  createNewSubcategoryProject,
 } from '@/helpers/api';
 import LocationModal from './LocationModal';
 import QuoteManager from './QuoteManager';
@@ -54,6 +56,7 @@ const SidebarBuilder = ({
   const [newImageCaption, setNewImageCaption] = useState('');
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [draggedImage, setDraggedImage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const [sortedImages, setSortedImages] = useState<ImageObject[]>([]);
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>(
     {}
@@ -124,6 +127,7 @@ const SidebarBuilder = ({
   };
 
   const handleSaveProject = async () => {
+    setIsSaving(true);
     await saveProject(
       project.id,
       project.name,
@@ -136,6 +140,7 @@ const SidebarBuilder = ({
       project.quoteAttribution || '',
       project.previewLocation || ''
     );
+    setIsSaving(false);
     refreshProject();
   };
 
@@ -769,28 +774,28 @@ const SidebarBuilder = ({
             </span>
           </div>
         </div>
-        <div className='grid grid-cols-2 gap-4 pt-4 border-t border-t-gray-700'>
+        <div className='grid grid-cols-1 gap-4 pt-4 border-t border-t-gray-700'>
           {project.status === 'DRAFT' ? (
             <>
               <button
                 onClick={handleSaveProject}
                 className='px-4 py-3 text-sm text-white bg-gray-700 rounded hover:bg-gray-600'
               >
-                Save
+                {isSaving ? 'Saving...' : 'Save'}
               </button>
-              <button
+              {/* <button
                 onClick={handlePublishProject}
                 className='px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
               >
                 Publish
-              </button>
+              </button> */}
             </>
           ) : (
             <button
               onClick={handleSaveProject}
               className='col-span-2 px-4 py-3 text-sm text-white bg-blue-600 rounded hover:bg-blue-500'
             >
-              Save Changes
+              {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
           )}
         </div>

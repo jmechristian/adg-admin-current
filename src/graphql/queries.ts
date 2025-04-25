@@ -250,6 +250,30 @@ export const getGallery = /* GraphQL */ `
         }
         nextToken
       }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
+        }
+        nextToken
+      }
       project {
         id
         oldId
@@ -345,6 +369,12 @@ export const listGalleries = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -435,6 +465,12 @@ export const getProject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -857,6 +893,12 @@ export const getImageObject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -920,6 +962,162 @@ export const listImageObjects = /* GraphQL */ `
         createdAt
         updatedAt
         galleryImagesId
+      }
+      nextToken
+    }
+  }
+`;
+export const getVideoObject = /* GraphQL */ `
+  query GetVideoObject($id: ID!) {
+    getVideoObject(id: $id) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const listVideoObjects = /* GraphQL */ `
+  query ListVideoObjects(
+    $filter: ModelVideoObjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        url
+        caption
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        order
+        createdAt
+        updatedAt
+        galleryVideosId
+      }
+      nextToken
+    }
+  }
+`;
+export const getGifObject = /* GraphQL */ `
+  query GetGifObject($id: ID!) {
+    getGifObject(id: $id) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
+    }
+  }
+`;
+export const listGifObjects = /* GraphQL */ `
+  query ListGifObjects(
+    $filter: ModelGifObjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGifObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        url
+        caption
+        gallery {
+          id
+          createdAt
+          updatedAt
+          galleryProjectId
+        }
+        order
+        createdAt
+        updatedAt
+        galleryGifsId
       }
       nextToken
     }

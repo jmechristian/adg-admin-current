@@ -171,7 +171,7 @@ const ProjectCreateModal = () => {
       },
     });
 
-    await selectedDepartments.forEach(async (departmentId) => {
+    selectedDepartments.forEach(async (departmentId) => {
       await createProjectDepartments(
         newProject.data.createProject.id,
         departmentId

@@ -454,6 +454,30 @@ export const createGallery = /* GraphQL */ `
         }
         nextToken
       }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
+        }
+        nextToken
+      }
       project {
         id
         oldId
@@ -560,6 +584,30 @@ export const updateGallery = /* GraphQL */ `
         }
         nextToken
       }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
+        }
+        nextToken
+      }
       project {
         id
         oldId
@@ -663,6 +711,30 @@ export const deleteGallery = /* GraphQL */ `
           createdAt
           updatedAt
           galleryImagesId
+        }
+        nextToken
+      }
+      gifs {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryGifsId
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          url
+          caption
+          order
+          createdAt
+          updatedAt
+          galleryVideosId
         }
         nextToken
       }
@@ -810,6 +882,12 @@ export const createProject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -977,6 +1055,12 @@ export const updateProject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1140,6 +1224,12 @@ export const deleteProject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -1709,6 +1799,12 @@ export const createImageObject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1760,6 +1856,12 @@ export const updateImageObject = /* GraphQL */ `
       gallery {
         id
         images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
           nextToken
         }
         project {
@@ -1815,6 +1917,12 @@ export const deleteImageObject = /* GraphQL */ `
         images {
           nextToken
         }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
         project {
           id
           oldId
@@ -1850,6 +1958,336 @@ export const deleteImageObject = /* GraphQL */ `
       createdAt
       updatedAt
       galleryImagesId
+    }
+  }
+`;
+export const createVideoObject = /* GraphQL */ `
+  mutation CreateVideoObject(
+    $input: CreateVideoObjectInput!
+    $condition: ModelVideoObjectConditionInput
+  ) {
+    createVideoObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const updateVideoObject = /* GraphQL */ `
+  mutation UpdateVideoObject(
+    $input: UpdateVideoObjectInput!
+    $condition: ModelVideoObjectConditionInput
+  ) {
+    updateVideoObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const deleteVideoObject = /* GraphQL */ `
+  mutation DeleteVideoObject(
+    $input: DeleteVideoObjectInput!
+    $condition: ModelVideoObjectConditionInput
+  ) {
+    deleteVideoObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryVideosId
+    }
+  }
+`;
+export const createGifObject = /* GraphQL */ `
+  mutation CreateGifObject(
+    $input: CreateGifObjectInput!
+    $condition: ModelGifObjectConditionInput
+  ) {
+    createGifObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
+    }
+  }
+`;
+export const updateGifObject = /* GraphQL */ `
+  mutation UpdateGifObject(
+    $input: UpdateGifObjectInput!
+    $condition: ModelGifObjectConditionInput
+  ) {
+    updateGifObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
+    }
+  }
+`;
+export const deleteGifObject = /* GraphQL */ `
+  mutation DeleteGifObject(
+    $input: DeleteGifObjectInput!
+    $condition: ModelGifObjectConditionInput
+  ) {
+    deleteGifObject(input: $input, condition: $condition) {
+      id
+      url
+      caption
+      gallery {
+        id
+        images {
+          nextToken
+        }
+        gifs {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        project {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        createdAt
+        updatedAt
+        galleryProjectId
+      }
+      order
+      createdAt
+      updatedAt
+      galleryGifsId
     }
   }
 `;
