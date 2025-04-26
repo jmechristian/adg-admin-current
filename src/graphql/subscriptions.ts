@@ -418,33 +418,10 @@ export const onCreateGallery = /* GraphQL */ `
           centerX
           centerY
           zoom
+          type
           createdAt
           updatedAt
           galleryImagesId
-        }
-        nextToken
-      }
-      gifs {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryGifsId
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryVideosId
         }
         nextToken
       }
@@ -545,33 +522,10 @@ export const onUpdateGallery = /* GraphQL */ `
           centerX
           centerY
           zoom
+          type
           createdAt
           updatedAt
           galleryImagesId
-        }
-        nextToken
-      }
-      gifs {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryGifsId
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryVideosId
         }
         nextToken
       }
@@ -672,33 +626,10 @@ export const onDeleteGallery = /* GraphQL */ `
           centerX
           centerY
           zoom
+          type
           createdAt
           updatedAt
           galleryImagesId
-        }
-        nextToken
-      }
-      gifs {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryGifsId
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          url
-          caption
-          order
-          createdAt
-          updatedAt
-          galleryVideosId
         }
         nextToken
       }
@@ -843,12 +774,6 @@ export const onCreateProject = /* GraphQL */ `
       gallery {
         id
         images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
           nextToken
         }
         project {
@@ -1013,12 +938,6 @@ export const onUpdateProject = /* GraphQL */ `
         images {
           nextToken
         }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
         project {
           id
           oldId
@@ -1179,12 +1098,6 @@ export const onDeleteProject = /* GraphQL */ `
       gallery {
         id
         images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
           nextToken
         }
         project {
@@ -1733,12 +1646,6 @@ export const onCreateImageObject = /* GraphQL */ `
         images {
           nextToken
         }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
         project {
           id
           oldId
@@ -1771,6 +1678,7 @@ export const onCreateImageObject = /* GraphQL */ `
       centerX
       centerY
       zoom
+      type
       createdAt
       updatedAt
       galleryImagesId
@@ -1789,12 +1697,6 @@ export const onUpdateImageObject = /* GraphQL */ `
         images {
           nextToken
         }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
         project {
           id
           oldId
@@ -1827,6 +1729,7 @@ export const onUpdateImageObject = /* GraphQL */ `
       centerX
       centerY
       zoom
+      type
       createdAt
       updatedAt
       galleryImagesId
@@ -1845,12 +1748,6 @@ export const onDeleteImageObject = /* GraphQL */ `
         images {
           nextToken
         }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
         project {
           id
           oldId
@@ -1883,321 +1780,10 @@ export const onDeleteImageObject = /* GraphQL */ `
       centerX
       centerY
       zoom
+      type
       createdAt
       updatedAt
       galleryImagesId
-    }
-  }
-`;
-export const onCreateVideoObject = /* GraphQL */ `
-  subscription OnCreateVideoObject {
-    onCreateVideoObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryVideosId
-    }
-  }
-`;
-export const onUpdateVideoObject = /* GraphQL */ `
-  subscription OnUpdateVideoObject {
-    onUpdateVideoObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryVideosId
-    }
-  }
-`;
-export const onDeleteVideoObject = /* GraphQL */ `
-  subscription OnDeleteVideoObject {
-    onDeleteVideoObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryVideosId
-    }
-  }
-`;
-export const onCreateGifObject = /* GraphQL */ `
-  subscription OnCreateGifObject {
-    onCreateGifObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryGifsId
-    }
-  }
-`;
-export const onUpdateGifObject = /* GraphQL */ `
-  subscription OnUpdateGifObject {
-    onUpdateGifObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryGifsId
-    }
-  }
-`;
-export const onDeleteGifObject = /* GraphQL */ `
-  subscription OnDeleteGifObject {
-    onDeleteGifObject {
-      id
-      url
-      caption
-      gallery {
-        id
-        images {
-          nextToken
-        }
-        gifs {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        project {
-          id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
-          createdAt
-          updatedAt
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
-        }
-        createdAt
-        updatedAt
-        galleryProjectId
-      }
-      order
-      createdAt
-      updatedAt
-      galleryGifsId
     }
   }
 `;

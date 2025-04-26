@@ -52,6 +52,7 @@ const ProjectItem = ({
         project.projectGalleryId
       )) as GalleryResponse;
       setGallery(projectGallery.data.getGallery);
+      console.log(projectGallery.data.getGallery);
     };
 
     if (project) {
