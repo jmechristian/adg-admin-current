@@ -1,6 +1,11 @@
 import { MdEdit } from 'react-icons/md';
 import React, { useState, useRef } from 'react';
-import { PlusIcon } from '@heroicons/react/24/outline';
+import ReactPlayer from 'react-player';
+import {
+  PlusIcon,
+  VideoCameraIcon,
+  PhotoIcon,
+} from '@heroicons/react/24/outline';
 import { MapPinIcon } from '@heroicons/react/24/solid';
 import { Project } from '@/types';
 import { SubcategorySelect } from './SubcategorySelect';
@@ -28,6 +33,7 @@ interface ImageObject {
   order?: number;
   centerX?: number;
   centerY?: number;
+  type?: string;
 }
 
 const getFullImageUrl = (url: string) => {
@@ -60,8 +66,9 @@ const SidebarBuilder = ({
     {}
   );
   const [uploading, setUploading] = useState<string[]>([]);
-
-  console.log(project);
+  const [newMediaType, setNewMediaType] = useState<null | 'video'>(null);
+  const [newVideoUrl, setNewVideoUrl] = useState('');
+  const [newVideoCaption, setNewVideoCaption] = useState('');
 
   // Initialize the sorted images whenever project changes
   React.useEffect(() => {
@@ -386,52 +393,78 @@ const SidebarBuilder = ({
             </div>
             <div className='w-full border border-gray-700 rounded p-2'>
               <div className='grid grid-cols-3 gap-2'>
-                {sortedImages.map((image, index) => (
-                  <div
-                    key={image.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, image.id)}
-                    onDragOver={handleDragOver}
-                    onDragEnter={(e) => handleDragEnter(e, image.id)}
-                    onDragLeave={handleDragLeave}
-                    onDrop={(e) => handleDrop(e, image.id)}
-                    onDragEnd={handleDragEnd}
-                    className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
-                      selectedImage?.id === image.id
-                        ? 'ring-2 ring-blue-500'
-                        : ''
-                    } hover:ring-1 hover:ring-gray-400`}
-                    style={{
-                      backgroundImage: `url("${getFullImageUrl(image.url)}")`,
-                      backgroundPosition: `${image.centerX || 50}% ${
-                        image.centerY || 50
-                      }%`,
-                    }}
-                    onClick={() => setSelectedImage(image)}
-                  >
-                    <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
-                      <svg
-                        className='w-4 h-4 text-white'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M8 9l4-4 4 4m0 6l-4 4-4-4'
-                        />
-                      </svg>
-                    </div>
-
-                    {index === 0 && (
-                      <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
-                        HERO
+                {sortedImages.map((image, index) =>
+                  image.type !== 'video' ? (
+                    <div
+                      key={image.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, image.id)}
+                      onDragOver={handleDragOver}
+                      onDragEnter={(e) => handleDragEnter(e, image.id)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, image.id)}
+                      onDragEnd={handleDragEnd}
+                      className={`aspect-square bg-cover bg-center bg-no-repeat cursor-move relative group transition-all ${
+                        selectedImage?.id === image.id
+                          ? 'ring-2 ring-blue-500'
+                          : ''
+                      } hover:ring-1 hover:ring-gray-400`}
+                      style={{
+                        backgroundImage: `url("${getFullImageUrl(image.url)}")`,
+                        backgroundPosition: `${image.centerX || 50}% ${
+                          image.centerY || 50
+                        }%`,
+                      }}
+                      onClick={() => setSelectedImage(image)}
+                    >
+                      <div className='absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'>
+                        <svg
+                          className='w-4 h-4 text-white'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2}
+                            d='M8 9l4-4 4 4m0 6l-4 4-4-4'
+                          />
+                        </svg>
                       </div>
-                    )}
-                  </div>
-                ))}
+
+                      {index === 0 && (
+                        <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
+                          HERO
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div
+                      key={image.id}
+                      className='aspect-square object-cover relative bg-slate-700'
+                    >
+                      {image.type === 'video' && (
+                        <div className='absolute top-1 left-1 bg-red-500 text-white text-xs px-2 py-0.5 rounded-md font-medium'>
+                          VIDEO
+                        </div>
+                      )}
+                      <ReactPlayer
+                        url={image.url}
+                        width='100%'
+                        height='100%'
+                        autoPlay={false}
+                        config={{
+                          vimeo: {
+                            playerOptions: {
+                              autoplay: false,
+                            },
+                          },
+                        }}
+                      />
+                    </div>
+                  )
+                )}
                 <button
                   className='aspect-square bg-cover bg-center bg-no-repeat bg-slate-500 flex items-center justify-center'
                   onClick={() => {
@@ -449,7 +482,7 @@ const SidebarBuilder = ({
         {/* Image Modal */}
         {isModalOpen && (
           <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center !z-[9999]'>
-            <div className='bg-gray-800 px-6 py-8 rounded-lg w-full max-w-5xl flex'>
+            <div className='bg-gray-800 px-6 py-8 rounded-lg w-full max-w-6xl flex h-[90vh]'>
               {/* Left side - Gallery */}
               <div className='w-8/12 pr-6 overflow-y-auto' id='scrollers'>
                 <div className='grid grid-cols-4 gap-4 py-4'>
@@ -457,6 +490,34 @@ const SidebarBuilder = ({
                     // Debug log to check image data
                     if (!image.url) {
                       console.warn('Image missing URL:', image);
+                    }
+
+                    if (image.type === 'video') {
+                      return (
+                        <div
+                          key={image.id}
+                          className='aspect-square object-cover relative bg-slate-700'
+                        >
+                          {image.type === 'video' && (
+                            <div className='absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-md font-medium'>
+                              VIDEO
+                            </div>
+                          )}
+                          <ReactPlayer
+                            url={image.url}
+                            width='100%'
+                            height='100%'
+                            autoPlay={false}
+                            config={{
+                              vimeo: {
+                                playerOptions: {
+                                  autoplay: false,
+                                },
+                              },
+                            }}
+                          />
+                        </div>
+                      );
                     }
 
                     return (
@@ -479,6 +540,7 @@ const SidebarBuilder = ({
                             HERO
                           </div>
                         )}
+
                         {!image.url && (
                           <div className='absolute inset-0 flex items-center justify-center text-white text-sm'>
                             Missing Image URL
@@ -649,92 +711,177 @@ const SidebarBuilder = ({
                     </div>
                   </div>
                 ) : (
-                  <div className='flex flex-col gap-4'>
-                    <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500'>
-                      <input
-                        type='file'
-                        accept='image/*'
-                        multiple
-                        className='hidden'
-                        onChange={async (e) => {
-                          const files = Array.from(e.target.files || []);
-                          if (files.length === 0) return;
+                  <div className='flex flex-col gap-6'>
+                    <div className='grid grid-cols-2 gap-6'>
+                      <div
+                        onClick={() => setNewMediaType(null)}
+                        className={`w-full p-2 bg-gray-700 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500 ${
+                          newMediaType !== 'video' ? 'ring-2 ring-blue-500' : ''
+                        }`}
+                      >
+                        <PhotoIcon className='w-10 h-10 text-gray-400 mx-auto' />
+                      </div>
+                      <div
+                        onClick={() => setNewMediaType('video')}
+                        className={`w-full p-2 bg-gray-700 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500 ${
+                          newMediaType === 'video' ? 'ring-2 ring-blue-500' : ''
+                        }`}
+                      >
+                        <VideoCameraIcon className='w-10 h-10 text-gray-400 mx-auto' />
+                      </div>
+                    </div>
+                    {newMediaType !== 'video' && (
+                      <div className='flex flex-col gap-4'>
+                        <label className='w-full aspect-video border-2 border-dashed border-gray-600 rounded flex flex-col items-center justify-center cursor-pointer hover:border-gray-500'>
+                          <input
+                            type='file'
+                            accept='image/*'
+                            multiple
+                            className='hidden'
+                            onChange={async (e) => {
+                              const files = Array.from(e.target.files || []);
+                              if (files.length === 0) return;
 
-                          setUploading(files.map((f) => f.name));
+                              setUploading(files.map((f) => f.name));
 
-                          for (const file of files) {
-                            setUploadProgress((prev) => ({
-                              ...prev,
-                              [file.name]: 0,
-                            }));
+                              for (const file of files) {
+                                setUploadProgress((prev) => ({
+                                  ...prev,
+                                  [file.name]: 0,
+                                }));
 
-                            try {
-                              const uploadedUrl = await uploadAndConvertImage(
-                                file
-                              );
+                                try {
+                                  const uploadedUrl =
+                                    await uploadAndConvertImage(file);
 
-                              await addNewImageObject(
-                                uploadedUrl,
+                                  await addNewImageObject(
+                                    uploadedUrl,
+                                    project.gallery.id,
+                                    project.gallery.images.items.length + 1,
+                                    '',
+                                    '',
+                                    0,
+                                    0
+                                  );
+
+                                  setUploadProgress((prev) => ({
+                                    ...prev,
+                                    [file.name]: 100,
+                                  }));
+                                } catch (error) {
+                                  console.error(
+                                    `Error uploading ${file.name}:`,
+                                    error
+                                  );
+                                } finally {
+                                  setUploading((prev) =>
+                                    prev.filter((name) => name !== file.name)
+                                  );
+                                  onProjectUpdate();
+                                }
+                              }
+
+                              e.target.value = '';
+                            }}
+                          />
+                          <div className='text-center'>
+                            <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
+                            <div className='text-gray-400'>
+                              Click to upload Image
+                            </div>
+                          </div>
+
+                          {uploading.length > 0 && (
+                            <div className='mt-4 w-full px-4 space-y-2'>
+                              {uploading.map((filename) => (
+                                <div key={filename} className='text-sm'>
+                                  <div className='flex justify-between mb-1'>
+                                    <span className='text-gray-700'>
+                                      {filename}
+                                    </span>
+                                    <span className='text-gray-500'>
+                                      {uploadProgress[filename]}%
+                                    </span>
+                                  </div>
+                                  <div className='w-full bg-gray-200 rounded-full h-1.5'>
+                                    <div
+                                      className='bg-brand h-1.5 rounded-full transition-all duration-300'
+                                      style={{
+                                        width: `${uploadProgress[filename]}%`,
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </label>
+                      </div>
+                    )}
+                    {newMediaType === 'video' && (
+                      <div className='flex flex-col gap-4'>
+                        <div>
+                          <input
+                            type='text'
+                            placeholder='Video URL'
+                            value={newVideoUrl}
+                            onChange={(e) => setNewVideoUrl(e.target.value)}
+                            className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                          />
+                        </div>
+                        <div className='w-full aspect-video bg-black'>
+                          {newVideoUrl && (
+                            <ReactPlayer
+                              url={newVideoUrl}
+                              width='100%'
+                              height='100%'
+                              config={{
+                                vimeo: {
+                                  playerOptions: {
+                                    background: true,
+                                  },
+                                },
+                              }}
+                            />
+                          )}
+                        </div>
+                        <div>
+                          <textarea
+                            value={newVideoCaption}
+                            onChange={(e) => setNewVideoCaption(e.target.value)}
+                            className='w-full !bg-transparent text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                            rows={3}
+                            placeholder='Caption'
+                          ></textarea>
+                        </div>
+                        <div className='grid grid-cols-2 gap-4'>
+                          <button
+                            className='w-full bg-blue-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                            onClick={() => {
+                              addNewImageObject(
+                                newVideoUrl,
                                 project.gallery.id,
                                 project.gallery.images.items.length + 1,
-                                '',
+                                newVideoCaption,
                                 '',
                                 0,
-                                0
-                              );
-
-                              setUploadProgress((prev) => ({
-                                ...prev,
-                                [file.name]: 100,
-                              }));
-                            } catch (error) {
-                              console.error(
-                                `Error uploading ${file.name}:`,
-                                error
-                              );
-                            } finally {
-                              setUploading((prev) =>
-                                prev.filter((name) => name !== file.name)
+                                0,
+                                'video'
                               );
                               onProjectUpdate();
-                            }
-                          }
-
-                          e.target.value = '';
-                        }}
-                      />
-                      <div className='text-center'>
-                        <PlusIcon className='w-12 h-12 text-gray-400 mx-auto mb-2' />
-                        <div className='text-gray-400'>
-                          Click to upload images
+                            }}
+                          >
+                            Create Video
+                          </button>
+                          <button
+                            className='w-full bg-red-500 text-white text-sm mt-1 p-2 border border-gray-700 rounded'
+                            onClick={() => setNewMediaType(null)}
+                          >
+                            Cancel
+                          </button>
                         </div>
                       </div>
-
-                      {uploading.length > 0 && (
-                        <div className='mt-4 w-full px-4 space-y-2'>
-                          {uploading.map((filename) => (
-                            <div key={filename} className='text-sm'>
-                              <div className='flex justify-between mb-1'>
-                                <span className='text-gray-700'>
-                                  {filename}
-                                </span>
-                                <span className='text-gray-500'>
-                                  {uploadProgress[filename]}%
-                                </span>
-                              </div>
-                              <div className='w-full bg-gray-200 rounded-full h-1.5'>
-                                <div
-                                  className='bg-brand h-1.5 rounded-full transition-all duration-300'
-                                  style={{
-                                    width: `${uploadProgress[filename]}%`,
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </label>
+                    )}
                   </div>
                 )}
               </div>

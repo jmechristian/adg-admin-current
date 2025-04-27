@@ -487,6 +487,7 @@ export const getProjectById = async (id: string) => {
                 centerX
                 centerY
                 zoom
+                type
               }
             }
           }
@@ -786,21 +787,22 @@ export const uploadAndConvertImage = async (file: File) => {
 
     // Get the processed filename from Content-Disposition header
     const contentDisposition = response.headers.get('Content-Disposition');
+    const contentType = response.headers.get('Content-Type') || 'image/webp';
     const processedFilename = contentDisposition
       ? contentDisposition.split('filename="')[1].split('"')[0]
       : file.name
           .replace(/\.[^/.]+$/, '')
           .replace(/\s+/g, '-')
-          .toLowerCase() + '.webp';
+          .toLowerCase() + (contentType.includes('gif') ? '.gif' : '.webp');
 
-    // Get the WebP buffer from the response
-    const webpBuffer = await response.blob();
+    // Get the buffer from the response
+    const imageBuffer = await response.blob();
 
     const result = await uploadData({
       key: `${processedFilename}`, // Use the processed filename instead of original
-      data: webpBuffer,
+      data: imageBuffer,
       options: {
-        contentType: 'image/webp',
+        contentType: contentType,
       },
     }).result;
 
@@ -819,7 +821,8 @@ export const addNewImageObject = async (
   caption: string,
   alt: string,
   centerX: number,
-  centerY: number
+  centerY: number,
+  type?: string
 ) => {
   const addToGallery = await client.graphql({
     query: createImageObject,
@@ -832,6 +835,7 @@ export const addNewImageObject = async (
         alt: caption,
         centerX: centerX,
         centerY: centerY,
+        type: type,
       },
     },
   });

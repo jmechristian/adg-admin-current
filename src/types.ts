@@ -271,6 +271,7 @@ export interface Image {
   alt?: string;
   caption?: string;
   order: number;
+  type?: string;
 }
 
 export interface DepartmentFilters {

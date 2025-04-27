@@ -18,25 +18,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get original filename, remove spaces, and change extension to .webp
+    const isGif = file.type === 'image/gif';
+
+    // Get original filename, remove spaces, and change extension based on file type
     const fileName =
       file.name
         .replace(/\.[^/.]+$/, '') // remove extension
         .replace(/\s+/g, '-') // replace spaces with hyphens
         .toLowerCase() + // convert to lowercase for consistency
-      '.webp';
+      (isGif ? '.gif' : '.webp');
 
-    // Convert to WebP
+    // Get the buffer
     const buffer = Buffer.from(await file.arrayBuffer());
-    const webpBuffer = await sharp(buffer).webp({ quality: 96 }).toBuffer();
+
+    // Only convert to WebP if it's not a GIF
+    const processedBuffer = isGif
+      ? buffer
+      : await sharp(buffer).webp({ quality: 96 }).toBuffer();
 
     // Sanitize the filename to remove special characters
     const sanitizedFileName = encodeURIComponent(fileName);
 
-    // Return the converted image with processed filename
-    return new NextResponse(webpBuffer, {
+    // Return the processed image with appropriate content type
+    return new NextResponse(processedBuffer, {
       headers: {
-        'Content-Type': 'image/webp',
+        'Content-Type': isGif ? 'image/gif' : 'image/webp',
         'Content-Disposition': `attachment; filename="${sanitizedFileName}"`,
       },
     });
