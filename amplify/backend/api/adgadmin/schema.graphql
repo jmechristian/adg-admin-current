@@ -137,3 +137,50 @@ type ProjectType @model {
   projects: [Project] @manyToMany(relationName: "ProjectProjectTypes")
   displayOrder: Int
 }
+
+type ServicesPage @model {
+  id: ID!
+  title: String!
+  hero: String
+  heroQuote: String
+  departments: [DepartmentSummary] @hasMany
+}
+
+type DepartmentSummary @model {
+  id: ID!
+  title: String!
+  image: String
+  description: String
+  link: String
+  split: String
+  envision: [DepartmentSummaryItem] @hasMany
+  design: [DepartmentSummaryItem] @hasMany
+  execute: [DepartmentSummaryItem] @hasMany
+  order: Int
+  hidden: Boolean
+}
+
+type DepartmentSummaryItem @model {
+  id: ID!
+  content: String!
+  order: Int
+}
+
+type StudioPage @model {
+  id: ID!
+  title: String!
+  hero: String
+  heroQuote: String
+  leadership: [StaffMember] @hasMany
+  staff: [StaffMember] @hasMany
+}
+
+type StaffMember @model {
+  id: ID!
+  name: String!
+  image: String
+  title: String
+  order: Int
+  extra: String
+  hidden: Boolean
+}

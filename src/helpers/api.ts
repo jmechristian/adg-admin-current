@@ -19,6 +19,8 @@ import {
   listProjectBuildingTypes,
   listProjectProjectTypes,
   listSubcategoryProjects,
+  listServicesPages,
+  listStudioPages,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -45,6 +47,7 @@ import {
   createSubcategoryProject,
   updateSubcategoryProject,
   deleteSubcategoryProject,
+  createStaffMember,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -64,7 +67,10 @@ import {
   ProjectWithDepartments,
   Department,
   Quote,
+  ServicesPage,
+  StudioPage,
 } from '@/types';
+
 // import * as doProjects from '../data/do-projects.json';
 // import * as images from '../data/images.json';
 
@@ -1357,6 +1363,130 @@ export const addDepartmentsToSubcategoryProjects = async ({
 export const getSubcategoryProjects = async () => {
   const res = await client.graphql({
     query: listSubcategoryProjects,
+  });
+  return res;
+};
+
+export const getServicesPage = async () => {
+  const customQuery = `
+    query MyQuery {
+      listServicesPages {
+        items {
+          createdAt
+          hero
+      heroQuote
+      id
+      title
+      updatedAt
+        departments {
+          items {
+            description
+            design {
+              items {
+                content
+                id
+                order
+              }
+            }
+            envision {
+              items {
+                content
+                id
+                order
+              }
+            }
+            execute {
+              items {
+                content
+                id
+                order
+              }
+            }
+            id
+            image
+            link
+            order
+            servicesPageDepartmentsId
+            split
+            title
+          }
+        }
+      }
+    }
+  }
+  `;
+
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ listServicesPages: { items: ServicesPage[] } }>;
+  return res.data.listServicesPages.items;
+};
+
+export const getStudioPage = async () => {
+  const customQuery = `
+    query MyQuery {
+      listStudioPages {
+        items {
+          hero
+          heroQuote
+          id
+          leadership {
+          items {
+            extra
+            hidden
+            id
+            image
+            name
+            order
+            title
+          }
+        }
+        staff {
+          items {
+            extra
+            hidden
+            id
+            image
+            name
+            order
+            title
+          }
+        }
+        title
+        updatedAt
+      }
+      }
+    }
+  `;
+
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ listStudioPages: { items: StudioPage[] } }>;
+  return res.data.listStudioPages.items[0];
+};
+
+export const createStaff = async ({
+  name,
+  image,
+  title,
+  extra,
+}: {
+  name: string;
+  image: string;
+  title: string;
+  extra: string;
+}) => {
+  const res = await client.graphql({
+    query: createStaffMember,
+    variables: {
+      input: {
+        name: name,
+        extra: extra,
+        image: `https://adgadmin170407-dev.s3.us-east-1.amazonaws.com${image}`,
+        studioPageStaffId: '5f4c13bd-c827-4352-995e-02ca9cbd51b0',
+        title: title,
+      },
+    },
   });
   return res;
 };

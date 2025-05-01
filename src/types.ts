@@ -296,3 +296,70 @@ export interface ProjectObject {
   collaborators: string;
   featured: boolean;
 }
+
+export interface ServicesPage {
+  createdAt: string;
+  hero: string;
+  heroQuote: string;
+  id: string;
+  title: string;
+  updatedAt: string;
+  departments: {
+    items: {
+      description: string;
+      design: {
+        items: {
+          content: string;
+          id: string;
+          order: number;
+        }[];
+      };
+      envision: {
+        items: {
+          content: string;
+          id: string;
+          order: number;
+        }[];
+      };
+      execute: {
+        items: {
+          content: string;
+          id: string;
+          order: number;
+        }[];
+      };
+      id: string;
+      image: string;
+      link: string;
+      order: number;
+      servicesPageDepartmentsId: string;
+      split: string;
+      title: string;
+    }[];
+  };
+}
+
+export interface DepartmentSummary {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+}
+
+export interface StaffMember {
+  id: string;
+  name: string;
+  image: string;
+  title: string;
+  order: number;
+  extra: string;
+  hidden: boolean;
+}
+export interface StudioPage {
+  id: string;
+  title: string;
+  hero: string;
+  heroQuote: string;
+  leadership: { items: StaffMember[] };
+  staff: { items: StaffMember[] };
+}

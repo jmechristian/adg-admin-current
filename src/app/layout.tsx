@@ -30,6 +30,16 @@ const navigation = [
   { name: 'Map', href: '/map', current: false },
   { name: 'Templates', href: '/templates', current: false },
   { name: 'Gallery', href: '/media', current: false },
+  {
+    name: 'Aux',
+    href: '/aux',
+    current: false,
+    pages: [
+      { name: 'Services', href: '/aux/services', current: false },
+      { name: 'Studio', href: '/aux/studio', current: false },
+      { name: 'Inquire', href: '/aux/inquire', current: false },
+    ],
+  },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -78,21 +88,51 @@ export default function RootLayout({
                 </div>
                 <div className='hidden md:!block'>
                   <div className='ml-10 flex gap-1'>
-                    {currentNavigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        aria-current={item.current ? 'page' : undefined}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-700 text-white rounded-md px-3 py-1 font-brand'
-                            : 'text-gray-400 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-1 font-brand font-medium'
-                        )}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    {currentNavigation.map((item) =>
+                      item.pages ? (
+                        <Menu as='div' key={item.name} className='relative'>
+                          <MenuButton
+                            className={classNames(
+                              item.current
+                                ? 'bg-gray-700 text-white'
+                                : 'text-gray-400 hover:bg-gray-700 hover:text-white',
+                              'rounded-md px-3 py-1 font-brand-serif font-medium'
+                            )}
+                          >
+                            {item.name}
+                          </MenuButton>
+                          <MenuItems className='absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none'>
+                            {item.pages.map((page) => (
+                              <MenuItem key={page.name}>
+                                <a
+                                  href={page.href}
+                                  className={classNames(
+                                    page.current ? 'bg-gray-100' : '',
+                                    'block px-4 py-2 text-sm text-gray-700'
+                                  )}
+                                >
+                                  {page.name}
+                                </a>
+                              </MenuItem>
+                            ))}
+                          </MenuItems>
+                        </Menu>
+                      ) : (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          aria-current={item.current ? 'page' : undefined}
+                          className={classNames(
+                            item.current
+                              ? 'bg-gray-700 text-white rounded-md px-3 py-1 font-brand'
+                              : 'text-gray-400 hover:bg-gray-700 hover:text-white',
+                            'rounded-md px-3 py-1 font-brand-serif font-medium'
+                          )}
+                        >
+                          {item.name}
+                        </a>
+                      )
+                    )}
                   </div>
                 </div>
                 <div className='hidden md:!block'>

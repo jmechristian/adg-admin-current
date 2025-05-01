@@ -2525,6 +2525,528 @@ export const deleteProjectType = /* GraphQL */ `
     }
   }
 `;
+export const createServicesPage = /* GraphQL */ `
+  mutation CreateServicesPage(
+    $input: CreateServicesPageInput!
+    $condition: ModelServicesPageConditionInput
+  ) {
+    createServicesPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateServicesPage = /* GraphQL */ `
+  mutation UpdateServicesPage(
+    $input: UpdateServicesPageInput!
+    $condition: ModelServicesPageConditionInput
+  ) {
+    updateServicesPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteServicesPage = /* GraphQL */ `
+  mutation DeleteServicesPage(
+    $input: DeleteServicesPageInput!
+    $condition: ModelServicesPageConditionInput
+  ) {
+    deleteServicesPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDepartmentSummary = /* GraphQL */ `
+  mutation CreateDepartmentSummary(
+    $input: CreateDepartmentSummaryInput!
+    $condition: ModelDepartmentSummaryConditionInput
+  ) {
+    createDepartmentSummary(input: $input, condition: $condition) {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const updateDepartmentSummary = /* GraphQL */ `
+  mutation UpdateDepartmentSummary(
+    $input: UpdateDepartmentSummaryInput!
+    $condition: ModelDepartmentSummaryConditionInput
+  ) {
+    updateDepartmentSummary(input: $input, condition: $condition) {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const deleteDepartmentSummary = /* GraphQL */ `
+  mutation DeleteDepartmentSummary(
+    $input: DeleteDepartmentSummaryInput!
+    $condition: ModelDepartmentSummaryConditionInput
+  ) {
+    deleteDepartmentSummary(input: $input, condition: $condition) {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const createDepartmentSummaryItem = /* GraphQL */ `
+  mutation CreateDepartmentSummaryItem(
+    $input: CreateDepartmentSummaryItemInput!
+    $condition: ModelDepartmentSummaryItemConditionInput
+  ) {
+    createDepartmentSummaryItem(input: $input, condition: $condition) {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const updateDepartmentSummaryItem = /* GraphQL */ `
+  mutation UpdateDepartmentSummaryItem(
+    $input: UpdateDepartmentSummaryItemInput!
+    $condition: ModelDepartmentSummaryItemConditionInput
+  ) {
+    updateDepartmentSummaryItem(input: $input, condition: $condition) {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const deleteDepartmentSummaryItem = /* GraphQL */ `
+  mutation DeleteDepartmentSummaryItem(
+    $input: DeleteDepartmentSummaryItemInput!
+    $condition: ModelDepartmentSummaryItemConditionInput
+  ) {
+    deleteDepartmentSummaryItem(input: $input, condition: $condition) {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const createStudioPage = /* GraphQL */ `
+  mutation CreateStudioPage(
+    $input: CreateStudioPageInput!
+    $condition: ModelStudioPageConditionInput
+  ) {
+    createStudioPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateStudioPage = /* GraphQL */ `
+  mutation UpdateStudioPage(
+    $input: UpdateStudioPageInput!
+    $condition: ModelStudioPageConditionInput
+  ) {
+    updateStudioPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteStudioPage = /* GraphQL */ `
+  mutation DeleteStudioPage(
+    $input: DeleteStudioPageInput!
+    $condition: ModelStudioPageConditionInput
+  ) {
+    deleteStudioPage(input: $input, condition: $condition) {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createStaffMember = /* GraphQL */ `
+  mutation CreateStaffMember(
+    $input: CreateStaffMemberInput!
+    $condition: ModelStaffMemberConditionInput
+  ) {
+    createStaffMember(input: $input, condition: $condition) {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
+export const updateStaffMember = /* GraphQL */ `
+  mutation UpdateStaffMember(
+    $input: UpdateStaffMemberInput!
+    $condition: ModelStaffMemberConditionInput
+  ) {
+    updateStaffMember(input: $input, condition: $condition) {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
+export const deleteStaffMember = /* GraphQL */ `
+  mutation DeleteStaffMember(
+    $input: DeleteStaffMemberInput!
+    $condition: ModelStaffMemberConditionInput
+  ) {
+    deleteStaffMember(input: $input, condition: $condition) {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
 export const createProjectDepartments = /* GraphQL */ `
   mutation CreateProjectDepartments(
     $input: CreateProjectDepartmentsInput!

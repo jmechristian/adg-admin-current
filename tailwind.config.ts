@@ -20,6 +20,7 @@ export default {
         'brand-light-gray': '#e6e6e6',
         'brand-gray': '#524f4f',
         'brand-peach': '#f5e5de',
+        'brand-dark-peach': '#e3d9d1',
         'brand-brown': '#b0a69c',
       },
       fontFamily: {

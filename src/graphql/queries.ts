@@ -1269,6 +1269,298 @@ export const listProjectTypes = /* GraphQL */ `
     }
   }
 `;
+export const getServicesPage = /* GraphQL */ `
+  query GetServicesPage($id: ID!) {
+    getServicesPage(id: $id) {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listServicesPages = /* GraphQL */ `
+  query ListServicesPages(
+    $filter: ModelServicesPageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listServicesPages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        hero
+        heroQuote
+        departments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getDepartmentSummary = /* GraphQL */ `
+  query GetDepartmentSummary($id: ID!) {
+    getDepartmentSummary(id: $id) {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const listDepartmentSummaries = /* GraphQL */ `
+  query ListDepartmentSummaries(
+    $filter: ModelDepartmentSummaryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDepartmentSummaries(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        image
+        description
+        link
+        split
+        envision {
+          nextToken
+        }
+        design {
+          nextToken
+        }
+        execute {
+          nextToken
+        }
+        order
+        hidden
+        createdAt
+        updatedAt
+        servicesPageDepartmentsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getDepartmentSummaryItem = /* GraphQL */ `
+  query GetDepartmentSummaryItem($id: ID!) {
+    getDepartmentSummaryItem(id: $id) {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const listDepartmentSummaryItems = /* GraphQL */ `
+  query ListDepartmentSummaryItems(
+    $filter: ModelDepartmentSummaryItemFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDepartmentSummaryItems(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        order
+        createdAt
+        updatedAt
+        departmentSummaryEnvisionId
+        departmentSummaryDesignId
+        departmentSummaryExecuteId
+      }
+      nextToken
+    }
+  }
+`;
+export const getStudioPage = /* GraphQL */ `
+  query GetStudioPage($id: ID!) {
+    getStudioPage(id: $id) {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listStudioPages = /* GraphQL */ `
+  query ListStudioPages(
+    $filter: ModelStudioPageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listStudioPages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        hero
+        heroQuote
+        leadership {
+          nextToken
+        }
+        staff {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getStaffMember = /* GraphQL */ `
+  query GetStaffMember($id: ID!) {
+    getStaffMember(id: $id) {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
+export const listStaffMembers = /* GraphQL */ `
+  query ListStaffMembers(
+    $filter: ModelStaffMemberFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listStaffMembers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        image
+        title
+        order
+        extra
+        hidden
+        createdAt
+        updatedAt
+        studioPageLeadershipId
+        studioPageStaffId
+      }
+      nextToken
+    }
+  }
+`;
 export const getProjectDepartments = /* GraphQL */ `
   query GetProjectDepartments($id: ID!) {
     getProjectDepartments(id: $id) {

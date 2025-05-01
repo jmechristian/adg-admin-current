@@ -13,7 +13,7 @@ import {
 } from '@jmechristian/adg-component-library';
 import '@jmechristian/adg-component-library/styles.css';
 import { Project } from '@/types';
-
+import Flipbook from '@/components/shared/Flipbook';
 interface ProjectResponse {
   getProject: Project;
 }
@@ -172,6 +172,11 @@ export const PageBuilder = ({ project }: PageBuilderProps) => {
             )}
             setModalImage={() => {}}
           />
+          {/* {project.id === 'f74f63fc-3f4b-4993-9f9b-ed9b6c55a52e' && (
+            <div className='flex flex-col gap-4'>
+              <Flipbook pdfUrl={'/WFP.pdf'} />
+            </div>
+          )} */}
         </div>
       </div>
       <div className='col-span-2 bg-black py-6 px-6'>

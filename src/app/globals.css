@@ -62,3 +62,7 @@ h2 {
   display: none;
   width: 0;
 }
+
+#services-hero i {
+  color: #f5e5de;
+}

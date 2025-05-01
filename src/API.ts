@@ -775,6 +775,263 @@ export type DeleteProjectTypeInput = {
   id: string,
 };
 
+export type CreateServicesPageInput = {
+  id?: string | null,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type ModelServicesPageConditionInput = {
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelServicesPageConditionInput | null > | null,
+  or?: Array< ModelServicesPageConditionInput | null > | null,
+  not?: ModelServicesPageConditionInput | null,
+};
+
+export type ServicesPage = {
+  __typename: "ServicesPage",
+  id: string,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+  departments?: ModelDepartmentSummaryConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelDepartmentSummaryConnection = {
+  __typename: "ModelDepartmentSummaryConnection",
+  items:  Array<DepartmentSummary | null >,
+  nextToken?: string | null,
+};
+
+export type DepartmentSummary = {
+  __typename: "DepartmentSummary",
+  id: string,
+  title: string,
+  image?: string | null,
+  description?: string | null,
+  link?: string | null,
+  split?: string | null,
+  envision?: ModelDepartmentSummaryItemConnection | null,
+  design?: ModelDepartmentSummaryItemConnection | null,
+  execute?: ModelDepartmentSummaryItemConnection | null,
+  order?: number | null,
+  hidden?: boolean | null,
+  createdAt: string,
+  updatedAt: string,
+  servicesPageDepartmentsId?: string | null,
+};
+
+export type ModelDepartmentSummaryItemConnection = {
+  __typename: "ModelDepartmentSummaryItemConnection",
+  items:  Array<DepartmentSummaryItem | null >,
+  nextToken?: string | null,
+};
+
+export type DepartmentSummaryItem = {
+  __typename: "DepartmentSummaryItem",
+  id: string,
+  content: string,
+  order?: number | null,
+  createdAt: string,
+  updatedAt: string,
+  departmentSummaryEnvisionId?: string | null,
+  departmentSummaryDesignId?: string | null,
+  departmentSummaryExecuteId?: string | null,
+};
+
+export type UpdateServicesPageInput = {
+  id: string,
+  title?: string | null,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type DeleteServicesPageInput = {
+  id: string,
+};
+
+export type CreateDepartmentSummaryInput = {
+  id?: string | null,
+  title: string,
+  image?: string | null,
+  description?: string | null,
+  link?: string | null,
+  split?: string | null,
+  order?: number | null,
+  hidden?: boolean | null,
+  servicesPageDepartmentsId?: string | null,
+};
+
+export type ModelDepartmentSummaryConditionInput = {
+  title?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  link?: ModelStringInput | null,
+  split?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  hidden?: ModelBooleanInput | null,
+  and?: Array< ModelDepartmentSummaryConditionInput | null > | null,
+  or?: Array< ModelDepartmentSummaryConditionInput | null > | null,
+  not?: ModelDepartmentSummaryConditionInput | null,
+  servicesPageDepartmentsId?: ModelIDInput | null,
+};
+
+export type UpdateDepartmentSummaryInput = {
+  id: string,
+  title?: string | null,
+  image?: string | null,
+  description?: string | null,
+  link?: string | null,
+  split?: string | null,
+  order?: number | null,
+  hidden?: boolean | null,
+  servicesPageDepartmentsId?: string | null,
+};
+
+export type DeleteDepartmentSummaryInput = {
+  id: string,
+};
+
+export type CreateDepartmentSummaryItemInput = {
+  id?: string | null,
+  content: string,
+  order?: number | null,
+  departmentSummaryEnvisionId?: string | null,
+  departmentSummaryDesignId?: string | null,
+  departmentSummaryExecuteId?: string | null,
+};
+
+export type ModelDepartmentSummaryItemConditionInput = {
+  content?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelDepartmentSummaryItemConditionInput | null > | null,
+  or?: Array< ModelDepartmentSummaryItemConditionInput | null > | null,
+  not?: ModelDepartmentSummaryItemConditionInput | null,
+  departmentSummaryEnvisionId?: ModelIDInput | null,
+  departmentSummaryDesignId?: ModelIDInput | null,
+  departmentSummaryExecuteId?: ModelIDInput | null,
+};
+
+export type UpdateDepartmentSummaryItemInput = {
+  id: string,
+  content?: string | null,
+  order?: number | null,
+  departmentSummaryEnvisionId?: string | null,
+  departmentSummaryDesignId?: string | null,
+  departmentSummaryExecuteId?: string | null,
+};
+
+export type DeleteDepartmentSummaryItemInput = {
+  id: string,
+};
+
+export type CreateStudioPageInput = {
+  id?: string | null,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type ModelStudioPageConditionInput = {
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelStudioPageConditionInput | null > | null,
+  or?: Array< ModelStudioPageConditionInput | null > | null,
+  not?: ModelStudioPageConditionInput | null,
+};
+
+export type StudioPage = {
+  __typename: "StudioPage",
+  id: string,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+  leadership?: ModelStaffMemberConnection | null,
+  staff?: ModelStaffMemberConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelStaffMemberConnection = {
+  __typename: "ModelStaffMemberConnection",
+  items:  Array<StaffMember | null >,
+  nextToken?: string | null,
+};
+
+export type StaffMember = {
+  __typename: "StaffMember",
+  id: string,
+  name: string,
+  image?: string | null,
+  title?: string | null,
+  order?: number | null,
+  extra?: string | null,
+  hidden?: boolean | null,
+  createdAt: string,
+  updatedAt: string,
+  studioPageLeadershipId?: string | null,
+  studioPageStaffId?: string | null,
+};
+
+export type UpdateStudioPageInput = {
+  id: string,
+  title?: string | null,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type DeleteStudioPageInput = {
+  id: string,
+};
+
+export type CreateStaffMemberInput = {
+  id?: string | null,
+  name: string,
+  image?: string | null,
+  title?: string | null,
+  order?: number | null,
+  extra?: string | null,
+  hidden?: boolean | null,
+  studioPageLeadershipId?: string | null,
+  studioPageStaffId?: string | null,
+};
+
+export type ModelStaffMemberConditionInput = {
+  name?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  extra?: ModelStringInput | null,
+  hidden?: ModelBooleanInput | null,
+  and?: Array< ModelStaffMemberConditionInput | null > | null,
+  or?: Array< ModelStaffMemberConditionInput | null > | null,
+  not?: ModelStaffMemberConditionInput | null,
+  studioPageLeadershipId?: ModelIDInput | null,
+  studioPageStaffId?: ModelIDInput | null,
+};
+
+export type UpdateStaffMemberInput = {
+  id: string,
+  name?: string | null,
+  image?: string | null,
+  title?: string | null,
+  order?: number | null,
+  extra?: string | null,
+  hidden?: boolean | null,
+  studioPageLeadershipId?: string | null,
+  studioPageStaffId?: string | null,
+};
+
+export type DeleteStaffMemberInput = {
+  id: string,
+};
+
 export type CreateProjectDepartmentsInput = {
   id?: string | null,
   projectID: string,
@@ -1081,6 +1338,80 @@ export type ModelProjectTypeConnection = {
   __typename: "ModelProjectTypeConnection",
   items:  Array<ProjectType | null >,
   nextToken?: string | null,
+};
+
+export type ModelServicesPageFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelServicesPageFilterInput | null > | null,
+  or?: Array< ModelServicesPageFilterInput | null > | null,
+  not?: ModelServicesPageFilterInput | null,
+};
+
+export type ModelServicesPageConnection = {
+  __typename: "ModelServicesPageConnection",
+  items:  Array<ServicesPage | null >,
+  nextToken?: string | null,
+};
+
+export type ModelDepartmentSummaryFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  link?: ModelStringInput | null,
+  split?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  hidden?: ModelBooleanInput | null,
+  and?: Array< ModelDepartmentSummaryFilterInput | null > | null,
+  or?: Array< ModelDepartmentSummaryFilterInput | null > | null,
+  not?: ModelDepartmentSummaryFilterInput | null,
+  servicesPageDepartmentsId?: ModelIDInput | null,
+};
+
+export type ModelDepartmentSummaryItemFilterInput = {
+  id?: ModelIDInput | null,
+  content?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelDepartmentSummaryItemFilterInput | null > | null,
+  or?: Array< ModelDepartmentSummaryItemFilterInput | null > | null,
+  not?: ModelDepartmentSummaryItemFilterInput | null,
+  departmentSummaryEnvisionId?: ModelIDInput | null,
+  departmentSummaryDesignId?: ModelIDInput | null,
+  departmentSummaryExecuteId?: ModelIDInput | null,
+};
+
+export type ModelStudioPageFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelStudioPageFilterInput | null > | null,
+  or?: Array< ModelStudioPageFilterInput | null > | null,
+  not?: ModelStudioPageFilterInput | null,
+};
+
+export type ModelStudioPageConnection = {
+  __typename: "ModelStudioPageConnection",
+  items:  Array<StudioPage | null >,
+  nextToken?: string | null,
+};
+
+export type ModelStaffMemberFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  order?: ModelIntInput | null,
+  extra?: ModelStringInput | null,
+  hidden?: ModelBooleanInput | null,
+  and?: Array< ModelStaffMemberFilterInput | null > | null,
+  or?: Array< ModelStaffMemberFilterInput | null > | null,
+  not?: ModelStaffMemberFilterInput | null,
+  studioPageLeadershipId?: ModelIDInput | null,
+  studioPageStaffId?: ModelIDInput | null,
 };
 
 export type ModelProjectDepartmentsFilterInput = {
@@ -4035,6 +4366,594 @@ export type DeleteProjectTypeMutation = {
     displayOrder?: number | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateServicesPageMutationVariables = {
+  input: CreateServicesPageInput,
+  condition?: ModelServicesPageConditionInput | null,
+};
+
+export type CreateServicesPageMutation = {
+  createServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateServicesPageMutationVariables = {
+  input: UpdateServicesPageInput,
+  condition?: ModelServicesPageConditionInput | null,
+};
+
+export type UpdateServicesPageMutation = {
+  updateServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteServicesPageMutationVariables = {
+  input: DeleteServicesPageInput,
+  condition?: ModelServicesPageConditionInput | null,
+};
+
+export type DeleteServicesPageMutation = {
+  deleteServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateDepartmentSummaryMutationVariables = {
+  input: CreateDepartmentSummaryInput,
+  condition?: ModelDepartmentSummaryConditionInput | null,
+};
+
+export type CreateDepartmentSummaryMutation = {
+  createDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type UpdateDepartmentSummaryMutationVariables = {
+  input: UpdateDepartmentSummaryInput,
+  condition?: ModelDepartmentSummaryConditionInput | null,
+};
+
+export type UpdateDepartmentSummaryMutation = {
+  updateDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type DeleteDepartmentSummaryMutationVariables = {
+  input: DeleteDepartmentSummaryInput,
+  condition?: ModelDepartmentSummaryConditionInput | null,
+};
+
+export type DeleteDepartmentSummaryMutation = {
+  deleteDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type CreateDepartmentSummaryItemMutationVariables = {
+  input: CreateDepartmentSummaryItemInput,
+  condition?: ModelDepartmentSummaryItemConditionInput | null,
+};
+
+export type CreateDepartmentSummaryItemMutation = {
+  createDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type UpdateDepartmentSummaryItemMutationVariables = {
+  input: UpdateDepartmentSummaryItemInput,
+  condition?: ModelDepartmentSummaryItemConditionInput | null,
+};
+
+export type UpdateDepartmentSummaryItemMutation = {
+  updateDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type DeleteDepartmentSummaryItemMutationVariables = {
+  input: DeleteDepartmentSummaryItemInput,
+  condition?: ModelDepartmentSummaryItemConditionInput | null,
+};
+
+export type DeleteDepartmentSummaryItemMutation = {
+  deleteDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type CreateStudioPageMutationVariables = {
+  input: CreateStudioPageInput,
+  condition?: ModelStudioPageConditionInput | null,
+};
+
+export type CreateStudioPageMutation = {
+  createStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateStudioPageMutationVariables = {
+  input: UpdateStudioPageInput,
+  condition?: ModelStudioPageConditionInput | null,
+};
+
+export type UpdateStudioPageMutation = {
+  updateStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteStudioPageMutationVariables = {
+  input: DeleteStudioPageInput,
+  condition?: ModelStudioPageConditionInput | null,
+};
+
+export type DeleteStudioPageMutation = {
+  deleteStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateStaffMemberMutationVariables = {
+  input: CreateStaffMemberInput,
+  condition?: ModelStaffMemberConditionInput | null,
+};
+
+export type CreateStaffMemberMutation = {
+  createStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type UpdateStaffMemberMutationVariables = {
+  input: UpdateStaffMemberInput,
+  condition?: ModelStaffMemberConditionInput | null,
+};
+
+export type UpdateStaffMemberMutation = {
+  updateStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type DeleteStaffMemberMutationVariables = {
+  input: DeleteStaffMemberInput,
+  condition?: ModelStaffMemberConditionInput | null,
+};
+
+export type DeleteStaffMemberMutation = {
+  deleteStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
   } | null,
 };
 
@@ -7154,6 +8073,343 @@ export type ListProjectTypesQuery = {
       displayOrder?: number | null,
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetServicesPageQueryVariables = {
+  id: string,
+};
+
+export type GetServicesPageQuery = {
+  getServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListServicesPagesQueryVariables = {
+  filter?: ModelServicesPageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListServicesPagesQuery = {
+  listServicesPages?:  {
+    __typename: "ModelServicesPageConnection",
+    items:  Array< {
+      __typename: "ServicesPage",
+      id: string,
+      title: string,
+      hero?: string | null,
+      heroQuote?: string | null,
+      departments?:  {
+        __typename: "ModelDepartmentSummaryConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetDepartmentSummaryQueryVariables = {
+  id: string,
+};
+
+export type GetDepartmentSummaryQuery = {
+  getDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type ListDepartmentSummariesQueryVariables = {
+  filter?: ModelDepartmentSummaryFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDepartmentSummariesQuery = {
+  listDepartmentSummaries?:  {
+    __typename: "ModelDepartmentSummaryConnection",
+    items:  Array< {
+      __typename: "DepartmentSummary",
+      id: string,
+      title: string,
+      image?: string | null,
+      description?: string | null,
+      link?: string | null,
+      split?: string | null,
+      envision?:  {
+        __typename: "ModelDepartmentSummaryItemConnection",
+        nextToken?: string | null,
+      } | null,
+      design?:  {
+        __typename: "ModelDepartmentSummaryItemConnection",
+        nextToken?: string | null,
+      } | null,
+      execute?:  {
+        __typename: "ModelDepartmentSummaryItemConnection",
+        nextToken?: string | null,
+      } | null,
+      order?: number | null,
+      hidden?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      servicesPageDepartmentsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetDepartmentSummaryItemQueryVariables = {
+  id: string,
+};
+
+export type GetDepartmentSummaryItemQuery = {
+  getDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type ListDepartmentSummaryItemsQueryVariables = {
+  filter?: ModelDepartmentSummaryItemFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDepartmentSummaryItemsQuery = {
+  listDepartmentSummaryItems?:  {
+    __typename: "ModelDepartmentSummaryItemConnection",
+    items:  Array< {
+      __typename: "DepartmentSummaryItem",
+      id: string,
+      content: string,
+      order?: number | null,
+      createdAt: string,
+      updatedAt: string,
+      departmentSummaryEnvisionId?: string | null,
+      departmentSummaryDesignId?: string | null,
+      departmentSummaryExecuteId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetStudioPageQueryVariables = {
+  id: string,
+};
+
+export type GetStudioPageQuery = {
+  getStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListStudioPagesQueryVariables = {
+  filter?: ModelStudioPageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListStudioPagesQuery = {
+  listStudioPages?:  {
+    __typename: "ModelStudioPageConnection",
+    items:  Array< {
+      __typename: "StudioPage",
+      id: string,
+      title: string,
+      hero?: string | null,
+      heroQuote?: string | null,
+      leadership?:  {
+        __typename: "ModelStaffMemberConnection",
+        nextToken?: string | null,
+      } | null,
+      staff?:  {
+        __typename: "ModelStaffMemberConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetStaffMemberQueryVariables = {
+  id: string,
+};
+
+export type GetStaffMemberQuery = {
+  getStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type ListStaffMembersQueryVariables = {
+  filter?: ModelStaffMemberFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListStaffMembersQuery = {
+  listStaffMembers?:  {
+    __typename: "ModelStaffMemberConnection",
+    items:  Array< {
+      __typename: "StaffMember",
+      id: string,
+      name: string,
+      image?: string | null,
+      title?: string | null,
+      order?: number | null,
+      extra?: string | null,
+      hidden?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      studioPageLeadershipId?: string | null,
+      studioPageStaffId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -10682,6 +11938,519 @@ export type OnDeleteProjectTypeSubscription = {
     displayOrder?: number | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateServicesPageSubscription = {
+  onCreateServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateServicesPageSubscription = {
+  onUpdateServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteServicesPageSubscription = {
+  onDeleteServicesPage?:  {
+    __typename: "ServicesPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    departments?:  {
+      __typename: "ModelDepartmentSummaryConnection",
+      items:  Array< {
+        __typename: "DepartmentSummary",
+        id: string,
+        title: string,
+        image?: string | null,
+        description?: string | null,
+        link?: string | null,
+        split?: string | null,
+        order?: number | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        servicesPageDepartmentsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateDepartmentSummarySubscription = {
+  onCreateDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateDepartmentSummarySubscription = {
+  onUpdateDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteDepartmentSummarySubscription = {
+  onDeleteDepartmentSummary?:  {
+    __typename: "DepartmentSummary",
+    id: string,
+    title: string,
+    image?: string | null,
+    description?: string | null,
+    link?: string | null,
+    split?: string | null,
+    envision?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    design?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    execute?:  {
+      __typename: "ModelDepartmentSummaryItemConnection",
+      items:  Array< {
+        __typename: "DepartmentSummaryItem",
+        id: string,
+        content: string,
+        order?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        departmentSummaryEnvisionId?: string | null,
+        departmentSummaryDesignId?: string | null,
+        departmentSummaryExecuteId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    order?: number | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    servicesPageDepartmentsId?: string | null,
+  } | null,
+};
+
+export type OnCreateDepartmentSummaryItemSubscription = {
+  onCreateDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type OnUpdateDepartmentSummaryItemSubscription = {
+  onUpdateDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type OnDeleteDepartmentSummaryItemSubscription = {
+  onDeleteDepartmentSummaryItem?:  {
+    __typename: "DepartmentSummaryItem",
+    id: string,
+    content: string,
+    order?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    departmentSummaryEnvisionId?: string | null,
+    departmentSummaryDesignId?: string | null,
+    departmentSummaryExecuteId?: string | null,
+  } | null,
+};
+
+export type OnCreateStudioPageSubscription = {
+  onCreateStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateStudioPageSubscription = {
+  onUpdateStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteStudioPageSubscription = {
+  onDeleteStudioPage?:  {
+    __typename: "StudioPage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    leadership?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    staff?:  {
+      __typename: "ModelStaffMemberConnection",
+      items:  Array< {
+        __typename: "StaffMember",
+        id: string,
+        name: string,
+        image?: string | null,
+        title?: string | null,
+        order?: number | null,
+        extra?: string | null,
+        hidden?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        studioPageLeadershipId?: string | null,
+        studioPageStaffId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateStaffMemberSubscription = {
+  onCreateStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type OnUpdateStaffMemberSubscription = {
+  onUpdateStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type OnDeleteStaffMemberSubscription = {
+  onDeleteStaffMember?:  {
+    __typename: "StaffMember",
+    id: string,
+    name: string,
+    image?: string | null,
+    title?: string | null,
+    order?: number | null,
+    extra?: string | null,
+    hidden?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    studioPageLeadershipId?: string | null,
+    studioPageStaffId?: string | null,
   } | null,
 };
 

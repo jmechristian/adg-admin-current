@@ -2417,6 +2417,483 @@ export const onDeleteProjectType = /* GraphQL */ `
     }
   }
 `;
+export const onCreateServicesPage = /* GraphQL */ `
+  subscription OnCreateServicesPage {
+    onCreateServicesPage {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateServicesPage = /* GraphQL */ `
+  subscription OnUpdateServicesPage {
+    onUpdateServicesPage {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteServicesPage = /* GraphQL */ `
+  subscription OnDeleteServicesPage {
+    onDeleteServicesPage {
+      id
+      title
+      hero
+      heroQuote
+      departments {
+        items {
+          id
+          title
+          image
+          description
+          link
+          split
+          order
+          hidden
+          createdAt
+          updatedAt
+          servicesPageDepartmentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateDepartmentSummary = /* GraphQL */ `
+  subscription OnCreateDepartmentSummary {
+    onCreateDepartmentSummary {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const onUpdateDepartmentSummary = /* GraphQL */ `
+  subscription OnUpdateDepartmentSummary {
+    onUpdateDepartmentSummary {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const onDeleteDepartmentSummary = /* GraphQL */ `
+  subscription OnDeleteDepartmentSummary {
+    onDeleteDepartmentSummary {
+      id
+      title
+      image
+      description
+      link
+      split
+      envision {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      design {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      execute {
+        items {
+          id
+          content
+          order
+          createdAt
+          updatedAt
+          departmentSummaryEnvisionId
+          departmentSummaryDesignId
+          departmentSummaryExecuteId
+        }
+        nextToken
+      }
+      order
+      hidden
+      createdAt
+      updatedAt
+      servicesPageDepartmentsId
+    }
+  }
+`;
+export const onCreateDepartmentSummaryItem = /* GraphQL */ `
+  subscription OnCreateDepartmentSummaryItem {
+    onCreateDepartmentSummaryItem {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const onUpdateDepartmentSummaryItem = /* GraphQL */ `
+  subscription OnUpdateDepartmentSummaryItem {
+    onUpdateDepartmentSummaryItem {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const onDeleteDepartmentSummaryItem = /* GraphQL */ `
+  subscription OnDeleteDepartmentSummaryItem {
+    onDeleteDepartmentSummaryItem {
+      id
+      content
+      order
+      createdAt
+      updatedAt
+      departmentSummaryEnvisionId
+      departmentSummaryDesignId
+      departmentSummaryExecuteId
+    }
+  }
+`;
+export const onCreateStudioPage = /* GraphQL */ `
+  subscription OnCreateStudioPage {
+    onCreateStudioPage {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateStudioPage = /* GraphQL */ `
+  subscription OnUpdateStudioPage {
+    onUpdateStudioPage {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteStudioPage = /* GraphQL */ `
+  subscription OnDeleteStudioPage {
+    onDeleteStudioPage {
+      id
+      title
+      hero
+      heroQuote
+      leadership {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      staff {
+        items {
+          id
+          name
+          image
+          title
+          order
+          extra
+          hidden
+          createdAt
+          updatedAt
+          studioPageLeadershipId
+          studioPageStaffId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateStaffMember = /* GraphQL */ `
+  subscription OnCreateStaffMember {
+    onCreateStaffMember {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
+export const onUpdateStaffMember = /* GraphQL */ `
+  subscription OnUpdateStaffMember {
+    onUpdateStaffMember {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
+export const onDeleteStaffMember = /* GraphQL */ `
+  subscription OnDeleteStaffMember {
+    onDeleteStaffMember {
+      id
+      name
+      image
+      title
+      order
+      extra
+      hidden
+      createdAt
+      updatedAt
+      studioPageLeadershipId
+      studioPageStaffId
+    }
+  }
+`;
 export const onCreateProjectDepartments = /* GraphQL */ `
   subscription OnCreateProjectDepartments {
     onCreateProjectDepartments {
