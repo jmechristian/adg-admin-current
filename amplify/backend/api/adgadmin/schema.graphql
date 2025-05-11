@@ -184,3 +184,10 @@ type StaffMember @model {
   extra: String
   hidden: Boolean
 }
+
+type InquirePage @model {
+  id: ID!
+  title: String!
+  hero: String
+  heroQuote: String
+}

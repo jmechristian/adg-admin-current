@@ -2894,6 +2894,42 @@ export const onDeleteStaffMember = /* GraphQL */ `
     }
   }
 `;
+export const onCreateInquirePage = /* GraphQL */ `
+  subscription OnCreateInquirePage {
+    onCreateInquirePage {
+      id
+      title
+      hero
+      heroQuote
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateInquirePage = /* GraphQL */ `
+  subscription OnUpdateInquirePage {
+    onUpdateInquirePage {
+      id
+      title
+      hero
+      heroQuote
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteInquirePage = /* GraphQL */ `
+  subscription OnDeleteInquirePage {
+    onDeleteInquirePage {
+      id
+      title
+      hero
+      heroQuote
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateProjectDepartments = /* GraphQL */ `
   subscription OnCreateProjectDepartments {
     onCreateProjectDepartments {

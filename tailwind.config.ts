@@ -21,6 +21,7 @@ export default {
         'brand-gray': '#524f4f',
         'brand-peach': '#f5e5de',
         'brand-dark-peach': '#e3d9d1',
+        'brand-light-peach': '#f5f0eb',
         'brand-brown': '#b0a69c',
       },
       fontFamily: {

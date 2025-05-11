@@ -363,3 +363,10 @@ export interface StudioPage {
   leadership: { items: StaffMember[] };
   staff: { items: StaffMember[] };
 }
+
+export interface InquirePage {
+  id: string;
+  title: string;
+  hero: string;
+  heroQuote: string;
+}

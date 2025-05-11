@@ -1561,6 +1561,37 @@ export const listStaffMembers = /* GraphQL */ `
     }
   }
 `;
+export const getInquirePage = /* GraphQL */ `
+  query GetInquirePage($id: ID!) {
+    getInquirePage(id: $id) {
+      id
+      title
+      hero
+      heroQuote
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listInquirePages = /* GraphQL */ `
+  query ListInquirePages(
+    $filter: ModelInquirePageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listInquirePages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        hero
+        heroQuote
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getProjectDepartments = /* GraphQL */ `
   query GetProjectDepartments($id: ID!) {
     getProjectDepartments(id: $id) {

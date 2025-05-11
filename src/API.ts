@@ -1032,6 +1032,43 @@ export type DeleteStaffMemberInput = {
   id: string,
 };
 
+export type CreateInquirePageInput = {
+  id?: string | null,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type ModelInquirePageConditionInput = {
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelInquirePageConditionInput | null > | null,
+  or?: Array< ModelInquirePageConditionInput | null > | null,
+  not?: ModelInquirePageConditionInput | null,
+};
+
+export type InquirePage = {
+  __typename: "InquirePage",
+  id: string,
+  title: string,
+  hero?: string | null,
+  heroQuote?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateInquirePageInput = {
+  id: string,
+  title?: string | null,
+  hero?: string | null,
+  heroQuote?: string | null,
+};
+
+export type DeleteInquirePageInput = {
+  id: string,
+};
+
 export type CreateProjectDepartmentsInput = {
   id?: string | null,
   projectID: string,
@@ -1412,6 +1449,22 @@ export type ModelStaffMemberFilterInput = {
   not?: ModelStaffMemberFilterInput | null,
   studioPageLeadershipId?: ModelIDInput | null,
   studioPageStaffId?: ModelIDInput | null,
+};
+
+export type ModelInquirePageFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  hero?: ModelStringInput | null,
+  heroQuote?: ModelStringInput | null,
+  and?: Array< ModelInquirePageFilterInput | null > | null,
+  or?: Array< ModelInquirePageFilterInput | null > | null,
+  not?: ModelInquirePageFilterInput | null,
+};
+
+export type ModelInquirePageConnection = {
+  __typename: "ModelInquirePageConnection",
+  items:  Array<InquirePage | null >,
+  nextToken?: string | null,
 };
 
 export type ModelProjectDepartmentsFilterInput = {
@@ -4957,6 +5010,57 @@ export type DeleteStaffMemberMutation = {
   } | null,
 };
 
+export type CreateInquirePageMutationVariables = {
+  input: CreateInquirePageInput,
+  condition?: ModelInquirePageConditionInput | null,
+};
+
+export type CreateInquirePageMutation = {
+  createInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateInquirePageMutationVariables = {
+  input: UpdateInquirePageInput,
+  condition?: ModelInquirePageConditionInput | null,
+};
+
+export type UpdateInquirePageMutation = {
+  updateInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteInquirePageMutationVariables = {
+  input: DeleteInquirePageInput,
+  condition?: ModelInquirePageConditionInput | null,
+};
+
+export type DeleteInquirePageMutation = {
+  deleteInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateProjectDepartmentsMutationVariables = {
   input: CreateProjectDepartmentsInput,
   condition?: ModelProjectDepartmentsConditionInput | null,
@@ -8410,6 +8514,44 @@ export type ListStaffMembersQuery = {
       updatedAt: string,
       studioPageLeadershipId?: string | null,
       studioPageStaffId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetInquirePageQueryVariables = {
+  id: string,
+};
+
+export type GetInquirePageQuery = {
+  getInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListInquirePagesQueryVariables = {
+  filter?: ModelInquirePageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListInquirePagesQuery = {
+  listInquirePages?:  {
+    __typename: "ModelInquirePageConnection",
+    items:  Array< {
+      __typename: "InquirePage",
+      id: string,
+      title: string,
+      hero?: string | null,
+      heroQuote?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -12451,6 +12593,42 @@ export type OnDeleteStaffMemberSubscription = {
     updatedAt: string,
     studioPageLeadershipId?: string | null,
     studioPageStaffId?: string | null,
+  } | null,
+};
+
+export type OnCreateInquirePageSubscription = {
+  onCreateInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateInquirePageSubscription = {
+  onUpdateInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteInquirePageSubscription = {
+  onDeleteInquirePage?:  {
+    __typename: "InquirePage",
+    id: string,
+    title: string,
+    hero?: string | null,
+    heroQuote?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 

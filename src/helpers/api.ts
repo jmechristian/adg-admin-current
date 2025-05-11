@@ -21,6 +21,7 @@ import {
   listSubcategoryProjects,
   listServicesPages,
   listStudioPages,
+  listInquirePages,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -69,6 +70,7 @@ import {
   Quote,
   ServicesPage,
   StudioPage,
+  InquirePage,
 } from '@/types';
 
 // import * as doProjects from '../data/do-projects.json';
@@ -1489,4 +1491,11 @@ export const createStaff = async ({
     },
   });
   return res;
+};
+
+export const getInquirePage = async () => {
+  const res = (await client.graphql({
+    query: listInquirePages,
+  })) as GraphQLResult<{ listInquirePages: { items: InquirePage[] } }>;
+  return res.data.listInquirePages.items[0];
 };
