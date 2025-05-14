@@ -26,23 +26,19 @@ const Inquire = () => {
   const [formState, setFormState] = useState<{
     name: string;
     email: string;
-    phone: string;
     company: string;
-    message: string;
     interestedIn: string[];
     projectAddress: string;
     projectDescription: string;
-    projectBudget: string;
+    projectBudget: number;
   }>({
     name: '',
     email: '',
-    phone: '',
     company: '',
-    message: '',
     interestedIn: [],
     projectAddress: '',
     projectDescription: '',
-    projectBudget: '',
+    projectBudget: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -63,8 +59,23 @@ const Inquire = () => {
     pitch: 0,
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSending(true);
+    const res = await fetch('/api/mailchimp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formState),
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      console.log('✅ Success:', result);
+    } else {
+      console.error('❌ Error:', result);
+    }
     setIsSubmitted(true);
     setIsSending(false);
     console.log(formState);
@@ -260,15 +271,18 @@ const Inquire = () => {
                   <div className='text-brand-brown font-brand-book uppercase'>
                     Project Budget (Required)
                   </div>
-                  <div>
+                  <div className='relative'>
+                    <span className='absolute left-2 top-1/2 -translate-y-1/2 text-brand-brown'>
+                      $
+                    </span>
                     <input
-                      type='text'
-                      className='w-full !border-0 border-brand-brown p-2 outline-none ring-0'
+                      type='number'
+                      className='w-full !border-0 border-brand-brown p-2 pl-6 outline-none ring-0'
                       value={formState.projectBudget}
                       onChange={(e) =>
                         setFormState({
                           ...formState,
-                          projectBudget: e.target.value,
+                          projectBudget: Number(e.target.value),
                         })
                       }
                     />
