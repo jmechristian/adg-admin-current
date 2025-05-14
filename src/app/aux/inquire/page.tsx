@@ -60,6 +60,42 @@ const Inquire = () => {
   };
 
   const handleSubmit = async () => {
+    if (formState.email === '') {
+      setIsError(true);
+      setErrorMessage('Email is required');
+      return;
+    }
+    if (formState.name === '') {
+      setIsError(true);
+      setErrorMessage('Name is required');
+      return;
+    }
+    if (formState.company === '') {
+      setIsError(true);
+      setErrorMessage('Company is required');
+      return;
+    }
+    if (formState.projectBudget === 0) {
+      setIsError(true);
+      setErrorMessage('Project budget is required');
+      return;
+    }
+    if (formState.projectAddress === '') {
+      setIsError(true);
+      setErrorMessage('Project address is required');
+      return;
+    }
+    if (formState.projectDescription === '') {
+      setIsError(true);
+      setErrorMessage('Project description is required');
+      return;
+    }
+    if (formState.interestedIn.length === 0) {
+      setIsError(true);
+      setErrorMessage('At least one interest is required');
+      return;
+    }
+
     setIsSending(true);
     const res = await fetch('/api/mailchimp', {
       method: 'POST',
