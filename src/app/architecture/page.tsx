@@ -14,7 +14,10 @@ import {
 import ProjectItem from '@/components/shared/ProjectItem';
 import ArchitectureIcon from '@/components/shared/ArchitectureIcon';
 import useLayoutStore from '@/store/useLayoutStore';
-import { MdRefresh } from 'react-icons/md';
+import { MdAdd, MdApps, MdRefresh, MdStar } from 'react-icons/md';
+import FeaturedModal from '@/components/shared/FeaturedModal';
+import ReorderModal from '@/components/shared/ReorderModal';
+
 export default function CommercialInteriors() {
   const [projects, setProjects] = useState<ProjectWithDepartments[]>([]);
   const [subcategories, setSubcategories] = useState<DepartmentSubcategory[]>(
@@ -26,6 +29,8 @@ export default function CommercialInteriors() {
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [activeFilter, setActiveFilter] = useState('');
   const toggleModal = useLayoutStore((state) => state.toggleModal);
+  const [toggleFeatured, setToggleFeatured] = useState(false);
+  const [toggleReorder, setToggleReorder] = useState({ open: false, id: '' });
   useEffect(() => {
     const getProjects = async () => {
       try {
@@ -56,6 +61,18 @@ export default function CommercialInteriors() {
     getSubcategories();
   }, []);
 
+  const refetchProjects = async () => {
+    const res = await getProjectsWithDepartments();
+    setProjects(
+      res.filter((project: ProjectWithDepartments) =>
+        project.departments.items.some(
+          (department) =>
+            department.department.id === '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
+        )
+      )
+    );
+  };
+
   const filteredProjects = useMemo(() => {
     if (!projects.length) return [];
 
@@ -78,6 +95,19 @@ export default function CommercialInteriors() {
           : true
       );
   }, [projects, searchTerm, activeFilter]);
+
+  const featuredProjects = useMemo(() => {
+    return projects.filter(
+      (project) =>
+        project.featuredProjects?.items &&
+        project.featuredProjects?.items.length > 0 &&
+        project.featuredProjects?.items.some(
+          (item) =>
+            item.departmentFeaturedProjectsId ===
+            '0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'
+        )
+    );
+  }, [projects]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -129,12 +159,26 @@ export default function CommercialInteriors() {
                   <MdRefresh className='text-gray-500' size={24} />
                 </div>
               </div>
-              <button
-                onClick={toggleModal}
-                className='bg-brand hover:bg-brand-brown transition-colors duration-300 text-white px-4 py-2 rounded-md font-brand-bold text-lg'
-              >
-                Create New +
-              </button>
+              <div className='flex items-center gap-1.5'>
+                <button
+                  onClick={() => setToggleFeatured(!toggleFeatured)}
+                  className='bg-brand-brown hover:bg-brand-gray/80 transition-colors duration-300 text-white px-4 py-2 rounded-md font-brand-book text-lg leading-none w-40'
+                >
+                  <div className='flex items-center justify-center gap-1 leading-none'>
+                    <MdStar size={18} />
+                    Featured
+                  </div>
+                </button>
+                <button
+                  onClick={toggleModal}
+                  className='bg-brand hover:bg-brand-gray/80 text-center transition-colors duration-300 text-white py-2 rounded-md font-brand-book text-lg leading-none w-40'
+                >
+                  <div className='flex items-center justify-center gap-1 leading-none'>
+                    <MdAdd size={18} />
+                    Create New
+                  </div>
+                </button>
+              </div>
             </div>
 
             <div className='flex justify-between items-center border-b-2 pb-4'>
@@ -174,19 +218,35 @@ export default function CommercialInteriors() {
                 return (
                   <button
                     key={subcategory.id}
-                    className={`px-3 py-1 rounded-md flex items-center gap-2 font-brand-serif ${
+                    className={`pl-2 pr-1 py-1 rounded-md flex items-center gap-0.5 font-brand-serif ${
                       activeFilter === subcategory.subcategory.name
                         ? 'bg-gray-400 text-white'
                         : 'bg-brand-gray text-white'
                     }`}
-                    onClick={() =>
-                      setActiveFilter(subcategory.subcategory.name)
-                    }
                   >
-                    {subcategory.subcategory.name}
-                    <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs'>
-                      {count}
-                    </span>
+                    <div
+                      className='flex items-center justify-center gap-1'
+                      onClick={() =>
+                        setActiveFilter(subcategory.subcategory.name)
+                      }
+                    >
+                      {subcategory.subcategory.name}
+                      <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs leading-none'>
+                        {count}
+                      </span>
+                    </div>
+
+                    <div
+                      className='flex items-center gap-1 hover:bg-gray-500 rounded-full p-1 text-white hover:text-yellow-300 transition-colors duration-300 ml-1'
+                      onClick={() =>
+                        setToggleReorder({
+                          open: true,
+                          id: subcategory.subcategory.id,
+                        })
+                      }
+                    >
+                      <MdApps size={18} />
+                    </div>
                   </button>
                 );
               })}
@@ -233,6 +293,21 @@ export default function CommercialInteriors() {
                 </button>
               ))}
             </div>
+            {toggleFeatured && (
+              <FeaturedModal
+                featuredProjects={featuredProjects}
+                closeModal={() => setToggleFeatured(false)}
+                refetchProjects={refetchProjects}
+              />
+            )}
+            {toggleReorder.open && (
+              <ReorderModal
+                subcategoryId={toggleReorder.id}
+                departmentId={'0e20ac00-ec5f-464a-86d3-61ddc90e9aa7'}
+                closeModal={() => setToggleReorder({ open: false, id: '' })}
+                refetchProjects={refetchProjects}
+              />
+            )}
           </>
         )}
       </div>
