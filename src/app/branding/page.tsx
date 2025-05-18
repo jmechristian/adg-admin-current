@@ -65,6 +65,25 @@ export default function CommercialInteriors() {
 
     return projects
       .sort((a, b) => {
+        // First sort by featured status
+        const aFeatured =
+          a.featuredProjects?.items && a.featuredProjects.items.length > 0;
+        const bFeatured =
+          b.featuredProjects?.items && b.featuredProjects.items.length > 0;
+
+        if (aFeatured && bFeatured) {
+          // If both are featured, sort by displayOrder
+          const aDisplayOrder =
+            a.featuredProjects?.items?.[0]?.displayOrder ?? 0;
+          const bDisplayOrder =
+            b.featuredProjects?.items?.[0]?.displayOrder ?? 0;
+          return aDisplayOrder - bDisplayOrder;
+        }
+
+        if (aFeatured && !bFeatured) return -1;
+        if (!aFeatured && bFeatured) return 1;
+
+        // If both are not featured, sort by published status
         if (a.status === 'PUBLISHED' && b.status !== 'PUBLISHED') return -1;
         if (a.status !== 'PUBLISHED' && b.status === 'PUBLISHED') return 1;
         return 0;
@@ -271,16 +290,14 @@ export default function CommercialInteriors() {
             </div>
             <div className='flex flex-col gap-2 divide-y divide-gray-300'>
               {currentProjects.length > 0 &&
-                currentProjects
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((project: ProjectWithDepartments) => (
-                    <ProjectItem
-                      key={project.id}
-                      project={project}
-                      departmentId={'4dfd71af-51a3-4af9-874f-da260e081f08'}
-                      refetchProjects={refetchProjects}
-                    />
-                  ))}
+                currentProjects.map((project: ProjectWithDepartments) => (
+                  <ProjectItem
+                    key={project.id}
+                    project={project}
+                    departmentId={'4dfd71af-51a3-4af9-874f-da260e081f08'}
+                    refetchProjects={refetchProjects}
+                  />
+                ))}
             </div>
             <div className='flex justify-center mt-4'>
               {Array.from({ length: totalPages }, (_, index) => (
