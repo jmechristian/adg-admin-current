@@ -141,6 +141,18 @@ export default function CommercialInteriors() {
     setCurrentPage(pageNumber);
   };
 
+  const liveProjects = useMemo(() => {
+    return projects.filter((project) => project.status === 'PUBLISHED').length;
+  }, [projects]);
+
+  const draftProjects = useMemo(() => {
+    return projects.filter((project) => project.status === 'DRAFT').length;
+  }, [projects]);
+
+  const archivedProjects = useMemo(() => {
+    return projects.filter((project) => project.status === 'ARCHIVED').length;
+  }, [projects]);
+
   return (
     <div className='flex flex-col'>
       <div className='max-w-7xl mx-auto flex flex-col gap-7 py-10 w-full'>
@@ -225,50 +237,65 @@ export default function CommercialInteriors() {
                 </label>
               </div>
             </div>
-            <div className='flex flex-wrap gap-2 mb-4 border-b-2 pb-4'>
-              {subcategories.map((subcategory) => {
-                const count = projects.filter((project) =>
-                  project.subcategories?.items.some(
-                    (item) =>
-                      item.subcategory.name === subcategory.subcategory.name
-                  )
-                ).length;
+            <div className='flex items-center justify-between w-full mb-4 border-b-2 pb-4'>
+              <div className='flex flex-wrap gap-2 w-full'>
+                {subcategories.map((subcategory) => {
+                  const count = projects.filter((project) =>
+                    project.subcategories?.items.some(
+                      (item) =>
+                        item.subcategory.name === subcategory.subcategory.name
+                    )
+                  ).length;
 
-                return (
-                  <button
-                    key={subcategory.id}
-                    className={`pl-2 pr-1 py-1 rounded-md flex items-center gap-0.5 font-brand-serif ${
-                      activeFilter === subcategory.subcategory.name
-                        ? 'bg-gray-400 text-white'
-                        : 'bg-brand-gray text-white'
-                    }`}
-                  >
-                    <div
-                      className='flex items-center justify-center gap-1'
-                      onClick={() =>
-                        setActiveFilter(subcategory.subcategory.name)
-                      }
+                  return (
+                    <button
+                      key={subcategory.id}
+                      className={`pl-2 pr-1 py-1 rounded-md flex items-center gap-0.5 font-brand-serif ${
+                        activeFilter === subcategory.subcategory.name
+                          ? 'bg-gray-400 text-white'
+                          : 'bg-brand-gray text-white'
+                      }`}
                     >
-                      {subcategory.subcategory.name}
-                      <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs leading-none'>
-                        {count}
-                      </span>
-                    </div>
+                      <div
+                        className='flex items-center justify-center gap-1'
+                        onClick={() =>
+                          setActiveFilter(subcategory.subcategory.name)
+                        }
+                      >
+                        {subcategory.subcategory.name}
+                        <span className='bg-white font-brand-bold text-gray-700 rounded-full w-5 h-5 flex items-center justify-center text-xs leading-none'>
+                          {count}
+                        </span>
+                      </div>
 
-                    <div
-                      className='flex items-center gap-1 hover:bg-gray-500 rounded-full p-1 text-white hover:text-yellow-300 transition-colors duration-300 ml-1'
-                      onClick={() =>
-                        setToggleReorder({
-                          open: true,
-                          id: subcategory.subcategory.id,
-                        })
-                      }
-                    >
-                      <MdApps size={18} />
-                    </div>
-                  </button>
-                );
-              })}
+                      <div
+                        className='flex items-center gap-1 hover:bg-gray-500 rounded-full p-1 text-white hover:text-yellow-300 transition-colors duration-300 ml-1'
+                        onClick={() =>
+                          setToggleReorder({
+                            open: true,
+                            id: subcategory.subcategory.id,
+                          })
+                        }
+                      >
+                        <MdApps size={18} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className='flex items-center justify-end w-full'>
+                <div className='flex items-center gap-2'>
+                  <div className='text-sm font-brand-book'>
+                    Live: {liveProjects}
+                  </div>
+                  <div className='text-sm font-brand-book'>
+                    Draft: {draftProjects}
+                  </div>
+                  <div className='text-sm font-brand-book'>
+                    Archived: {archivedProjects}
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className='grid grid-cols-12 gap-5 border-b-2 pb-2'>
