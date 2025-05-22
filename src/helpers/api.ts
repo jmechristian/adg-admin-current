@@ -49,6 +49,7 @@ import {
   updateSubcategoryProject,
   deleteSubcategoryProject,
   createStaffMember,
+  createDepartmentSummaryItem,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1498,4 +1499,62 @@ export const getInquirePage = async () => {
     query: listInquirePages,
   })) as GraphQLResult<{ listInquirePages: { items: InquirePage[] } }>;
   return res.data.listInquirePages.items[0];
+};
+
+export const createNewEnvisionSummaryItem = async ({
+  content,
+  order,
+  departmentSummaryEnvisionId,
+}: {
+  content: string;
+  order: number;
+  departmentSummaryEnvisionId: string;
+}) => {
+  const res = await client.graphql({
+    query: createDepartmentSummaryItem,
+    variables: {
+      input: {
+        content,
+        order: order,
+        departmentSummaryEnvisionId: departmentSummaryEnvisionId,
+      },
+    },
+  });
+  return res;
+};
+
+export const createNewDesignSummaryItem = async ({
+  content,
+  order,
+  departmentSummaryDesignId,
+}: {
+  content: string;
+  order: number;
+  departmentSummaryDesignId: string;
+}) => {
+  const res = await client.graphql({
+    query: createDepartmentSummaryItem,
+    variables: {
+      input: { content, order, departmentSummaryDesignId },
+    },
+  });
+  return res;
+};
+
+export const createNewExecuteSummaryItem = async ({
+  content,
+  order,
+  departmentSummaryExecuteId,
+}: {
+  content: string;
+  order: number;
+  departmentSummaryExecuteId: string;
+}) => {
+  const res = await client.graphql({
+    query: createDepartmentSummaryItem,
+    variables: {
+      input: { content, order, departmentSummaryExecuteId },
+    },
+  });
+  return res;
 };

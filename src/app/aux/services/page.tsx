@@ -8,16 +8,35 @@ import {
 } from '@jmechristian/adg-component-library';
 import '@jmechristian/adg-component-library/styles.css';
 import { useState } from 'react';
+import { MdArrowForwardIos, MdEdit } from 'react-icons/md';
+import AuxEditModal from '@/components/shared/AuxEditModal';
 
 const Services = () => {
   const [servicesPage, setServicesPage] = useState<ServicesPage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     getServicesPage()
       .then(setServicesPage)
       .finally(() => setIsLoading(false));
   }, []);
+
+  const refreshPage = () => {
+    getServicesPage().then(setServicesPage);
+  };
+
+  const handleDepartmentClick = (department: any) => {
+    console.log(department);
+    setSelectedDepartment(department);
+    setIsEditing(true);
+  };
+
+  const handleCloseClick = () => {
+    setIsEditing(false);
+    setSelectedDepartment(null);
+  };
 
   if (isLoading) {
     return (
@@ -46,7 +65,10 @@ const Services = () => {
           {servicesPage[0].departments.items
             .sort((a, b) => a.order - b.order)
             .map((department) => (
-              <div key={department.id}>
+              <div
+                key={department.id}
+                className='cursor-pointer w-full relative'
+              >
                 <DepartmentSummary
                   key={department.id}
                   title={department.title}
@@ -57,11 +79,28 @@ const Services = () => {
                   design={department.design.items}
                   execute={department.execute.items}
                 />
+                <div className='absolute top-0 right-0 z-30 shadow-lg'>
+                  <div className='bg-brand-brown text-white px-4 py-2 rounded-md font-brand-book text-lg leading-none cursor-pointer'>
+                    <div
+                      className='flex items-center justify-center gap-1 leading-none'
+                      onClick={() => handleDepartmentClick(department)}
+                    >
+                      <MdEdit size={24} />
+                    </div>
+                  </div>
+                </div>
                 <div className='h-px bg-brand-brown my-16'></div>
               </div>
             ))}
         </div>
       </div>
+      {isEditing && (
+        <AuxEditModal
+          department={selectedDepartment}
+          close={handleCloseClick}
+          refreshPage={refreshPage}
+        />
+      )}
     </div>
   );
 };
