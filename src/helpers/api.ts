@@ -50,6 +50,9 @@ import {
   deleteSubcategoryProject,
   createStaffMember,
   createDepartmentSummaryItem,
+  deleteDepartmentSummaryItem,
+  updateDepartmentSummaryItem,
+  updateDepartmentSummary,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1554,6 +1557,48 @@ export const createNewExecuteSummaryItem = async ({
     query: createDepartmentSummaryItem,
     variables: {
       input: { content, order, departmentSummaryExecuteId },
+    },
+  });
+  return res;
+};
+
+export const deleteNewSummaryItem = async ({ id }: { id: string }) => {
+  const res = await client.graphql({
+    query: deleteDepartmentSummaryItem,
+    variables: { input: { id } },
+  });
+  return res;
+};
+
+export const updateNewSummaryItem = async ({
+  id,
+  content,
+  order,
+}: {
+  id: string;
+  content: string;
+  order: number;
+}) => {
+  const res = await client.graphql({
+    query: updateDepartmentSummaryItem,
+    variables: { input: { id, content, order } },
+  });
+  return res;
+};
+
+export const updateSelectedDepartmentSummary = async ({
+  id,
+  title,
+  description,
+}: {
+  id: string;
+  title: string;
+  description: string;
+}) => {
+  const res = await client.graphql({
+    query: updateDepartmentSummary,
+    variables: {
+      input: { id, title, description },
     },
   });
   return res;
