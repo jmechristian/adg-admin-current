@@ -53,6 +53,7 @@ import {
   deleteDepartmentSummaryItem,
   updateDepartmentSummaryItem,
   updateDepartmentSummary,
+  updateServicesPage,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1600,6 +1601,22 @@ export const updateSelectedDepartmentSummary = async ({
     variables: {
       input: { id, title, description },
     },
+  });
+  return res;
+};
+
+export const saveServicesPage = async ({
+  id,
+  heroQuote,
+  hero,
+}: {
+  id: string;
+  heroQuote: string;
+  hero: string;
+}) => {
+  const res = await client.graphql({
+    query: updateServicesPage,
+    variables: { input: { id, heroQuote, hero } },
   });
   return res;
 };
