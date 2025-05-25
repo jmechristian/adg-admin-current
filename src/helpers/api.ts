@@ -56,6 +56,7 @@ import {
   updateServicesPage,
   updateStudioPage,
   updateStaffMember,
+  updateInquirePage,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1653,6 +1654,22 @@ export const saveStaff = async ({
   const res = await client.graphql({
     query: updateStaffMember,
     variables: { input: { id, name, title, extra } },
+  });
+  return res;
+};
+
+export const saveInquirePage = async ({
+  id,
+  heroQuote,
+  hero,
+}: {
+  id: string;
+  heroQuote: string;
+  hero: string;
+}) => {
+  const res = await client.graphql({
+    query: updateInquirePage,
+    variables: { input: { id, heroQuote, hero } },
   });
   return res;
 };
