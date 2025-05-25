@@ -370,3 +370,13 @@ export interface InquirePage {
   hero: string;
   heroQuote: string;
 }
+
+export interface Staff {
+  id: string;
+  name: string;
+  image: string;
+  title: string;
+  order: number;
+  extra: string;
+  hidden: boolean;
+}
