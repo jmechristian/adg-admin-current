@@ -48,7 +48,6 @@ export const SubcategorySelect = ({
     const fetchSubcategories = async () => {
       const subcategories = await getSubcategories();
       setAllSubcategories(subcategories);
-      console.log('allSubcategories', subcategories);
     };
 
     fetchSubcategories();
