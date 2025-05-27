@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { OverlayHero } from '@jmechristian/adg-component-library';
 import '@jmechristian/adg-component-library/styles.css';
 import { MdClose, MdDelete, MdEdit, MdKey, MdSave } from 'react-icons/md';
+import ImageUpload from '@/components/shared/ImageUpload';
 
 export default function Studio() {
   const [studioPage, setStudioPage] = useState<StudioPage | null>(null);
@@ -227,9 +228,11 @@ export default function Studio() {
             <div className='flex flex-col gap-6 w-full max-w-3xl mx-auto'>
               <div className='w-full'>
                 <div
-                  className='w-full aspect-[5/2.5] bg-brand-brown rounded bg-cover bg-center'
+                  className='w-full aspect-[5/2.5] bg-brand-brown rounded bg-cover bg-center flex items-center justify-center'
                   style={{ backgroundImage: `url(${heroImage})` }}
-                ></div>
+                >
+                  <ImageUpload setImage={(url) => setHeroImage(url)} />
+                </div>
               </div>
               <div className='w-full flex flex-col gap-2'>
                 <textarea

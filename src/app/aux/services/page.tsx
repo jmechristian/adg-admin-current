@@ -16,6 +16,7 @@ import {
   MdKey,
 } from 'react-icons/md';
 import AuxEditModal from '@/components/shared/AuxEditModal';
+import ImageUpload from '@/components/shared/ImageUpload';
 
 const Services = () => {
   const [servicesPage, setServicesPage] = useState<ServicesPage[]>([]);
@@ -115,6 +116,11 @@ const Services = () => {
                   envision={department.envision.items}
                   design={department.design.items}
                   execute={department.execute.items}
+                  link={
+                    department.link
+                      ? () => window.open(department.link, '_blank')
+                      : undefined
+                  }
                 />
                 <div className='absolute top-0 right-0 z-30 shadow-lg'>
                   <div className='bg-brand-brown text-white px-4 py-2 rounded-md font-brand-book text-lg leading-none cursor-pointer'>
@@ -149,9 +155,11 @@ const Services = () => {
             <div className='flex flex-col gap-6 w-full max-w-3xl mx-auto'>
               <div className='w-full'>
                 <div
-                  className='w-full aspect-[5/2.5] bg-brand-brown rounded bg-cover bg-center'
+                  className='w-full aspect-[5/2.5] bg-brand-brown rounded bg-cover bg-center flex items-center justify-center'
                   style={{ backgroundImage: `url(${heroImage})` }}
-                ></div>
+                >
+                  <ImageUpload setImage={(url) => setHeroImage(url)} />
+                </div>
               </div>
               <div className='w-full flex flex-col gap-2'>
                 <textarea
