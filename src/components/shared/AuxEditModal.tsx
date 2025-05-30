@@ -54,7 +54,7 @@ const SortableItem = ({ id, content, type, onSelect }: SortableItemProps) => {
       style={style}
       {...attributes}
       {...listeners}
-      className='flex items-center gap-2 hover:bg-brand-brown/10 p-1 rounded-md cursor-pointer'
+      className='flex items-center gap-2 hover:bg-brand-brown/10 p-1 rounded-md cursor-grab active:cursor-grabbing'
       onClick={() => onSelect({ id, content, type })}
     >
       <div className='w-1 h-1 bg-brand-brown rounded-full'></div>
@@ -86,7 +86,11 @@ const AuxEditModal = ({
   const [isNewItemType, setIsNewItemType] = useState<any>('envision');
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
