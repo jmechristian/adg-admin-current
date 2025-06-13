@@ -130,6 +130,12 @@ export default function Home() {
     setCurrentPage(1);
   };
 
+  const publishedProjects = useMemo(() => {
+    return projects.filter(
+      (project: ProjectWithDepartments) => project.status === 'PUBLISHED'
+    );
+  }, [projects]);
+
   return (
     <div className='flex flex-col'>
       <header className='bg-gray-900 pt-6 pb-6'>
@@ -232,7 +238,8 @@ export default function Home() {
               <div className='flex items-center gap-1'>
                 <div className='font-brand-bold text-xl'>All Projects</div>
                 <div className='text-xl text-gray-500 ml-1'>
-                  {filteredProjects.length} projects
+                  {filteredProjects.length} projects /{' '}
+                  {publishedProjects.length} published
                 </div>
                 <div
                   className='cursor-pointer'

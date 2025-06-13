@@ -721,7 +721,7 @@ export const listProjectsWithLocations = async () => {
         }
       }
     }
-  }
+  
   `;
 
   const locations = (await client.graphql({
