@@ -22,6 +22,7 @@ import {
   listServicesPages,
   listStudioPages,
   listInquirePages,
+  listHomePages,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -79,6 +80,7 @@ import {
   ServicesPage,
   StudioPage,
   InquirePage,
+  HomePageType,
 } from '@/types';
 
 // import * as doProjects from '../data/do-projects.json';
@@ -1672,4 +1674,73 @@ export const saveInquirePage = async ({
     variables: { input: { id, heroQuote, hero } },
   });
   return res;
+};
+
+export const getHomePage = async () => {
+  const customQuery = `
+    query MyQuery {
+      listHomePages {
+    items {
+      hero
+      heroQuote
+      id
+      introText
+      studioImage
+      studioLink
+      studioText
+      title
+      features {
+        items {
+          callout
+          homePageFeaturesId
+          id
+          image
+          link
+          linkText
+          order
+          title
+        }
+      }
+      featuredProjects {
+        items {
+          departments {
+            items {
+              department {
+                name
+                id
+              }
+            }
+          }
+          gallery {
+            images {
+              items {
+                alt
+                caption
+                centerX
+                centerY
+                createdAt
+                id
+                order
+                type
+                url
+                zoom
+              }
+            }
+          }
+          link
+          id
+          locationString
+          name
+          slug
+        }
+      }
+    }
+  }
+    }
+  `;
+
+  const res = (await client.graphql({
+    query: customQuery,
+  })) as GraphQLResult<{ listHomePages: { items: HomePageType[] } }>;
+  return res.data.listHomePages.items[0];
 };

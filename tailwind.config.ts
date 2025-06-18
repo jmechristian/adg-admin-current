@@ -29,6 +29,7 @@ export default {
         'brand-bold': 'Gotham Bold',
         'brand-medium': 'Gotham Medium',
         'brand-serif': 'calluna',
+        brand: 'calluna',
       },
     },
   },

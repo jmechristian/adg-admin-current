@@ -191,3 +191,26 @@ type InquirePage @model {
   hero: String
   heroQuote: String
 }
+
+type HomePageFeature @model {
+  id: ID!
+  title: String!
+  image: String
+  link: String
+  linkText: String
+  callout: String
+  order: Int
+}
+
+type HomePage @model {
+  id: ID!
+  title: String!
+  hero: String
+  heroQuote: String
+  introText: String
+  features: [HomePageFeature] @hasMany
+  studioText: String
+  studioLink: String
+  studioImage: String
+  featuredProjects: [Project] @hasMany
+}

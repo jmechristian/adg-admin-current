@@ -380,3 +380,26 @@ export interface Staff {
   extra: string;
   hidden: boolean;
 }
+
+export interface HomePageType {
+  id: string;
+  title: string;
+  hero: string;
+  heroQuote: string;
+  introText: string;
+  features: HomePageFeature[];
+  studioText: string;
+  studioLink: string;
+  studioImage: string;
+  featuredProjects: Project[];
+}
+
+export interface HomePageFeature {
+  id: string;
+  title: string;
+  image: string;
+  link: string;
+  linkText: string;
+  callout: string;
+  order: number;
+}

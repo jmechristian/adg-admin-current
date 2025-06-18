@@ -144,6 +144,7 @@ export const getFeaturedProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -208,6 +209,7 @@ export const listFeaturedProjects = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -323,6 +325,7 @@ export const getGallery = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -365,6 +368,7 @@ export const listGalleries = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -457,6 +461,7 @@ export const getProject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -533,6 +538,7 @@ export const getProject = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      homePageFeaturedProjectsId
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
@@ -619,6 +625,7 @@ export const listProjects = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -706,6 +713,7 @@ export const getQuote = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -748,6 +756,7 @@ export const listQuotes = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -877,6 +886,7 @@ export const getImageObject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1074,6 +1084,7 @@ export const getSubcategoryProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1155,6 +1166,7 @@ export const listSubcategoryProjects = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1592,6 +1604,137 @@ export const listInquirePages = /* GraphQL */ `
     }
   }
 `;
+export const getHomePageFeature = /* GraphQL */ `
+  query GetHomePageFeature($id: ID!) {
+    getHomePageFeature(id: $id) {
+      id
+      title
+      image
+      link
+      linkText
+      callout
+      order
+      createdAt
+      updatedAt
+      homePageFeaturesId
+    }
+  }
+`;
+export const listHomePageFeatures = /* GraphQL */ `
+  query ListHomePageFeatures(
+    $filter: ModelHomePageFeatureFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listHomePageFeatures(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        image
+        link
+        linkText
+        callout
+        order
+        createdAt
+        updatedAt
+        homePageFeaturesId
+      }
+      nextToken
+    }
+  }
+`;
+export const getHomePage = /* GraphQL */ `
+  query GetHomePage($id: ID!) {
+    getHomePage(id: $id) {
+      id
+      title
+      hero
+      heroQuote
+      introText
+      features {
+        items {
+          id
+          title
+          image
+          link
+          linkText
+          callout
+          order
+          createdAt
+          updatedAt
+          homePageFeaturesId
+        }
+        nextToken
+      }
+      studioText
+      studioLink
+      studioImage
+      featuredProjects {
+        items {
+          id
+          oldId
+          name
+          description
+          locationString
+          featured
+          link
+          slug
+          quote
+          quoteAttribution
+          collaborators
+          size
+          gridOrder
+          status
+          displayOrder
+          previewLocation
+          createdAt
+          updatedAt
+          homePageFeaturedProjectsId
+          projectLocationId
+          projectCreatedById
+          projectLastUpdatedById
+          projectGalleryId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listHomePages = /* GraphQL */ `
+  query ListHomePages(
+    $filter: ModelHomePageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listHomePages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        hero
+        heroQuote
+        introText
+        features {
+          nextToken
+        }
+        studioText
+        studioLink
+        studioImage
+        featuredProjects {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getProjectDepartments = /* GraphQL */ `
   query GetProjectDepartments($id: ID!) {
     getProjectDepartments(id: $id) {
@@ -1670,6 +1813,7 @@ export const getProjectDepartments = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1733,6 +1877,7 @@ export const listProjectDepartments = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1830,6 +1975,7 @@ export const getProjectSubcategories = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1890,6 +2036,7 @@ export const listProjectSubcategories = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1987,6 +2134,7 @@ export const getProjectBuildingTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -2041,6 +2189,7 @@ export const listProjectBuildingTypes = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -2138,6 +2287,7 @@ export const getProjectProjectTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -2192,6 +2342,7 @@ export const listProjectProjectTypes = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
+          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById

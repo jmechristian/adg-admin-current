@@ -38,6 +38,7 @@ const navigation = [
       { name: 'Services', href: '/aux/services', current: false },
       { name: 'Studio', href: '/aux/studio', current: false },
       { name: 'Inquire', href: '/aux/inquire', current: false },
+      { name: 'Home', href: '/aux/home', current: false },
     ],
   },
 ];
