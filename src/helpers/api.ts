@@ -23,6 +23,8 @@ import {
   listStudioPages,
   listInquirePages,
   listHomePages,
+  listHomePageFeatures,
+  getHomePageFeature,
 } from '../graphql/queries';
 import {
   createLocation,
@@ -58,6 +60,7 @@ import {
   updateStudioPage,
   updateStaffMember,
   updateInquirePage,
+  updateHomePage,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -81,6 +84,7 @@ import {
   StudioPage,
   InquirePage,
   HomePageType,
+  HomePageFeature,
 } from '@/types';
 
 // import * as doProjects from '../data/do-projects.json';
@@ -1743,4 +1747,54 @@ export const getHomePage = async () => {
     query: customQuery,
   })) as GraphQLResult<{ listHomePages: { items: HomePageType[] } }>;
   return res.data.listHomePages.items[0];
+};
+
+export const saveHomePageIntroText = async ({
+  data,
+}: {
+  data: { id: string; introText: string };
+}) => {
+  const res = await client.graphql({
+    query: updateHomePage,
+    variables: { input: { ...data } },
+  });
+  return res;
+};
+
+export const saveHomePageHero = async ({
+  data,
+}: {
+  data: { id: string; hero: string; heroQuote: string };
+}) => {
+  const res = await client.graphql({
+    query: updateHomePage,
+    variables: { input: { ...data } },
+  });
+  return res;
+};
+
+export const getHomePageFeatureItem = async ({ id }: { id: string }) => {
+  const res = (await client.graphql({
+    query: getHomePageFeature,
+    variables: { id: id },
+  })) as GraphQLResult<{ getHomePageFeature: HomePageFeature }>;
+  return res.data.getHomePageFeature;
+};
+
+export const saveHomePageStudioText = async ({
+  id,
+  studioText,
+  studioLink,
+  studioImage,
+}: {
+  id: string;
+  studioText: string;
+  studioLink: string;
+  studioImage: string;
+}) => {
+  const res = await client.graphql({
+    query: updateHomePage,
+    variables: { input: { id, studioText, studioLink, studioImage } },
+  });
+  return res;
 };

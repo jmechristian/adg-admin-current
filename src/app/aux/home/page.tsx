@@ -25,8 +25,12 @@ const HomePage = () => {
 
   return (
     <div className='w-full max-w-[2000px] mx-auto relative flex flex-col gap-16'>
-      <Hero hero={homePage?.hero || ''} heroQuote={homePage?.heroQuote || ''} />
-      <HomeText introText={homePage?.introText || ''} />
+      <Hero
+        hero={homePage?.hero || ''}
+        heroQuote={homePage?.heroQuote || ''}
+        id={homePage!.id}
+      />
+      <HomeText introText={homePage?.introText || ''} id={homePage!.id} />
       <VariableHomeDepartments />
       <HomeFeatured />
       <SecondVariableHomeDepartments />
@@ -34,6 +38,7 @@ const HomePage = () => {
         studioText={homePage?.studioText || ''}
         studioLink={homePage?.studioLink || ''}
         studioImage={homePage?.studioImage || ''}
+        id={homePage!.id}
       />
     </div>
   );
