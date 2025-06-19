@@ -66,3 +66,39 @@ h2 {
 #overlay-hero-content i {
   color: #f5e5de !important;
 }
+
+/* Tiptap Editor Styles */
+.ProseMirror {
+  font-family: 'Gotham Book', sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #524f4f;
+  outline: none;
+  min-height: 200px;
+}
+
+.ProseMirror p {
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.25rem;
+}
+
+.ProseMirror strong {
+  font-family: 'Gotham Bold', sans-serif;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.studio-text {
+  line-height: 1.4;
+}
