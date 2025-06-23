@@ -1600,15 +1600,17 @@ export const updateSelectedDepartmentSummary = async ({
   id,
   title,
   description,
+  image,
 }: {
   id: string;
   title: string;
   description: string;
+  image: string;
 }) => {
   const res = await client.graphql({
     query: updateDepartmentSummary,
     variables: {
-      input: { id, title, description },
+      input: { id, title, description, image },
     },
   });
   return res;

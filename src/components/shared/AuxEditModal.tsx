@@ -25,6 +25,7 @@ import {
   updateNewSummaryItem,
   updateSelectedDepartmentSummary,
 } from '../../helpers/api';
+import ImageUpload from './ImageUpload';
 
 interface SortableItemProps {
   id: string;
@@ -246,6 +247,7 @@ const AuxEditModal = ({
       id: department.id,
       title,
       description,
+      image,
     });
     refreshPage();
     setIsSaving(false);
@@ -262,9 +264,15 @@ const AuxEditModal = ({
         <div className='w-full grid grid-cols-2 gap-10'>
           <div>
             <div
-              className='w-full h-full aspect-[4/3] bg-cover bg-center rounded-lg'
+              className='w-full h-full aspect-[4/3] bg-cover bg-center rounded-lg flex items-center justify-center'
               style={{ backgroundImage: `url(${image})` }}
-            ></div>
+            >
+              <ImageUpload
+                setImage={(url) => {
+                  setImage(url);
+                }}
+              />
+            </div>
           </div>
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col gap-2'>
