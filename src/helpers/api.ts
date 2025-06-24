@@ -61,6 +61,7 @@ import {
   updateStaffMember,
   updateInquirePage,
   updateHomePage,
+  updateHomePageFeature,
 } from '../graphql/mutations';
 import { GraphQLResult } from '@aws-amplify/api';
 import {
@@ -1797,6 +1798,37 @@ export const saveHomePageStudioText = async ({
   const res = await client.graphql({
     query: updateHomePage,
     variables: { input: { id, studioText, studioLink, studioImage } },
+  });
+  return res;
+};
+
+export const saveHomePageFeatureItem = async ({
+  id,
+  department,
+  content,
+  callout,
+  link,
+  image,
+}: {
+  id: string;
+  department: string;
+  content: string;
+  callout: string;
+  link: string;
+  image: string;
+}) => {
+  const res = await client.graphql({
+    query: updateHomePageFeature,
+    variables: {
+      input: {
+        id,
+        title: department,
+        callout: content,
+        linkText: callout,
+        link: link,
+        image: image,
+      },
+    },
   });
   return res;
 };

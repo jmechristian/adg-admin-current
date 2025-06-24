@@ -177,7 +177,6 @@ export const createFeaturedProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -289,7 +288,6 @@ export const updateFeaturedProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -401,7 +399,6 @@ export const deleteFeaturedProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -530,7 +527,6 @@ export const createGallery = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -638,7 +634,6 @@ export const updateGallery = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -746,7 +741,6 @@ export const deleteGallery = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -840,7 +834,6 @@ export const createProject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -917,7 +910,6 @@ export const createProject = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      homePageFeaturedProjectsId
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
@@ -1007,7 +999,6 @@ export const updateProject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1084,7 +1075,6 @@ export const updateProject = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      homePageFeaturedProjectsId
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
@@ -1174,7 +1164,6 @@ export const deleteProject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1251,7 +1240,6 @@ export const deleteProject = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      homePageFeaturedProjectsId
       projectLocationId
       projectCreatedById
       projectLastUpdatedById
@@ -1340,7 +1328,6 @@ export const createQuote = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1434,7 +1421,6 @@ export const updateQuote = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1528,7 +1514,6 @@ export const deleteQuote = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -1746,7 +1731,6 @@ export const createImageObject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1801,7 +1785,6 @@ export const updateImageObject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -1856,7 +1839,6 @@ export const deleteImageObject = /* GraphQL */ `
           previewLocation
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
           projectLocationId
           projectCreatedById
           projectLastUpdatedById
@@ -2094,7 +2076,6 @@ export const createSubcategoryProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -2223,7 +2204,6 @@ export const updateSubcategoryProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -2352,7 +2332,6 @@ export const deleteSubcategoryProject = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3196,37 +3175,23 @@ export const createHomePage = /* GraphQL */ `
         }
         nextToken
       }
-      studioText
-      studioLink
-      studioImage
-      featuredProjects {
+      featureProjects {
         items {
           id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
+          projectTitle
+          projectLink
+          projectImage
+          projectLocation
+          order
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
+          homePageFeatureProjectsId
         }
         nextToken
       }
+      studioText
+      studioLink
+      studioImage
       createdAt
       updatedAt
     }
@@ -3258,37 +3223,23 @@ export const updateHomePage = /* GraphQL */ `
         }
         nextToken
       }
-      studioText
-      studioLink
-      studioImage
-      featuredProjects {
+      featureProjects {
         items {
           id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
+          projectTitle
+          projectLink
+          projectImage
+          projectLocation
+          order
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
+          homePageFeatureProjectsId
         }
         nextToken
       }
+      studioText
+      studioLink
+      studioImage
       createdAt
       updatedAt
     }
@@ -3320,39 +3271,79 @@ export const deleteHomePage = /* GraphQL */ `
         }
         nextToken
       }
-      studioText
-      studioLink
-      studioImage
-      featuredProjects {
+      featureProjects {
         items {
           id
-          oldId
-          name
-          description
-          locationString
-          featured
-          link
-          slug
-          quote
-          quoteAttribution
-          collaborators
-          size
-          gridOrder
-          status
-          displayOrder
-          previewLocation
+          projectTitle
+          projectLink
+          projectImage
+          projectLocation
+          order
           createdAt
           updatedAt
-          homePageFeaturedProjectsId
-          projectLocationId
-          projectCreatedById
-          projectLastUpdatedById
-          projectGalleryId
+          homePageFeatureProjectsId
         }
         nextToken
       }
+      studioText
+      studioLink
+      studioImage
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createHomePageFeatureProject = /* GraphQL */ `
+  mutation CreateHomePageFeatureProject(
+    $input: CreateHomePageFeatureProjectInput!
+    $condition: ModelHomePageFeatureProjectConditionInput
+  ) {
+    createHomePageFeatureProject(input: $input, condition: $condition) {
+      id
+      projectTitle
+      projectLink
+      projectImage
+      projectLocation
+      order
+      createdAt
+      updatedAt
+      homePageFeatureProjectsId
+    }
+  }
+`;
+export const updateHomePageFeatureProject = /* GraphQL */ `
+  mutation UpdateHomePageFeatureProject(
+    $input: UpdateHomePageFeatureProjectInput!
+    $condition: ModelHomePageFeatureProjectConditionInput
+  ) {
+    updateHomePageFeatureProject(input: $input, condition: $condition) {
+      id
+      projectTitle
+      projectLink
+      projectImage
+      projectLocation
+      order
+      createdAt
+      updatedAt
+      homePageFeatureProjectsId
+    }
+  }
+`;
+export const deleteHomePageFeatureProject = /* GraphQL */ `
+  mutation DeleteHomePageFeatureProject(
+    $input: DeleteHomePageFeatureProjectInput!
+    $condition: ModelHomePageFeatureProjectConditionInput
+  ) {
+    deleteHomePageFeatureProject(input: $input, condition: $condition) {
+      id
+      projectTitle
+      projectLink
+      projectImage
+      projectLocation
+      order
+      createdAt
+      updatedAt
+      homePageFeatureProjectsId
     }
   }
 `;
@@ -3437,7 +3428,6 @@ export const createProjectDepartments = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3548,7 +3538,6 @@ export const updateProjectDepartments = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3659,7 +3648,6 @@ export const deleteProjectDepartments = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3770,7 +3758,6 @@ export const createProjectSubcategories = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3878,7 +3865,6 @@ export const updateProjectSubcategories = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -3986,7 +3972,6 @@ export const deleteProjectSubcategories = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4094,7 +4079,6 @@ export const createProjectBuildingTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4196,7 +4180,6 @@ export const updateProjectBuildingTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4298,7 +4281,6 @@ export const deleteProjectBuildingTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4400,7 +4382,6 @@ export const createProjectProjectTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4502,7 +4483,6 @@ export const updateProjectProjectTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById
@@ -4604,7 +4584,6 @@ export const deleteProjectProjectTypes = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        homePageFeaturedProjectsId
         projectLocationId
         projectCreatedById
         projectLastUpdatedById

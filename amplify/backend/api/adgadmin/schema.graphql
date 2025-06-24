@@ -209,8 +209,17 @@ type HomePage @model {
   heroQuote: String
   introText: String
   features: [HomePageFeature] @hasMany
+  featureProjects: [HomePageFeatureProject] @hasMany
   studioText: String
   studioLink: String
   studioImage: String
-  featuredProjects: [Project] @hasMany
+}
+
+type HomePageFeatureProject @model {
+  id: ID!
+  projectTitle: String
+  projectLink: String
+  projectImage: String
+  projectLocation: String
+  order: Int
 }
