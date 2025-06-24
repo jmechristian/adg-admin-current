@@ -1708,39 +1708,16 @@ export const getHomePage = async () => {
           title
         }
       }
-      featuredProjects {
-        items {
-          departments {
-            items {
-              department {
-                name
-                id
-              }
-            }
-          }
-          gallery {
-            images {
-              items {
-                alt
-                caption
-                centerX
-                centerY
-                createdAt
-                id
-                order
-                type
-                url
-                zoom
-              }
-            }
-          }
-          link
-          id
-          locationString
-          name
-          slug
-        }
+      featureProjects {
+      items {
+        id
+        order
+        projectImage
+        projectLink
+        projectLocation
+        projectTitle
       }
+    }
     }
   }
     }
