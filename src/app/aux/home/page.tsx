@@ -8,6 +8,8 @@ import VariableHomeDepartments from '@/components/shared/VariableHomeDepartments
 import HomeVisit from '@/components/shared/HomeVisit';
 import { HomePageType } from '@/types';
 import { getHomePage } from '@/helpers/api';
+import { HomeSlider } from '@jmechristian/adg-component-library';
+import '@jmechristian/adg-component-library/styles.css';
 
 const HomePage = () => {
   const [homePage, setHomePage] = useState<HomePageType>();
@@ -24,7 +26,7 @@ const HomePage = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className='w-full max-w-[2000px] mx-auto relative flex flex-col gap-16'>
+    <div className='w-full max-w-[2000px] mx-auto relative flex flex-col gap-16 overflow-hidden'>
       <Hero
         hero={homePage?.hero || ''}
         heroQuote={homePage?.heroQuote || ''}
@@ -32,7 +34,7 @@ const HomePage = () => {
       />
       <HomeText introText={homePage?.introText || ''} id={homePage!.id} />
       <VariableHomeDepartments />
-      <HomeFeatured />
+      <HomeSlider featured={homePage?.featureProjects.items || []} />
       <SecondVariableHomeDepartments />
       <HomeVisit
         studioText={homePage?.studioText || ''}

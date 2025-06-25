@@ -391,7 +391,9 @@ export interface HomePageType {
   studioText: string;
   studioLink: string;
   studioImage: string;
-  featuredProjects: Project[];
+  featureProjects: {
+    items: HomePageFeatureProject[];
+  };
 }
 
 export interface HomePageFeature {
@@ -401,5 +403,14 @@ export interface HomePageFeature {
   link: string;
   linkText: string;
   callout: string;
+  order: number;
+}
+
+export interface HomePageFeatureProject {
+  id: string;
+  projectTitle: string;
+  projectLink: string;
+  projectImage: string;
+  projectLocation: string;
   order: number;
 }

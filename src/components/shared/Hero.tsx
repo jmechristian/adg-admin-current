@@ -118,7 +118,7 @@ const Hero = ({
           />
         </div>
       </div>
-      <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-15 z-10'></div>
+      <div className='absolute top-0 left-0 w-full h-full bg-black !bg-opacity-15 !z-10'></div>
     </div>
   );
 };

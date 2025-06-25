@@ -15,7 +15,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "@jmechristian/adg-component-library": "^1.0.65",
+    "@jmechristian/adg-component-library": "^1.0.70",
     "@tiptap/pm": "^2.14.0",
     "@tiptap/react": "^2.14.0",
     "@tiptap/starter-kit": "^2.14.0",
