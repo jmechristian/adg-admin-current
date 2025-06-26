@@ -89,6 +89,7 @@ export default function ReorderModal({
         departmentId
       );
       setProjects(projects);
+      console.log(projects);
     };
     fetchProjects();
   }, [subcategoryId, departmentId]);

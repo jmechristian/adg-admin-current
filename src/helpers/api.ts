@@ -1323,6 +1323,7 @@ export const getProjectsBySubcategory = async (
   const customQuery = `
     query MyQuery {
       listSubcategoryProjects(
+        limit: 1000,
         filter: {
           subcategorySubcategoryProjectsId: { eq: "${subcategoryId}" }
           departmentSubcategoriesProjectsId: { eq: "${departmentId}" }
